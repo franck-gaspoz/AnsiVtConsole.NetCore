@@ -1,0 +1,172 @@
+// -----------------------------------------------------------------------------------
+// ansi sequences patterns
+// from https://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+// -----------------------------------------------------------------------------------
+// in terminal wt,vscode we observe :
+// num? <-> numlist?
+// numlist := (;123456789)*
+// lowest priority rules are added to cover these cases
+// -----------------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------------
+// lexical
+// -----------------------------------------------------------------------------------
+
+// scf (revision 1967)
+
+NONE := \x0
+SOH := \x1
+STX := \x2
+ETX := \x3
+EOT := \x4
+ENQ := \x5
+ACK := \x6
+BEL := \x7
+BS := \x8
+HT := \x9
+LF := \xa
+VT := \xb
+FF := \xC
+CR := \xd
+SO := \xe
+SI := \xf
+DLE := \x10
+DC1 := \x11
+DC2 := \x12
+DC3 := \x13
+DC4 := \x14
+NAK := \x15
+SYN := \x16
+ETB := \x17
+CAN := \x18
+EM := \x19
+SUB := \x1a
+ESC := \x1b
+FS := \x1c
+GS := \x1d
+RS := \x1e
+US := \x1f
+//SP := \x20 // is visible
+
+// C1 Control characters
+
+CSI := ESC [
+OSC := ESC ]
+APC := ESC _
+DCS := ESC P
+ST := ESC \
+PM := ESC ^
+
+// -----------------------------------------------------------------------------------
+// syntactic rules
+// rule syntax: rule:= ( symbol | list_of_symbol | char | text | numlist? | num )
+// list_of_symbol := symbol (,symbol)*
+// -----------------------------------------------------------------------------------
+
+// single character functions (except ESC)
+NONE
+SOH
+STX
+ETX
+EOT
+ENQ
+ACK
+BEL
+BS
+HT
+LF
+VT
+FF 
+CR 
+SO 
+SI 
+DLE
+DC1
+DC2
+DC3
+DC4
+NAK
+SYN
+ETB
+CAN
+EM 
+SUB
+FS 
+GS 
+RS 
+US 
+SP
+scf
+
+ESC D,E,H,M,N,O,P,V,W,X,Z,6,7,8,9,=,>,F,c,l,m,n,o,|,},~
+ESC SP L,M,N
+ESC # 3,4,5,6,7,8,P,Q,R,q,p
+ESC % @,G
+
+// use \x2; as SP
+
+ESC ( A,B,C,H,K,Q,R,Y,Z,4,",%\x2;2,%\x2;6,%\x2;=,=,`,E,6,0,<,>,"\x2;4,"\x2;?,%\x2;0,%\x2;5,%\x2;4,%\x2;3,&\x2;5
+ESC * A,B,C,H,K,Q,R,Y,Z,4,",%\x2;2,%\x2;6,%\x2;=,=,`,E,6,0,<,>,"\x2;4,"\x2;?,%\x2;0,%\x2;5,%\x2;4,%\x2;3,&\x2;5
+ESC + A,B,C,H,K,Q,R,Y,Z,4,",%\x2;2,%\x2;6,%\x2;=,=,`,E,6,0,<,>,"\x2;4,"\x2;?,%\x2;0,%\x2;5,%\x2;4,%\x2;3,&\x2;5
+
+ESC - A,B,F,H,L,M
+ESC . A,B,F,H,L,M
+ESC / A,B,F,H,L,M
+
+// is ignored on reference terminals ? (TODO: check)
+// APC text ST NONE
+APC text
+
+// are ignored on reference terminals ? (TODO: check)
+// DCS 0,1, ; 0,1 | text ST
+// DCS $ m," p,SP q," q,r,s,t,$ |,* | text ST
+// DCS 1,2 $ t text ST
+// DCS + Q text ST
+// DCS + p text ST
+// DCS + q text ST
+DCS text
+
+CSI u
+CSI ! p
+CSI # q,{,}
+CSI numlist? ' w,x,z,{,|,},~
+CSI numlist? " p,q
+CSI numlist? $ p,t,v,w,x,z,{,|
+CSI numlist? SP q,t,u
+CSI ? numlist? $ p
+CSI ? numlist? s,T,J,h,i,l,m,n,c
+CSI > numlist? m,n,p,q,t,T,m,n
+CSI numlist? * x,y,|
+CSI numlist? # y,{,Q,P,|
+CSI numlist? @,A,B,C,D,E,F,G,H,I,J,K,L,M,P,S,T,X,Z,^,`,a,b,d,e,i,f,g,h,r,t,q,x
+CSI numlist? SP @,A
+
+OSC numlist? BEL,ST
+PM numlist? ST
+
+CSI 1,2,3,4,5,6,7,8,9 ~
+CSI 2 5 ~
+CSI 2 6 ~
+CSI 2 8 ~
+CSI 2 9 ~
+CSI 3 1 ~
+CSI 3 2 ~
+CSI 3 3 ~
+CSI 3 4 ~
+
+// extended rules
+
+ESC - char
+ESC . char
+ESC / char
+ESC + char,% char," char,& char
+ESC * char,% char," char,& char
+ESC ( char,% char," char,& char
+ESC % char
+ESC # char
+ESC SP char
+ESC char
+
+CSI numlist? char
+CSI ? numlist? char
+CSI ? num ; num ; char
