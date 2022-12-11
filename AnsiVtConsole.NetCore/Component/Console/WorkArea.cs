@@ -44,5 +44,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// is empty
         /// </summary>
         public bool IsEmpty => Rect.IsEmpty;
+
+        public bool InWorkArea => !Rect.IsEmpty;
     }
 }

@@ -1,12 +1,13 @@
-﻿using AnsiVtConsole.NetCore.Component.UI;
+﻿using AnsiVtConsole.NetCore.Component.Settings;
 
 namespace AnsiVtConsole.NetCore.Component.Console
 {
     public interface IAnsiVtConsole
     {
-        public EventHandler? ViewSizeChanged { get; set; }
-        public EventHandler<WorkAreaScrollEventArgs>? WorkAreaScrolled { get; set; }
-        bool EnableConstraintConsolePrintInsideWorkArea { get; set; }
+        public AnsiVtConsoleSettings Settings { get; }
+
+        public WorkAreaSettings WorkAreaSettings { get; }
+
         string CodeBlockBegin { get; set; }
         string CodeBlockEnd { get; set; }
         ColorSettings Colors { get; set; }
@@ -18,10 +19,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
         ConsoleColor? DefaultBackground { get; set; }
         ConsoleColor? DefaultForeground { get; set; }
         bool DumpExceptions { get; set; }
-        TextWriterWrapper Err { get; set; }
+        TextWriterWrapper StdErr { get; }
         bool ForwardLogsToSystemDiagnostics { get; set; }
         TextReader In { get; set; }
-        bool InWorkArea { get; }
         bool IsConsoleGeometryEnabled { get; }
         bool IsErrorRedirected { get; set; }
         bool IsOutputRedirected { get; set; }

@@ -1209,8 +1209,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 var ms = new MemoryStream(s.Length * 4);
                 var sw = new StreamWriter(ms);
                 Console.RedirectOut(sw);
-                var e = Console.EnableConstraintConsolePrintInsideWorkArea;
-                Console.EnableConstraintConsolePrintInsideWorkArea = false;
+                var e = Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea;
+                Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea = false;
                 if (!ignorePrintDirectives)
                 {
                     // directives are removed
@@ -1223,7 +1223,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                     EchoInternal(s, lineBreak, false, true, printSequences, false, false);
                 }
                 ms.Position = 0;
-                Console.EnableConstraintConsolePrintInsideWorkArea = e;
+                Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea = e;
                 sw.Flush();
                 var rw = new StreamReader(ms);
                 var txt = rw.ReadToEnd();
@@ -1242,10 +1242,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 var ms = new MemoryStream(s.Length * 4);
                 var sw = new StreamWriter(ms);
                 Console.RedirectOut(sw);
-                var e = Console.EnableConstraintConsolePrintInsideWorkArea;
-                Console.EnableConstraintConsolePrintInsideWorkArea = false;
+                var e = Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea;
+                Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea = false;
                 Echo(s, lineBreak);
-                Console.EnableConstraintConsolePrintInsideWorkArea = e;
+                Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea = e;
                 sw.Flush();
                 ms.Position = 0;
                 var rw = new StreamReader(ms);
@@ -1340,7 +1340,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 if (IsReplicationEnabled)
                     ReplicateStreamWriter!.Write(s);
 
-                Console.Err.Write(s);
+                Console.StdErr.Write(s);
             }
             else
             {
@@ -1447,9 +1447,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
             else
             {
-                Console.Err.Write(s);
+                Console.StdErr.Write(s);
                 if (lineBreak)
-                    Console.Err.WriteLine(string.Empty);
+                    Console.StdErr.WriteLine(string.Empty);
             }
         }
 
@@ -1460,7 +1460,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             lock (Lock!)
             {
-                if (Console.EnableConstraintConsolePrintInsideWorkArea)
+                if (Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea)
                 {
                     var (id, x, y, w, h) = Console.ActualWorkArea();
                     var x0 = CursorLeft;
@@ -1833,7 +1833,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 var dx = 0;
                 var dy = 0;
 
-                if (Console.EnableConstraintConsolePrintInsideWorkArea || forceEnableConstraintInWorkArea)
+                if (Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea || forceEnableConstraintInWorkArea)
                 {
                     var (id, left, top, right, bottom) = Console.ActualWorkArea(fitToVisibleArea);
                     if (cx < left)
@@ -1885,7 +1885,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 {
                     SetCursorPos(cx, cy);
                     if (dx != 0 || dy != 0)
-                        Console.WorkAreaScrolled?.Invoke(null, new WorkAreaScrollEventArgs(0, dy));
+                        Console.WorkAreaSettings.WorkAreaScrolled?.Invoke(null, new WorkAreaScrollEventArgs(0, dy));
                 }
             }
         }

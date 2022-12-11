@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 using AnsiVtConsole.NetCore.Component.Console;
 using AnsiVtConsole.NetCore.Component.EchoDirective;
-using AnsiVtConsole.NetCore.Component.UI;
+using AnsiVtConsole.NetCore.Component.Settings;
 
 using static AnsiVtConsole.NetCore.Component.EchoDirective.Shortcuts;
 
@@ -24,14 +24,26 @@ namespace AnsiVtConsole.NetCore
     {
         #region attributes
 
+        public AnsiVtConsoleSettings Settings { get; private set; } = new();
+
         private static int _instanceCounter = 1000;
         private static readonly object _instanceLock = new object();
-        public int ID;
 
         #region streams : entry points to DotNetConsole output operations
 
+        /// <summary>
+        /// ansi vt output stream
+        /// </summary>
         public ConsoleTextWriterWrapper Out { get; set; }
-        public TextWriterWrapper Err { get; set; } = new TextWriterWrapper(sc.Error);
+
+        /// <summary>
+        /// system standard err stream wrapper
+        /// </summary>
+        public TextWriterWrapper StdErr { get; private set; } = new(sc.Error);
+
+        /// <summary>
+        /// standard input stream
+        /// </summary>
         public TextReader In { get; set; } = System.Console.In;
 
         #endregion
@@ -40,17 +52,13 @@ namespace AnsiVtConsole.NetCore
 
         private readonly WorkArea _workArea = new();
         public WorkArea WorkArea => new(_workArea);
-        public bool InWorkArea => !_workArea.Rect.IsEmpty;
 
-        public EventHandler? ViewSizeChanged { get; set; }
-
-        public EventHandler<WorkAreaScrollEventArgs>? WorkAreaScrolled { get; set; }
-
-        public bool EnableConstraintConsolePrintInsideWorkArea { get; set; } = false;
+        public WorkAreaSettings WorkAreaSettings { get; private set; } = new();
 
         #endregion
 
         public bool IsErrorRedirected { get; set; } = false;
+
         public bool IsOutputRedirected { get; set; } = false;
 
         public bool ClearOnViewResized = true;      // false not works properly in Windows Terminal + fit view size
@@ -60,30 +68,42 @@ namespace AnsiVtConsole.NetCore
         public bool TraceCommandErrors { get; set; } = true;
 
         public bool DumpExceptions { get; set; } = true;
+
         public ConsoleColor? DefaultForeground { get; set; }
+
         public ConsoleColor? DefaultBackground { get; set; }
 
         public char CommandBlockBeginChar { get; set; } = '(';
+
         public char CommandBlockEndChar { get; set; } = ')';
+
         public char CommandSeparatorChar { get; set; } = ',';
+
         public char CommandValueAssignationChar { get; set; } = '=';
+
         public string CodeBlockBegin { get; set; } = "[[";
+
         public string CodeBlockEnd { get; set; } = "]]";
 
         public bool ForwardLogsToSystemDiagnostics { get; set; } = true;
+
         public int TabLength { get; set; } = 7;
 
         private TextWriter? _errorWriter;
+
         private StreamWriter? _errorStreamWriter;
+
         private FileStream? _errorFileStream;
+
         private TextWriter? _outputWriter;
+
         private StreamWriter? _outputStreamWriter;
+
         private FileStream? _outputFileStream;
+
         private readonly string[] _crlf = { Environment.NewLine };
 
         public object ConsoleLock => Out.Lock!;
-
-        public bool RedrawUIElementsEnabled = true;
 
         public ColorSettings Colors { get; set; }
 
@@ -93,7 +113,7 @@ namespace AnsiVtConsole.NetCore
         {
             lock (_instanceLock)
             {
-                ID = _instanceCounter;
+                Settings.ID = _instanceCounter;
                 _instanceCounter++;
             }
             Out = new ConsoleTextWriterWrapper(this, sc.Out);
@@ -101,7 +121,7 @@ namespace AnsiVtConsole.NetCore
             Shortcuts.Initialize(this);
         }
 
-        public override string ToString() => $"[Console : ID={ID} Out={Out} In={In} Err={Err}]";
+        public override string ToString() => $"[Console : ID={Settings.ID} Out={Out} In={In} Err={StdErr}]";
 
         #region log methods
 
@@ -395,14 +415,14 @@ namespace AnsiVtConsole.NetCore
         {
             if (sw != null)
             {
-                Err.Redirect(sw);
+                StdErr.Redirect(sw);
                 _errorWriter = sc.Error;
                 sc.SetError(sw);
                 IsErrorRedirected = true;
             }
             else
             {
-                Err.Redirect((TextWriter?)null);
+                StdErr.Redirect((TextWriter?)null);
                 sc.SetError(_errorWriter!);
                 _errorWriter = null;
                 IsErrorRedirected = false;
@@ -438,7 +458,7 @@ namespace AnsiVtConsole.NetCore
                 _errorFileStream = new FileStream(filepath, FileMode.Append, FileAccess.Write);
                 _errorStreamWriter = new StreamWriter(_errorFileStream);
                 sc.SetOut(_errorStreamWriter);
-                Err.Redirect(_errorStreamWriter);
+                StdErr.Redirect(_errorStreamWriter);
             }
             else
             {
@@ -447,7 +467,7 @@ namespace AnsiVtConsole.NetCore
                 _errorStreamWriter = null;
                 sc.SetOut(_errorWriter!);
                 _errorWriter = null;
-                Err.Redirect((string?)null);
+                StdErr.Redirect((string?)null);
             }
         }
 
