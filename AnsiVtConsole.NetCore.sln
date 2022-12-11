@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnsiVtConsole.NetCore", "An
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{196A14D8-B446-482A-8B5E-9CD986A0C5A3}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnsiVtConsole.NetCore.Examples", "AnsiVtConsole.NetCore.Examples\AnsiVtConsole.NetCore.Examples.csproj", "{81478669-85E5-4F1E-9A87-8D9E85F75B50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +32,14 @@ Global
 		{72B1CBA5-B4C1-4B1B-907E-7BCAE9CC7557}.Release|Any CPU.Build.0 = Release|Any CPU
 		{72B1CBA5-B4C1-4B1B-907E-7BCAE9CC7557}.Release|x86.ActiveCfg = Release|x86
 		{72B1CBA5-B4C1-4B1B-907E-7BCAE9CC7557}.Release|x86.Build.0 = Release|x86
+		{81478669-85E5-4F1E-9A87-8D9E85F75B50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81478669-85E5-4F1E-9A87-8D9E85F75B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81478669-85E5-4F1E-9A87-8D9E85F75B50}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{81478669-85E5-4F1E-9A87-8D9E85F75B50}.Debug|x86.Build.0 = Debug|Any CPU
+		{81478669-85E5-4F1E-9A87-8D9E85F75B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81478669-85E5-4F1E-9A87-8D9E85F75B50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81478669-85E5-4F1E-9A87-8D9E85F75B50}.Release|x86.ActiveCfg = Release|Any CPU
+		{81478669-85E5-4F1E-9A87-8D9E85F75B50}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

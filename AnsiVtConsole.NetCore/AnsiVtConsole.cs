@@ -20,7 +20,7 @@ namespace AnsiVtConsole.NetCore
     /// - the .net core make use of interop for each console method call in windows (ConsolePal.Windows.cs)
     /// </para>
     /// </summary>
-    internal sealed class AnsiVtConsole : IAnsiVtConsole
+    public sealed class AnsiVtConsole : IAnsiVtConsole
     {
         #region attributes
 

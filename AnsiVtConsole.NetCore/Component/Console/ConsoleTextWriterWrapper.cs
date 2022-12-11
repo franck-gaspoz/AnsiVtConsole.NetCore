@@ -1215,12 +1215,12 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 {
                     // directives are removed
                     s = ANSI.GetText(s);    // also removed ansi sequences
-                    Echo(s, lineBreak, true, true, printSequences);
+                    EchoInternal(s, lineBreak, true, true, printSequences);
                 }
                 else
                 {
                     // directives are keeped
-                    Echo(s, lineBreak, false, true, printSequences, false, false);
+                    EchoInternal(s, lineBreak, false, true, printSequences, false, false);
                 }
                 ms.Position = 0;
                 Console.EnableConstraintConsolePrintInsideWorkArea = e;
@@ -1349,22 +1349,22 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
-        public void Echoln(string s = "", bool ignorePrintDirectives = false) => Echo(s, true, !ignorePrintDirectives);
-        public void Echoln(object s, bool ignorePrintDirectives = false) => Echo(s, true, !ignorePrintDirectives);
+        public void Echoln(string s = "", bool ignorePrintDirectives = false) => EchoInternal(s, true, !ignorePrintDirectives);
+        public void Echoln(object s, bool ignorePrintDirectives = false) => EchoInternal(s, true, !ignorePrintDirectives);
 
         public void Echo(
             string s = "",
             bool lineBreak = false,
-            bool ignorePrintDirectives = false) => Echo(s, lineBreak, !ignorePrintDirectives);
+            bool ignorePrintDirectives = false) => EchoInternal(s, lineBreak, !ignorePrintDirectives);
 
-        public void Echoln(char s, bool ignorePrintDirectives = false) => Echo(s + "", true, !ignorePrintDirectives);
+        public void Echoln(char s, bool ignorePrintDirectives = false) => EchoInternal(s + "", true, !ignorePrintDirectives);
 
-        public void Echo(char s, bool lineBreak = false, bool ignorePrintDirectives = false) => Echo(s + "", lineBreak, !ignorePrintDirectives);
+        public void Echo(char s, bool lineBreak = false, bool ignorePrintDirectives = false) => EchoInternal(s + "", lineBreak, !ignorePrintDirectives);
 
         public void Echo(
             object o,
             bool lineBreak = false)
-            => Echo(o, lineBreak);
+            => EchoInternal(o, lineBreak);
 
         /// <summary>
         /// output to stream
@@ -1376,7 +1376,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <param name="printSequences">to store echo sequence objects when collected</param>
         /// <param name="avoidANSISequencesAndNonPrintableCharacters">if true and parseCommands=false, replace ansiseq and non printable chars by readable data</param>
         /// <param name="getNonPrintablesASCIICodesAsLabel">if true and parseCommands=false, replace ascii non printables chars by labels</param>
-        private void Echo(
+        private void EchoInternal(
             object o,
             bool lineBreak = false,
             bool parseCommands = true,
