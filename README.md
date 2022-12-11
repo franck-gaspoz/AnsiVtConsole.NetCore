@@ -24,9 +24,9 @@ The toolkit provides functionalities needed to build console applications runnin
 # Usage
 
 ``` csharp
-using AnsiVtConsole.NetCore;
+using cons=AnsiVtConsole.NetCore;
 // get the ansi vt console
-var console = new AnsiVTConsole();
+var console = new cons.AnsiVTConsole();
 ```
 
 ## 1. using the text parser:
