@@ -1,6 +1,6 @@
 <hr>
 
-# AnsiVtConsole.NetCore
+# <img src="Doc/Images/game-ascii-icon-200x200.png" width="72" valign="middle"/> AnsiVtConsole.NetCore
 
 <hr>
 
