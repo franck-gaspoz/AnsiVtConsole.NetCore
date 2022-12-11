@@ -12,9 +12,8 @@ The toolkit provides functionalities needed to build console applications runnin
 - <b>a text printer engine </b>that supports <b>print directives</b> allowing to manage console functionalities from text itself, as html would do but with a simplest grammar (that can be configured). That makes possible colored outputs, cursor control, text scrolling and also dynamic C# execution (scripting), based on <b>System.Console</b> and <b> ANSI VT100 / VT52 (VT100 type Fp or 3Fp, Fs, CSI, SGR)</b>. 
 - The print directives can be used:
 
-    - in strings with tokens
+    - as tokens in a string
     - as methods
-    - as constants
 
 # Usage
 
