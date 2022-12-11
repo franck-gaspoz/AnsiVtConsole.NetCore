@@ -28,11 +28,11 @@ namespace AnsiVtConsole.NetCore
 
         public AnsiVtConsoleSettings Settings { get; private set; } = new();
 
-        public ColorSettings Colors { get; set; }
+        public ColorSettings Colors { get; private set; }
 
         #region work area settings        
 
-        public WorkArea WorkArea => new(_workArea);
+        public WorkArea WorkArea { get; private set; }
 
         public WorkAreaSettings WorkAreaSettings { get; private set; } = new();
 
@@ -41,9 +41,19 @@ namespace AnsiVtConsole.NetCore
         #region streams
 
         /// <summary>
-        /// ansi vt output stream
+        /// ansi vt std redirectable/bufferable stream
         /// </summary>
         public ConsoleTextWriterWrapper Out { get; set; }
+
+        /// <summary>
+        /// ansi vr error output stream
+        /// </summary>
+        public Err Err { get; private set; }
+
+        /// <summary>
+        /// ansi vr warning output stream
+        /// </summary>
+        public Warn Warn { get; private set; }
 
         /// <summary>
         /// system standard err stream wrapper
@@ -54,6 +64,16 @@ namespace AnsiVtConsole.NetCore
         /// standard input stream
         /// </summary>
         public TextReader In { get; set; } = System.Console.In;
+
+        /// <summary>
+        /// input stream
+        /// </summary>
+        public Inp Inp { get; set; }
+
+        /// <summary>
+        /// cursor
+        /// </summary>
+        public Cursor Cursor { get; set; }
 
         #endregion
 
@@ -79,10 +99,6 @@ namespace AnsiVtConsole.NetCore
 
         private readonly string[] _crlf = { Environment.NewLine };
 
-        private readonly WorkArea _workArea = new();
-
-        private object ConsoleLock => Out.Lock!;
-
         #endregion
 
         public AnsiVtConsole()
@@ -94,6 +110,11 @@ namespace AnsiVtConsole.NetCore
             }
             Out = new ConsoleTextWriterWrapper(this, sc.Out);
             Colors = new ColorSettings(this);
+            Err = new(Out, Colors);
+            Warn = new(Out, Err, Colors);
+            Inp = new(Out);
+            Cursor = new(this, Out);
+            WorkArea = new(Out);
             Shortcuts.Initialize(this);
         }
 
@@ -117,7 +138,7 @@ namespace AnsiVtConsole.NetCore
                 }
                 var ls = msg.Split(_crlf, StringSplitOptions.None)
                     .Select(x => Colors.Error + x);
-                Errorln(ls);
+                Err.Logln(ls);
             }
         }
 
@@ -139,7 +160,7 @@ namespace AnsiVtConsole.NetCore
                 ls.Insert(0, $"{Colors.Error}{message}: {ex.Message}");
             }
 
-            Errorln(ls);
+            Err.Logln(ls);
         }
 
         public void LogError(string s, bool enableForwardLogsToSystemDiagnostics = true)
@@ -148,7 +169,7 @@ namespace AnsiVtConsole.NetCore
                 System.Diagnostics.Debug.WriteLine(s);
             var ls = (s + "").Split(_crlf, StringSplitOptions.None)
                 .Select(x => Colors.Error + x);
-            Errorln(ls);
+            Err.Logln(ls);
         }
 
         public void LogWarning(string s, bool enableForwardLogsToSystemDiagnostics = true)
@@ -157,7 +178,7 @@ namespace AnsiVtConsole.NetCore
                 System.Diagnostics.Debug.WriteLine(s);
             var ls = (s + "").Split(_crlf, StringSplitOptions.None)
                 .Select(x => Colors.Warning + x);
-            Errorln(ls);
+            Err.Logln(ls);
         }
 
         public void Log(string s, bool enableForwardLogsToSystemDiagnostics = true)
@@ -174,58 +195,6 @@ namespace AnsiVtConsole.NetCore
         #endregion
 
         #region operations
-
-        public void Error(string s = "") => Error(s, false);
-        public void Errorln(string s = "") => Error(s, true);
-        public void Errorln(IEnumerable<string> ls)
-        {
-            foreach (var s in ls)
-                Errorln(s);
-        }
-        public void Error(IEnumerable<string> ls)
-        {
-            foreach (var s in ls)
-                Error(s);
-        }
-        public void Error(string s, bool lineBreak = false)
-        {
-            lock (Out.Lock!)
-            {
-                Out.RedirectToErr = true;
-                Out.Echo($"{Colors.Error}{s}{Colors.Default}", lineBreak);
-                Out.RedirectToErr = false;
-            }
-        }
-
-        public void Warning(string s = "") => Warning(s, false);
-        public void Warningln(string s = "") => Warning(s, true);
-        public void Warningln(IEnumerable<string> ls)
-        {
-            foreach (var s in ls)
-                Errorln(s);
-        }
-        public void Warning(IEnumerable<string> ls)
-        {
-            foreach (var s in ls)
-                Error(s);
-        }
-        public void Warning(string s, bool lineBreak = false)
-        {
-            lock (Out.Lock!)
-            {
-                Out.Echo($"{Colors.Warning}{s}{Colors.Default}", lineBreak);
-            }
-        }
-
-        public string? Readln(string? prompt = null)
-        {
-            lock (Out.Lock!)
-            {
-                if (prompt != null)
-                    Out.Echo(prompt);
-            }
-            return sc.ReadLine();
-        }
 
         public void Infos()
         {
@@ -252,116 +221,6 @@ namespace AnsiVtConsole.NetCore
         /// </summary>
         /// <param name="r">return code</param>
         public void Exit(int r = 0) => Environment.Exit(r);
-
-        #endregion
-
-        #region work area operations
-
-        /// <summary>
-        /// this setting limit wide of lines (available width -1) to prevent sys console to automatically put a line break when reaching end of line (console bug ?)
-        /// </summary>
-        public bool AvoidConsoleAutoLineBreakAtEndOfLine = false;
-
-        /// <summary>
-        /// true until the contrary is detected (exception in GetCoords : sc.WindowLeft)
-        /// </summary>
-        public bool IsConsoleGeometryEnabled { get; private set; } = true;
-
-        /// <summary>
-        /// update the IsConsoleGeometryEnabled field
-        /// </summary>
-        /// <returns>value of the field</returns>
-        public bool CheckConsoleHasGeometry()
-        {
-            try
-            {
-                var x = sc.WindowLeft;
-            }
-            catch (Exception)
-            {
-                IsConsoleGeometryEnabled = false;
-                return false;
-            }
-            return true;
-        }
-
-        public (int x, int y, int w, int h) GetCoords(int x, int y, int w, int h, bool fitToVisibleArea = true)
-        {
-            // (1) dos console (eg. vs debug consolehep) set WindowTop as y scroll position. WSL console doesn't (still 0)
-            // scroll -> native dos console set WindowTop and WindowLeft as base scroll coordinates
-            // if WorkArea defined, we must use absolute coordinates and not related
-            // CursorLeft and CursorTop are always good
-            lock (ConsoleLock)
-            {
-                if (!IsConsoleGeometryEnabled)
-                    return (x, y, 1000, 1000);
-
-                if (x < 0)
-                    x = sc.WindowLeft + sc.WindowWidth + x;
-
-                if (y < 0)
-                    y = /*sc.WindowTop (fix 1) */ +sc.WindowHeight + y;
-
-                if (fitToVisibleArea)
-                {
-                    if (w < 0)
-                    {
-                        w = sc.WindowWidth + ((AvoidConsoleAutoLineBreakAtEndOfLine) ? -1 : 0) + (w + 1)     // 1 POS TOO MUCH !!
-                            /*+ sc.WindowLeft*/;
-                    }
-
-                    if (h < 0)
-                    {
-                        h = sc.WindowHeight + h
-                            + sc.WindowTop; /* ?? */
-                    }
-                }
-                else
-                {
-                    if (w < 0)
-                        w = sc.BufferWidth + ((AvoidConsoleAutoLineBreakAtEndOfLine) ? -1 : 0) + (w + 1);
-
-                    if (h < 0)
-                        h = sc.WindowHeight + h + sc.WindowTop;
-                }
-                return (x, y, w, h);
-            }
-        }
-
-        public ActualWorkArea ActualWorkArea(bool fitToVisibleArea = true)
-        {
-            if (!IsConsoleGeometryEnabled)
-                return new ActualWorkArea(_workArea.Id, 0, 0, 0, 0);
-            var x0 = _workArea.Rect.IsEmpty ? 0 : _workArea.Rect.X;
-            var y0 = _workArea.Rect.IsEmpty ? 0 : _workArea.Rect.Y;
-            var w0 = _workArea.Rect.IsEmpty ? -1 : _workArea.Rect.Width;
-            var h0 = _workArea.Rect.IsEmpty ? -1 : _workArea.Rect.Height;
-            var (x, y, w, h) = GetCoords(x0, y0, w0, h0, fitToVisibleArea);
-            return new ActualWorkArea(_workArea.Id, x, y, w, h);
-        }
-
-        public void SetCursorAtWorkAreaTop()
-        {
-            if (!IsConsoleGeometryEnabled || _workArea.Rect.IsEmpty)
-                return;     // TODO: set cursor even if workarea empty?
-            lock (Out.Lock!)
-            {
-                Out.SetCursorPos(_workArea.Rect.X, _workArea.Rect.Y);
-            }
-        }
-
-        #endregion
-
-        #region UI operations
-
-        public void FixCoords(ref int x, ref int y)
-        {
-            lock (ConsoleLock)
-            {
-                x = Math.Max(0, Math.Min(x, sc.BufferWidth - 1));
-                y = Math.Max(0, Math.Min(y, sc.BufferHeight - 1));
-            }
-        }
 
         #endregion
 
@@ -449,41 +308,7 @@ namespace AnsiVtConsole.NetCore
 
         #region implementation methods
 
-        public int GetCursorX(object x)
-        {
-            if (x != null && x is string s && !string.IsNullOrWhiteSpace(s)
-                && int.TryParse(s, out var v))
-            {
-                return v;
-            }
 
-            if (Settings.TraceCommandErrors)
-                LogError($"wrong cursor x: {x}");
-            if (!IsConsoleGeometryEnabled)
-                return 0;
-            lock (Out.Lock!)
-            {
-                return sc.CursorLeft;
-            }
-        }
-
-        public int GetCursorY(object x)
-        {
-            if (x != null && x is string s && !string.IsNullOrWhiteSpace(s)
-                && int.TryParse(s, out var v))
-            {
-                return v;
-            }
-
-            if (Settings.TraceCommandErrors)
-                LogError($"wrong cursor y: {x}");
-            if (!IsConsoleGeometryEnabled)
-                return 0;
-            lock (Out.Lock!)
-            {
-                return sc.CursorTop;
-            }
-        }
 
         #endregion
 

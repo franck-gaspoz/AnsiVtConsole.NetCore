@@ -19,8 +19,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
         #region attributes
 
         public override string ToString() => $"[console text writer wrapper - {base.ToString()}]";
-        public bool IsMuteOrIsNotConsoleGeometryEnabled => IsMute || !Console.IsConsoleGeometryEnabled;
-        public bool IsNotMuteAndIsConsoleGeometryEnabled => IsNotMute && Console.IsConsoleGeometryEnabled;
+        public bool IsMuteOrIsNotConsoleGeometryEnabled => IsMute || !Console.WorkArea.IsConsoleGeometryEnabled;
+        public bool IsNotMuteAndIsConsoleGeometryEnabled => IsNotMute && Console.WorkArea.IsConsoleGeometryEnabled;
 
         public bool RedirectToErr = false;
 
@@ -81,7 +81,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         private void Init(IAnsiVtConsole console, CSharpScriptEngine? cSharpScriptEngine = null)
         {
             Console = console;
-            console.CheckConsoleHasGeometry();
+            console.WorkArea.CheckConsoleHasGeometry();
             CSharpScriptEngine = cSharpScriptEngine ?? new CSharpScriptEngine(console);
 
             if (IsNotMute)
@@ -440,13 +440,13 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         private object? SetCursorX(object x)
         {
-            CursorLeft = Console.GetCursorX(x);
+            CursorLeft = Console.Cursor.GetCursorX(x);
             return null;
         }
 
         private object? SetCursorY(object x)
         {
-            CursorTop = Console.GetCursorY(x);
+            CursorTop = Console.Cursor.GetCursorY(x);
             return null;
         }
 
@@ -1134,7 +1134,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 var x = p.X;
                 var y = p.Y;
-                Console.FixCoords(ref x, ref y);
+                Console.Cursor.FixCoords(ref x, ref y);
                 if (IsBufferEnabled)
                 {
                     _cachedCursorPosition.X = x;
@@ -1155,7 +1155,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             lock (Lock!)
             {
-                Console.FixCoords(ref x, ref y);
+                Console.Cursor.FixCoords(ref x, ref y);
                 if (IsBufferEnabled)
                 {
                     _cachedCursorPosition.X = x;
@@ -1462,7 +1462,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 if (Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea)
                 {
-                    var (id, x, y, w, h) = Console.ActualWorkArea();
+                    var (id, x, y, w, h) = Console.WorkArea.ActualWorkArea();
                     var x0 = CursorLeft;
                     var y0 = CursorTop;
 
@@ -1533,7 +1533,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                     return;
                 var f = _cachedForegroundColor;
                 var b = _cachedForegroundColor;
-                var aw = Console.ActualWorkArea();
+                var aw = Console.WorkArea.ActualWorkArea();
                 var nb = Math.Max(0, Math.Max(aw.Right, _cachedBufferSize.Width - 1) - CursorLeft - 1);
                 var x = CursorLeft;
                 var y = CursorTop;
@@ -1672,7 +1672,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             lock (Lock!)
             {
                 var index = -1;
-                var (id, x, y, w, h) = Console.ActualWorkArea(fitToVisibleArea);
+                var (id, x, y, w, h) = Console.WorkArea.ActualWorkArea(fitToVisibleArea);
                 var x0 = origin.X;
                 var y0 = origin.Y;
 
@@ -1835,7 +1835,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
                 if (Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea || forceEnableConstraintInWorkArea)
                 {
-                    var (id, left, top, right, bottom) = Console.ActualWorkArea(fitToVisibleArea);
+                    var (id, left, top, right, bottom) = Console.WorkArea.ActualWorkArea(fitToVisibleArea);
                     if (cx < left)
                     {
                         cx = right - 1;
