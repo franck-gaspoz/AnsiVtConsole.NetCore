@@ -20,7 +20,7 @@ The toolkit provides functionalities needed to build console applications runnin
 
 ``` csharp
 using AnsiVtConsole.NetCore;
-// get a ansi vt console
+// get the ansi vt console
 var console = new AnsiVTConsole();
 ```
 
