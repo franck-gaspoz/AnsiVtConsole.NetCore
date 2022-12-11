@@ -112,22 +112,16 @@ namespace AnsiVtConsole.NetCore.Lib
             return null;
         }
 
-        public static List<(string name, object value, MemberInfo memberInfo)> GetMemberValues(this object o)
+        public static List<(string name, object? value, MemberInfo memberInfo)> GetMemberValues(this object o)
         {
             var t = o.GetType();
-            var r = new List<(string, object, MemberInfo)>();
+            var r = new List<(string, object?, MemberInfo)>();
             foreach (var f in t.GetFields())
             {
-                //r.Add((f.Name, f.GetValue(o),f));
                 r.Add((f.Name, f.GetMemberValue(o), f));
             }
             foreach (var p in t.GetProperties())
             {
-                /*if (p.GetGetMethod().GetParameters().Length==0)
-                    r.Add((p.Name, p.GetValue(o),p));
-                else
-                    // indexed property
-                    r.Add((p.Name, "indexed property" , p));*/
                 try
                 {
                     var val = p.GetMemberValue(o, true);
@@ -138,7 +132,7 @@ namespace AnsiVtConsole.NetCore.Lib
                     r.Add((p.Name, "indexed property", p));
                 }
             }
-            r.Sort(new Comparison<(string, object, MemberInfo)>(
+            r.Sort(new Comparison<(string, object?, MemberInfo)>(
                 (a, b) => a.Item1.CompareTo(b.Item1)));
             return r;
         }
@@ -151,21 +145,6 @@ namespace AnsiVtConsole.NetCore.Lib
                 return prop.PropertyType;
             return null;
         }
-
-        /*public static object GetValue(this MemberInfo memberInfo,object target)
-        {
-            if (memberInfo is FieldInfo fi)
-            {
-                return fi.GetValue(target);
-            } else
-            {
-                if (memberInfo is PropertyInfo pi)
-                {
-                    return pi.GetValue(target);
-                }
-            }
-            return null;
-        }*/
 
         #endregion
 
@@ -198,18 +177,21 @@ namespace AnsiVtConsole.NetCore.Lib
         }
 
         public static void Merge<K, V>(this Dictionary<K, V> dic, Dictionary<K, V> mergeTo)
+            where K : notnull
         {
             foreach (var kv in mergeTo)
                 dic.AddOrReplace(kv.Key, kv.Value);
         }
 
         public static void Add<K, V>(this Dictionary<K, V> dic, Dictionary<K, V> addTo)
+            where K : notnull
         {
             foreach (var kv in addTo)
                 dic.Add(kv.Key, kv.Value);
         }
 
         public static void AddOrReplace<TK, TV>(this Dictionary<TK, TV> dic, TK key, TV value)
+            where TK : notnull
         {
             if (dic.ContainsKey(key))
                 dic[key] = value;
@@ -218,6 +200,7 @@ namespace AnsiVtConsole.NetCore.Lib
         }
 
         public static void AddOrReplace<TK, TV>(this SortedDictionary<TK, TV> dic, TK key, TV value)
+            where TK : notnull
         {
             if (dic.ContainsKey(key))
                 dic[key] = value;
@@ -226,6 +209,7 @@ namespace AnsiVtConsole.NetCore.Lib
         }
 
         public static void AddOrReplace<TK, TV>(this Dictionary<TK, List<TV>> dic, TK key, TV value)
+            where TK : notnull
         {
             if (dic.ContainsKey(key))
                 dic[key].AddUnique(value);

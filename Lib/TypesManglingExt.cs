@@ -32,7 +32,7 @@ namespace AnsiVtConsole.NetCore.Lib
             { typeof(object), "object" }
         };
 
-        public static string GetKeyword(this Type type)
+        public static string? GetKeyword(this Type? type)
         {
             if (type == null)
                 return null;

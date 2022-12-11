@@ -208,7 +208,7 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
             var i = 0;
             var paths = new SyntacticBlockList();
             var rootNode = _gramTree;
-            Parse(ref t, i, rootNode, rootNode, paths);
+            Parse(ref t, i, rootNode!, rootNode!, paths);
             return paths;
         }
 

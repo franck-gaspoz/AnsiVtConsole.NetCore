@@ -1192,14 +1192,13 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <returns>text visible characters only</returns>
         public string GetText(string s)
         {
-            var r = GetPrint(s, false, false, false);
+            var r = GetPrint(s, false, false);
             return r;
         }
 
         private string GetPrint(
             string s,
             bool lineBreak = false,
-            bool doNotEvaluatePrintDirectives = false,      // TODO: remove this parameter
             bool ignorePrintDirectives = false,
             EchoSequenceList? printSequences = null)
         {
@@ -1216,12 +1215,12 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 {
                     // directives are removed
                     s = ANSI.GetText(s);    // also removed ansi sequences
-                    Echo(s, lineBreak, false, true, true, printSequences);
+                    Echo(s, lineBreak, true, true, printSequences);
                 }
                 else
                 {
                     // directives are keeped
-                    Echo(s, lineBreak, false, false, true, printSequences, false, false);
+                    Echo(s, lineBreak, false, true, printSequences, false, false);
                 }
                 ms.Position = 0;
                 Console.EnableConstraintConsolePrintInsideWorkArea = e;
@@ -1350,29 +1349,28 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
-        public void Echoln(string s = "", bool ignorePrintDirectives = false) => Echo(s, true, false, !ignorePrintDirectives);
-        public void Echoln(object s, bool ignorePrintDirectives = false) => Echo(s, true, false, !ignorePrintDirectives);
+        public void Echoln(string s = "", bool ignorePrintDirectives = false) => Echo(s, true, !ignorePrintDirectives);
+        public void Echoln(object s, bool ignorePrintDirectives = false) => Echo(s, true, !ignorePrintDirectives);
 
         public void Echo(
             string s = "",
             bool lineBreak = false,
-            bool ignorePrintDirectives = false) => Echo(s, lineBreak, false, !ignorePrintDirectives);
+            bool ignorePrintDirectives = false) => Echo(s, lineBreak, !ignorePrintDirectives);
 
-        public void Echoln(char s, bool ignorePrintDirectives = false) => Echo(s + "", true, false, !ignorePrintDirectives);
+        public void Echoln(char s, bool ignorePrintDirectives = false) => Echo(s + "", true, !ignorePrintDirectives);
 
         public void Echo(char s, bool lineBreak = false, bool ignorePrintDirectives = false) => Echo(s + "", lineBreak, !ignorePrintDirectives);
 
         public void Echo(
             object o,
             bool lineBreak = false)
-            => Echo(o, lineBreak, false);
+            => Echo(o, lineBreak);
 
         /// <summary>
         /// output to stream
         /// </summary>
         /// <param name="o">object to output - is transform to string with ToText</param>
         /// <param name="lineBreak">if true, append a line break to output (call LineBreak()), default is false</param>
-        /// <param name="preserveColors">TODO: remove this parameter</param>
         /// <param name="parseCommands">if true, echo directives are parsed and evaluated, default is true</param>
         /// <param name="doNotEvalutatePrintDirectives">TODO: explain this parameter</param>
         /// <param name="printSequences">to store echo sequence objects when collected</param>
@@ -1381,7 +1379,6 @@ namespace AnsiVtConsole.NetCore.Component.Console
         private void Echo(
             object o,
             bool lineBreak = false,
-            bool preserveColors = false,        // TODO: remove this parameter + SaveColors property
             bool parseCommands = true,
             bool doNotEvalutatePrintDirectives = false,         // TODO: explain this
             EchoSequenceList? printSequences = null,
@@ -1412,9 +1409,13 @@ namespace AnsiVtConsole.NetCore.Component.Console
                     }
                     else
                     {
-                        var txt = o.ToString();
+                        var txt = o.ToString()!;
                         if (getNonPrintablesASCIICodesAsLabel)
-                            txt = ASCII.GetNonPrintablesCodesAsLabel(txt, false /* true: show all symbols */ );
+                        {
+                            txt = ASCII.GetNonPrintablesCodesAsLabel(
+                                txt, false /* true: show all symbols */ );
+                        }
+
                         if (avoidANSISequencesAndNonPrintableCharacters)
                             txt = ANSI.AvoidANSISequencesAndNonPrintableCharacters(txt);
                         ConsolePrint(txt, false);
@@ -1682,7 +1683,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 {
                     pds = s;
                     printSequences = new EchoSequenceList();
-                    s = GetPrint(s, false, doNotEvaluatePrintDirectives, ignorePrintDirectives, printSequences);
+                    s = GetPrint(s, false, ignorePrintDirectives, printSequences);
                 }
                 var xr = x0 + s.Length - 1;
                 var xm = x + w - 1;

@@ -266,7 +266,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                         {
                             try
                             {
-                                result = cmd.Value.Value.command(cmd.Value.Value.parameter);
+                                result = cmd.Value.Value.command(cmd.Value.Value.parameter!);
                             }
                             catch (Exception ex)
                             {
