@@ -2,6 +2,8 @@
 
 var console = new cons.AnsiVtConsole();
 
+console.Infos();
+
 console.Out.Echo("(b=red,f=yellow)Hello, World!(br)");
 
 

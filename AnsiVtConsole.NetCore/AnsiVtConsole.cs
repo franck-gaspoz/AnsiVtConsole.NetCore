@@ -110,13 +110,13 @@ namespace AnsiVtConsole.NetCore
                 Settings.ID = _instanceCounter;
                 _instanceCounter++;
             }
+            WorkArea = new(this);
             Out = new ConsoleTextWriterWrapper(this, sc.Out);
             Colors = new ColorSettings(this);
             Err = new(Out, Colors);
             Warn = new(Out, Err, Colors);
             Inp = new(Out);
             Cursor = new(this, Out);
-            WorkArea = new(Out);
             Logger = new(this, Out, Err);
             Shortcuts.Initialize(this);
         }

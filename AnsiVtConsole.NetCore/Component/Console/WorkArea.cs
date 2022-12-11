@@ -9,7 +9,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
     /// </summary>
     public sealed class WorkArea
     {
-        private readonly ConsoleTextWriterWrapper _out;
+        private readonly IAnsiVtConsole _console;
 
         /// <summary>
         /// id
@@ -26,9 +26,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         public bool AvoidConsoleAutoLineBreakAtEndOfLine = false;
 
-        public WorkArea(ConsoleTextWriterWrapper @out)
+        public WorkArea(IAnsiVtConsole console)
         {
-            _out = @out;
+            _console = console;
             Id = string.Empty;
         }
 
@@ -36,14 +36,14 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// WorkArea
         /// </summary>
         public WorkArea(
-            ConsoleTextWriterWrapper @out,
+            IAnsiVtConsole console,
             string id,
             int x,
             int y,
             int width,
             int height)
         {
-            _out = @out;
+            _console = console;
             Id = id;
             Rect = new Rectangle(x, y, width, height);
         }
@@ -52,10 +52,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// WorkArea
         /// </summary>
         public WorkArea(
-            ConsoleTextWriterWrapper @out,
+            IAnsiVtConsole console,
             WorkArea workArea)
         {
-            _out = @out;
+            _console = console;
             Id = workArea.Id;
             Rect = new Rectangle(workArea.Rect.X, workArea.Rect.Y, workArea.Rect.Width, workArea.Rect.Height);
         }
@@ -96,7 +96,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             // scroll -> native dos console set WindowTop and WindowLeft as base scroll coordinates
             // if WorkArea defined, we must use absolute coordinates and not related
             // CursorLeft and CursorTop are always good
-            lock (_out.Lock!)
+            lock (_console.Out.Lock!)
             {
                 if (!IsConsoleGeometryEnabled)
                     return (x, y, 1000, 1000);
@@ -149,9 +149,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (!IsConsoleGeometryEnabled || Rect.IsEmpty)
                 return;     // TODO: set cursor even if workarea empty?
-            lock (_out.Lock!)
+            lock (_console.Out.Lock!)
             {
-                _out.SetCursorPos(Rect.X, Rect.Y);
+                _console.Out.SetCursorPos(Rect.X, Rect.Y);
             }
         }
     }
