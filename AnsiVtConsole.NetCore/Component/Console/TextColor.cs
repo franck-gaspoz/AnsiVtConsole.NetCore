@@ -111,7 +111,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return null;
             if (Enum.TryParse(s, true, out ConsoleColor r))
                 return r;
-            if (console.TraceCommandErrors)
+            if (console.Settings.TraceCommandErrors)
                 console.Error($"invalid color name: {c}");
             return ConsoleColor.Black;
         }
@@ -126,7 +126,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (int.TryParse((string)c, out var r) && r >= 0 && r <= 255)
                 return r;
-            if (console.TraceCommandErrors)
+            if (console.Settings.TraceCommandErrors)
                 console.Error($"invalid 8 bit color number: {c}");
             return 255;
         }
@@ -150,7 +150,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                     return (r, g, b);
                 }
             }
-            if (console.TraceCommandErrors)
+            if (console.Settings.TraceCommandErrors)
                 console.Error($"invalid 24 bit color: {c}");
             return (255, 255, 255);
         }

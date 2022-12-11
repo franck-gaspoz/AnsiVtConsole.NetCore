@@ -55,11 +55,11 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
 
                 while (cmd == null && i < n)
                 {
-                    if (s[i] == _console.CommandBlockBeginChar)
+                    if (s[i] == _console.Settings.CommandBlockBeginChar)
                     {
                         foreach (var ccmd in CommandMap.Map!)
                         {
-                            if (s.IndexOf(_console.CommandBlockBeginChar + ccmd.Key, i) == i)
+                            if (s.IndexOf(_console.Settings.CommandBlockBeginChar + ccmd.Key, i) == i)
                             {
                                 cmd = ccmd;
                                 cmdindex = i;
@@ -121,19 +121,19 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                 string? value = null;
                 if (isAssignation)
                 {
-                    firstCommandEndIndex = s.IndexOf(_console.CommandValueAssignationChar, i + 1);
+                    firstCommandEndIndex = s.IndexOf(_console.Settings.CommandValueAssignationChar, i + 1);
                     if (firstCommandEndIndex > -1)
                     {
                         firstCommandEndIndex++;
                         var subs = s[firstCommandEndIndex..];
-                        if (subs.StartsWith(_console.CodeBlockBegin))
+                        if (subs.StartsWith(_console.Settings.CodeBlockBegin))
                         {
-                            firstCommandEndIndex += _console.CodeBlockBegin.Length;
-                            k = s.IndexOf(_console.CodeBlockEnd, firstCommandEndIndex);
+                            firstCommandEndIndex += _console.Settings.CodeBlockBegin.Length;
+                            k = s.IndexOf(_console.Settings.CodeBlockEnd, firstCommandEndIndex);
                             if (k > -1)
                             {
                                 value = s[firstCommandEndIndex..k];
-                                k += _console.CodeBlockEnd.Length;
+                                k += _console.Settings.CodeBlockEnd.Length;
                             }
                             else
                             {
@@ -159,19 +159,19 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                 var firstCommandSeparatorCharIndex = -1;
                 while (j < s.Length)
                 {
-                    if (inCmt && s.IndexOf(_console.CodeBlockEnd, j) == j)
+                    if (inCmt && s.IndexOf(_console.Settings.CodeBlockEnd, j) == j)
                     {
                         inCmt = false;
-                        j += _console.CodeBlockEnd.Length - 1;
+                        j += _console.Settings.CodeBlockEnd.Length - 1;
                     }
-                    if (!inCmt && s.IndexOf(_console.CodeBlockBegin, j) == j)
+                    if (!inCmt && s.IndexOf(_console.Settings.CodeBlockBegin, j) == j)
                     {
                         inCmt = true;
-                        j += _console.CodeBlockBegin.Length - 1;
+                        j += _console.Settings.CodeBlockBegin.Length - 1;
                     }
-                    if (!inCmt && s.IndexOf(_console.CommandSeparatorChar, j) == j && firstCommandSeparatorCharIndex == -1)
+                    if (!inCmt && s.IndexOf(_console.Settings.CommandSeparatorChar, j) == j && firstCommandSeparatorCharIndex == -1)
                         firstCommandSeparatorCharIndex = j;
-                    if (!inCmt && s.IndexOf(_console.CommandBlockEndChar, j) == j)
+                    if (!inCmt && s.IndexOf(_console.Settings.CommandBlockEndChar, j) == j)
                         break;
                     j++;
                 }
@@ -200,7 +200,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                 {
                     if (value == null)
                     {
-                        var t = cmdtxt.Split(_console.CommandValueAssignationChar);
+                        var t = cmdtxt.Split(_console.Settings.CommandValueAssignationChar);
                         value = t[1];
                     }
 
@@ -217,7 +217,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                                 }
                                 catch (Exception ex)
                                 {
-                                    if (_console.TraceCommandErrors)
+                                    if (_console.Settings.TraceCommandErrors)
                                         _console.Error(ex.Message);
                                 }
                             }
@@ -229,7 +229,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                                 }
                                 catch (Exception ex)
                                 {
-                                    if (_console.TraceCommandErrors)
+                                    if (_console.Settings.TraceCommandErrors)
                                         _console.Error(ex.Message);
                                 }
                             }
@@ -243,7 +243,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                             }
                             catch (Exception ex)
                             {
-                                if (_console.TraceCommandErrors)
+                                if (_console.Settings.TraceCommandErrors)
                                     _console.Error(ex.Message);
                             }
                             result = null;
@@ -253,7 +253,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                     // <--
 
                     if (Writer.FileEchoDebugEnabled && Writer.FileEchoDebugCommands)
-                        Writer.EchoDebug(_console.CommandBlockBeginChar + cmd.Value.Key + value + _console.CommandBlockEndChar);
+                        Writer.EchoDebug(_console.Settings.CommandBlockBeginChar + cmd.Value.Key + value + _console.Settings.CommandBlockEndChar);
 
                     printSequences?.Add(new EchoSequence(_console, cmd.Value.Key[0..^1], i, j, value, null, startIndex));
                 }
@@ -270,7 +270,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                             }
                             catch (Exception ex)
                             {
-                                if (_console.TraceCommandErrors)
+                                if (_console.Settings.TraceCommandErrors)
                                     _console.Error(ex.Message);
                             }
                         }
@@ -284,7 +284,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                                 }
                                 catch (Exception ex)
                                 {
-                                    if (_console.TraceCommandErrors)
+                                    if (_console.Settings.TraceCommandErrors)
                                         _console.Error(ex.Message);
                                 }
                                 result = null;
@@ -295,7 +295,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                     // <--
 
                     if (Writer.FileEchoDebugEnabled && Writer.FileEchoDebugCommands)
-                        Writer.EchoDebug(_console.CommandBlockBeginChar + cmd.Value.Key + _console.CommandBlockEndChar);
+                        Writer.EchoDebug(_console.Settings.CommandBlockBeginChar + cmd.Value.Key + _console.Settings.CommandBlockEndChar);
 
                     printSequences?.Add(new EchoSequence(_console, cmd.Value.Key, i, j, value, null, startIndex));
                 }
@@ -304,7 +304,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
 
                 if (firstCommandSeparatorCharIndex > -1)
                 {
-                    s = _console.CommandBlockBeginChar + s[(firstCommandSeparatorCharIndex + 1) /*+ i*/ ..];
+                    s = _console.Settings.CommandBlockBeginChar + s[(firstCommandSeparatorCharIndex + 1) /*+ i*/ ..];
                     startIndex += firstCommandSeparatorCharIndex + 1;
                 }
                 else

@@ -57,12 +57,12 @@ namespace AnsiVtConsole.NetCore.Component.Console
             var s = "";
             if (PrintDirective.HasValue && Value == null)
             {
-                s += $"{_console.CommandBlockBeginChar}{PrintDirective}{_console.CommandBlockEndChar}";
+                s += $"{_console.Settings.CommandBlockBeginChar}{PrintDirective}{_console.Settings.CommandBlockEndChar}";
             }
             else
             {
                 if (PrintDirective.HasValue && Value != null)
-                    s += $"{_console.CommandBlockBeginChar}{PrintDirective}{_console.CommandValueAssignationChar}{Value}{_console.CommandBlockEndChar}";
+                    s += $"{_console.Settings.CommandBlockBeginChar}{PrintDirective}{_console.Settings.CommandValueAssignationChar}{Value}{_console.Settings.CommandBlockEndChar}";
                 else
                     s += Text;
             }

@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 using AnsiVtConsole.NetCore.Component.Console;
@@ -20,6 +21,7 @@ namespace AnsiVtConsole.NetCore
     /// - the .net core make use of interop for each console method call in windows (ConsolePal.Windows.cs)
     /// </para>
     /// </summary>
+    [DebuggerDisplay("[Console : ID={Settings.ID} Out={Out} In={In} Err={StdErr}]")]
     public sealed class AnsiVtConsole : IAnsiVtConsole
     {
         #region public properties
@@ -94,8 +96,6 @@ namespace AnsiVtConsole.NetCore
             Colors = new ColorSettings(this);
             Shortcuts.Initialize(this);
         }
-
-        public override string ToString() => $"[Console : ID={Settings.ID} Out={Out} In={In} Err={StdErr}]";
 
         #region log methods
 

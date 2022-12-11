@@ -10,9 +10,13 @@
         /// defaults shell foreground and background - if is setted. designed to preserve console default background transparency
         /// </summary>
         /// <returns></returns>
-        public TextColor Default => new TextColor(_console.DefaultForeground, _console.DefaultBackground, ANSI.RSTXTA);
+        public TextColor Default => new TextColor(
+            _console.Settings.DefaultForeground,
+            _console.Settings.DefaultBackground, ANSI.RSTXTA);
 
-        public TextColor Inverted => new TextColor(_console.DefaultBackground, _console.DefaultForeground);
+        public TextColor Inverted => new TextColor(
+            _console.Settings.DefaultBackground,
+            _console.Settings.DefaultForeground);
 
         // states colors
 
@@ -25,7 +29,7 @@
         // states as text in a box
 
         public TextColor BoxOk = new TextColor(ConsoleColor.White, ConsoleColor.DarkGreen);
-        public TextColor BoxError => new TextColor(ConsoleColor.Yellow, ConsoleColor.Red);
+        public TextColor BoxError = new TextColor(ConsoleColor.Yellow, ConsoleColor.Red);
         public TextColor BoxUnknown = new TextColor(ConsoleColor.Green, ConsoleColor.DarkCyan);
         public TextColor BoxNotIdentified = new TextColor(ConsoleColor.Yellow, ConsoleColor.Red);
         public TextColor Information = new TextColor(ConsoleColor.DarkCyan, null);
@@ -34,7 +38,7 @@
 
         public TextColor TaskInformation = new TextColor(ConsoleColor.Blue, null);
 
-        // DotNetConsoleAppToolkit-UI
+        // UI
 
         public TextColor TitleBar = new TextColor(ConsoleColor.White, ConsoleColor.DarkBlue);
         public TextColor TitleDarkText = new TextColor(ConsoleColor.Gray, ConsoleColor.DarkBlue);
@@ -51,7 +55,7 @@
         public TextColor ExceptionText = new TextColor(ConsoleColor.Red, null);
         public TextColor ExceptionName = new TextColor(ConsoleColor.Yellow, ConsoleColor.Red);
 
-        // DotNetConsoleAppToolkit-Shell
+        // Shell
 
         //      values types
 
@@ -85,7 +89,7 @@
         public TextColor HalfDark = new TextColor(ConsoleColor.Gray, null);
         public TextColor Dark = new TextColor(ConsoleColor.DarkGray, null);
 
-        //      global ? 
+        //      table
 
         public TextColor TableBorder = new TextColor(ConsoleColor.Cyan, null);
         public TextColor TableColumnName = new TextColor(ConsoleColor.Yellow, null);
