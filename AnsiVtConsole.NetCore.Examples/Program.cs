@@ -79,7 +79,7 @@ current print directives are:
     (f=yellow)tdoff(rdc)               : text decoration off and reset default colors
     (f=yellow)lion(rdc)                : ligt colors
     (f=yellow)bon(rdc)                 : bold on
-    (f=yellow)blon(rdc)                : blink on
+    (f=yellow)blon(rdc)                : blink on (not supported on Windows)
     (f=yellow)invon(rdc)               : inverse on
 
     (3) (uon)echo flow control:(tdoff)
