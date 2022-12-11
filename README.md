@@ -29,7 +29,7 @@ var console = new AnsiVTConsole();
 console.Echo("(br,f=yellow,b=red)yellow text on red background(br)(f=cyan)current time is: (exec=System.DateTime.Now,br)");
 ```
 
-## 2. using the constants/methods:
+## 2. using the methods :
 
 ``` csharp
 using static AnsiVtConsole.NetCore.Component.EchoDirective;
