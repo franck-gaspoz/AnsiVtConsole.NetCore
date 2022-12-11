@@ -29,7 +29,7 @@ namespace AnsiVtConsole.NetCore
         private static int _instanceCounter = 1000;
         private static readonly object _instanceLock = new object();
 
-        #region streams : entry points to DotNetConsole output operations
+        #region streams
 
         /// <summary>
         /// ansi vt output stream
@@ -51,43 +51,12 @@ namespace AnsiVtConsole.NetCore
         #region work area settings
 
         private readonly WorkArea _workArea = new();
+
         public WorkArea WorkArea => new(_workArea);
 
         public WorkAreaSettings WorkAreaSettings { get; private set; } = new();
 
         #endregion
-
-        public bool IsErrorRedirected { get; set; } = false;
-
-        public bool IsOutputRedirected { get; set; } = false;
-
-        public bool ClearOnViewResized = true;      // false not works properly in Windows Terminal + fit view size
-
-        public bool SaveColors = /*true*/ false; /*bug fix*/ // TODO: remove
-
-        public bool TraceCommandErrors { get; set; } = true;
-
-        public bool DumpExceptions { get; set; } = true;
-
-        public ConsoleColor? DefaultForeground { get; set; }
-
-        public ConsoleColor? DefaultBackground { get; set; }
-
-        public char CommandBlockBeginChar { get; set; } = '(';
-
-        public char CommandBlockEndChar { get; set; } = ')';
-
-        public char CommandSeparatorChar { get; set; } = ',';
-
-        public char CommandValueAssignationChar { get; set; } = '=';
-
-        public string CodeBlockBegin { get; set; } = "[[";
-
-        public string CodeBlockEnd { get; set; } = "]]";
-
-        public bool ForwardLogsToSystemDiagnostics { get; set; } = true;
-
-        public int TabLength { get; set; } = 7;
 
         private TextWriter? _errorWriter;
 
@@ -127,9 +96,9 @@ namespace AnsiVtConsole.NetCore
 
         public void LogError(Exception ex, bool enableForwardLogsToSystemDiagnostics = true)
         {
-            if (ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
+            if (Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
                 System.Diagnostics.Debug.WriteLine(ex + "");
-            if (DumpExceptions)
+            if (Settings.DumpExceptions)
             {
                 LogException(ex);
             }
@@ -149,10 +118,10 @@ namespace AnsiVtConsole.NetCore
 
         public void LogException(Exception ex, string message = "", bool enableForwardLogsToSystemDiagnostics = true)
         {
-            if (ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
+            if (Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
                 System.Diagnostics.Debug.WriteLine(message + _crlf + ex + "");
             var ls = new List<string>();
-            if (DumpExceptions)
+            if (Settings.DumpExceptions)
             {
                 ls = (ex + "").Split(_crlf, StringSplitOptions.None)
                 .Select(x => Colors.Error + x)
@@ -170,7 +139,7 @@ namespace AnsiVtConsole.NetCore
 
         public void LogError(string s, bool enableForwardLogsToSystemDiagnostics = true)
         {
-            if (ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
+            if (Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
                 System.Diagnostics.Debug.WriteLine(s);
             var ls = (s + "").Split(_crlf, StringSplitOptions.None)
                 .Select(x => Colors.Error + x);
@@ -179,7 +148,7 @@ namespace AnsiVtConsole.NetCore
 
         public void LogWarning(string s, bool enableForwardLogsToSystemDiagnostics = true)
         {
-            if (ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
+            if (Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
                 System.Diagnostics.Debug.WriteLine(s);
             var ls = (s + "").Split(_crlf, StringSplitOptions.None)
                 .Select(x => Colors.Warning + x);
@@ -188,7 +157,7 @@ namespace AnsiVtConsole.NetCore
 
         public void Log(string s, bool enableForwardLogsToSystemDiagnostics = true)
         {
-            if (ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
+            if (Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
                 System.Diagnostics.Debug.WriteLine(s);
             var ls = (s + "").Split(_crlf, StringSplitOptions.None)
                 .Select(x => Colors.Log + x);
@@ -260,7 +229,7 @@ namespace AnsiVtConsole.NetCore
                 Out.Echoln($"OS={Environment.OSVersion} {(Environment.Is64BitOperatingSystem ? "64" : "32")}bits plateform={RuntimeEnvironment.OSType}");
                 Out.Echoln($"{White}{Bkf}{Colors.HighlightIdentifier}window:{Rsf} left={Colors.Numeric}{sc.WindowLeft}{Rsf},top={Colors.Numeric}{sc.WindowTop}{Rsf},width={Colors.Numeric}{sc.WindowWidth}{Rsf},height={Colors.Numeric}{sc.WindowHeight}{Rsf},largest width={Colors.Numeric}{sc.LargestWindowWidth}{Rsf},largest height={Colors.Numeric}{sc.LargestWindowHeight}{Rsf}");
                 Out.Echoln($"{Colors.HighlightIdentifier}buffer:{Rsf} width={Colors.Numeric}{sc.BufferWidth}{Rsf},height={Colors.Numeric}{sc.BufferHeight}{Rsf} | input encoding={Colors.Numeric}{sc.InputEncoding.EncodingName}{Rsf} | output encoding={Colors.Numeric}{sc.OutputEncoding.EncodingName}{Rsf}");
-                Out.Echoln($"{White}default background color={Bkf}{Colors.KeyWord}{DefaultBackground}{Rsf} | default foreground color={Colors.KeyWord}{DefaultForeground}{Rsf}");
+                Out.Echoln($"{White}default background color={Bkf}{Colors.KeyWord}{Settings.DefaultBackground}{Rsf} | default foreground color={Colors.KeyWord}{Settings.DefaultForeground}{Rsf}");
                 if (RuntimeEnvironment.OSType == OSPlatform.Windows)
                 {
 #pragma warning disable CA1416 // Valider la compatibilité de la plateforme
@@ -400,14 +369,14 @@ namespace AnsiVtConsole.NetCore
                 Out.Redirect(sw);
                 _outputWriter = sc.Out;
                 sc.SetOut(sw);
-                IsOutputRedirected = true;
+                Settings.IsOutputRedirected = true;
             }
             else
             {
                 Out.Redirect((TextWriter?)null);
                 sc.SetOut(_outputWriter!);
                 _outputWriter = null;
-                IsOutputRedirected = false;
+                Settings.IsOutputRedirected = false;
             }
         }
 
@@ -418,14 +387,14 @@ namespace AnsiVtConsole.NetCore
                 StdErr.Redirect(sw);
                 _errorWriter = sc.Error;
                 sc.SetError(sw);
-                IsErrorRedirected = true;
+                Settings.IsErrorRedirected = true;
             }
             else
             {
                 StdErr.Redirect((TextWriter?)null);
                 sc.SetError(_errorWriter!);
                 _errorWriter = null;
-                IsErrorRedirected = false;
+                Settings.IsErrorRedirected = false;
             }
         }
 
@@ -483,7 +452,7 @@ namespace AnsiVtConsole.NetCore
                 return v;
             }
 
-            if (TraceCommandErrors)
+            if (Settings.TraceCommandErrors)
                 LogError($"wrong cursor x: {x}");
             if (!IsConsoleGeometryEnabled)
                 return 0;
@@ -501,7 +470,7 @@ namespace AnsiVtConsole.NetCore
                 return v;
             }
 
-            if (TraceCommandErrors)
+            if (Settings.TraceCommandErrors)
                 LogError($"wrong cursor y: {x}");
             if (!IsConsoleGeometryEnabled)
                 return 0;

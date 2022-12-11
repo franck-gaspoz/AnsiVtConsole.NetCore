@@ -4,4 +4,4 @@ var console = new cons.AnsiVtConsole();
 
 console.Out.Echo("(b=red,f=yellow)Hello, World!(br)");
 
-console.StdErr.WriteLine("hello world");
+//console.StdErr.WriteLine("hello world");

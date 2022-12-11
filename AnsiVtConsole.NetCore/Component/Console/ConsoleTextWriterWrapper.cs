@@ -87,8 +87,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
             if (IsNotMute)
             {
                 // TIP: dot not affect background color throught System.Console.Background to preserve terminal console background transparency
-                Console.DefaultForeground = sc.ForegroundColor;
-                _cachedForegroundColor = Console.DefaultForeground;
+                Console.Settings.DefaultForeground = sc.ForegroundColor;
+                _cachedForegroundColor = Console.Settings.DefaultForeground;
             }
 
             InitEchoDirectives();
@@ -544,7 +544,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 @out.Echoln($"OS={Environment.OSVersion} {(Environment.Is64BitOperatingSystem ? "64" : "32")}bits plateform={RuntimeEnvironment.OSType}");
                 @out.Echoln($"{Bkf}{colors.HighlightIdentifier}window:{Rsf} left={colors.Numeric}{sc.WindowLeft}{Rsf},top={colors.Numeric}{sc.WindowTop}{Rsf},width={colors.Numeric}{sc.WindowWidth}{Rsf},height={colors.Numeric}{sc.WindowHeight}{Rsf},largest width={colors.Numeric}{sc.LargestWindowWidth}{Rsf},largest height={colors.Numeric}{sc.LargestWindowHeight}{Rsf}");
                 @out.Echoln($"{colors.HighlightIdentifier}buffer:{Rsf} width={colors.Numeric}{sc.BufferWidth}{Rsf},height={colors.Numeric}{sc.BufferHeight}{Rsf} | input encoding={colors.Numeric}{sc.InputEncoding.EncodingName}{Rsf} | output encoding={colors.Numeric}{sc.OutputEncoding.EncodingName}{Rsf}");
-                @out.Echoln($"default background color={Bkf}{colors.KeyWord}{Console.DefaultBackground}{Rsf} | default foreground color={colors.KeyWord}{Console.DefaultForeground}{Rsf}");
+                @out.Echoln($"default background color={Bkf}{colors.KeyWord}{Console.Settings.DefaultBackground}{Rsf} | default foreground color={colors.KeyWord}{Console.Settings.DefaultForeground}{Rsf}");
                 if (RuntimeEnvironment.OSType == itpsrv.OSPlatform.Windows)
                 {
 #pragma warning disable CA1416 // Valider la compatibilité de la plateforme
@@ -776,7 +776,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             lock (Lock!)
             {
-                SetForeground(Console.DefaultForeground);
+                SetForeground(Console.Settings.DefaultForeground);
             }
         }
 
@@ -786,7 +786,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             lock (Lock!)
             {
-                SetBackground(Console.DefaultBackground);
+                SetBackground(Console.Settings.DefaultBackground);
             }
         }
 
@@ -892,7 +892,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             lock (Lock!)
             {
-                Console.DefaultForeground = c;
+                Console.Settings.DefaultForeground = c;
                 sc.ForegroundColor = c;
             }
         }
@@ -903,7 +903,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             lock (Lock!)
             {
-                Console.DefaultBackground = c;
+                Console.Settings.DefaultBackground = c;
                 sc.BackgroundColor = c;
             }
         }
@@ -929,10 +929,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
             lock (Lock!)
             {
                 Write(ANSI.RSTXTA);
-                SetForeground(Console.DefaultForeground);
-                SetBackground(Console.DefaultBackground);
-                if (Console.DefaultForeground.HasValue)
-                    sc.ForegroundColor = Console.DefaultForeground.Value;
+                SetForeground(Console.Settings.DefaultForeground);
+                SetBackground(Console.Settings.DefaultBackground);
+                if (Console.Settings.DefaultForeground.HasValue)
+                    sc.ForegroundColor = Console.Settings.DefaultForeground.Value;
             }
         }
 
@@ -941,19 +941,19 @@ namespace AnsiVtConsole.NetCore.Component.Console
             get
             {
                 var r = ANSI.RSTXTA;
-                if (Console.DefaultForeground.HasValue)
-                    r += ANSI.Set4BitsColorsForeground(ANSI.To4BitColorNum(Console.DefaultForeground.Value));
-                if (Console.DefaultBackground.HasValue)
-                    r += ANSI.Set4BitsColorsBackground(ANSI.To4BitColorNum(Console.DefaultBackground.Value));
-                if (Console.DefaultForeground.HasValue)
-                    sc.ForegroundColor = Console.DefaultForeground.Value;
+                if (Console.Settings.DefaultForeground.HasValue)
+                    r += ANSI.Set4BitsColorsForeground(ANSI.To4BitColorNum(Console.Settings.DefaultForeground.Value));
+                if (Console.Settings.DefaultBackground.HasValue)
+                    r += ANSI.Set4BitsColorsBackground(ANSI.To4BitColorNum(Console.Settings.DefaultBackground.Value));
+                if (Console.Settings.DefaultForeground.HasValue)
+                    sc.ForegroundColor = Console.Settings.DefaultForeground.Value;
                 return r;
             }
         }
 
         public string DefaultColors => ANSI.Set4BitsColors(
-            ANSI.To4BitColorNum(Console.DefaultForeground),
-            ANSI.To4BitColorNum(Console.DefaultBackground));
+            ANSI.To4BitColorNum(Console.Settings.DefaultForeground),
+            ANSI.To4BitColorNum(Console.Settings.DefaultBackground));
 
         public void ClearScreen()
         {
@@ -1858,7 +1858,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
                                 left, top, right, bottom - top,
                                 left, top + 1,
                                 ' ',
-                                Console.DefaultForeground ?? ConsoleColor.White, Console.DefaultBackground ?? ConsoleColor.Black);
+                                Console.Settings.DefaultForeground ?? ConsoleColor.White,
+                                Console.Settings.DefaultBackground ?? ConsoleColor.Black);
                         }
 #pragma warning restore CA1416 // Valider la compatibilité de la plateforme
                     }
@@ -1875,7 +1876,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
                                 left, top - dy, right, nh,
                                 left, top,
                                 ' ',
-                                Console.DefaultForeground ?? ConsoleColor.White, Console.DefaultBackground ?? ConsoleColor.Black);
+                                Console.Settings.DefaultForeground ?? ConsoleColor.White,
+                                Console.Settings.DefaultBackground ?? ConsoleColor.Black);
 #pragma warning restore CA1416 // Valider la compatibilité de la plateforme
                         }
                     }

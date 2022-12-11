@@ -8,30 +8,25 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         public WorkAreaSettings WorkAreaSettings { get; }
 
-        string CodeBlockBegin { get; set; }
-        string CodeBlockEnd { get; set; }
+
         ColorSettings Colors { get; set; }
-        char CommandBlockBeginChar { get; set; }
-        char CommandBlockEndChar { get; set; }
-        char CommandSeparatorChar { get; set; }
-        char CommandValueAssignationChar { get; set; }
+
         object ConsoleLock { get; }
-        ConsoleColor? DefaultBackground { get; set; }
-        ConsoleColor? DefaultForeground { get; set; }
-        bool DumpExceptions { get; set; }
+
+
         TextWriterWrapper StdErr { get; }
-        bool ForwardLogsToSystemDiagnostics { get; set; }
+
         TextReader In { get; set; }
         bool IsConsoleGeometryEnabled { get; }
-        bool IsErrorRedirected { get; set; }
-        bool IsOutputRedirected { get; set; }
+
         ConsoleTextWriterWrapper Out { get; set; }
-        int TabLength { get; set; }
-        bool TraceCommandErrors { get; set; }
+
         WorkArea WorkArea { get; }
 
         ActualWorkArea ActualWorkArea(bool fitToVisibleArea = true);
+
         bool CheckConsoleHasGeometry();
+
         static bool GetConsoleHasGeometry()
         {
             try
@@ -44,6 +39,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
             return true;
         }
+
         void Error(string s = "");
         void Error(IEnumerable<string> ls);
         void Error(string s, bool lineBreak = false);
