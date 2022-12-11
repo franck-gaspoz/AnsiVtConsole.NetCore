@@ -22,12 +22,19 @@ namespace AnsiVtConsole.NetCore
     /// </summary>
     public sealed class AnsiVtConsole : IAnsiVtConsole
     {
-        #region attributes
+        #region public properties
 
         public AnsiVtConsoleSettings Settings { get; private set; } = new();
 
-        private static int _instanceCounter = 1000;
-        private static readonly object _instanceLock = new object();
+        public ColorSettings Colors { get; set; }
+
+        #region work area settings        
+
+        public WorkArea WorkArea => new(_workArea);
+
+        public WorkAreaSettings WorkAreaSettings { get; private set; } = new();
+
+        #endregion
 
         #region streams
 
@@ -48,15 +55,13 @@ namespace AnsiVtConsole.NetCore
 
         #endregion
 
-        #region work area settings
-
-        private readonly WorkArea _workArea = new();
-
-        public WorkArea WorkArea => new(_workArea);
-
-        public WorkAreaSettings WorkAreaSettings { get; private set; } = new();
-
         #endregion
+
+        #region private attributes
+
+        private static int _instanceCounter = 1000;
+
+        private static readonly object _instanceLock = new object();
 
         private TextWriter? _errorWriter;
 
@@ -72,9 +77,9 @@ namespace AnsiVtConsole.NetCore
 
         private readonly string[] _crlf = { Environment.NewLine };
 
-        public object ConsoleLock => Out.Lock!;
+        private readonly WorkArea _workArea = new();
 
-        public ColorSettings Colors { get; set; }
+        private object ConsoleLock => Out.Lock!;
 
         #endregion
 

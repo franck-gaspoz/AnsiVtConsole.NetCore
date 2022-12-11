@@ -18,15 +18,15 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
         public static string GetCmd(string cmd, string? value = null)
         {
             if (value != null)
-                return $"{Console!.CommandBlockBeginChar}{cmd}{Console!.CommandValueAssignationChar}{value}{Console!.CommandBlockEndChar}";
-            return $"{Console!.CommandBlockBeginChar}{cmd}{Console!.CommandBlockEndChar}";
+                return $"{Console!.Settings.CommandBlockBeginChar}{cmd}{Console!.Settings.CommandValueAssignationChar}{value}{Console!.Settings.CommandBlockEndChar}";
+            return $"{Console!.Settings.CommandBlockBeginChar}{cmd}{Console!.Settings.CommandBlockEndChar}";
         }
 
         public static string GetCmd(EchoDirectives cmd, string? value = null)
         {
             if (value != null)
-                return $"{Console!.CommandBlockBeginChar}{cmd}{Console!.CommandValueAssignationChar}{value}{Console!.CommandBlockEndChar}";
-            return $"{Console!.CommandBlockBeginChar}{cmd}{Console!.CommandBlockEndChar}";
+                return $"{Console!.Settings.CommandBlockBeginChar}{cmd}{Console!.Settings.CommandValueAssignationChar}{value}{Console!.Settings.CommandBlockEndChar}";
+            return $"{Console!.Settings.CommandBlockBeginChar}{cmd}{Console!.Settings.CommandBlockEndChar}";
         }
 
         #region commands shortcuts
@@ -133,12 +133,12 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
         /// <summary>
         /// setup default background color
         /// </summary>
-        public static string DefaultBackgroundCmd => GetCmd(EchoDirectives.b + "", Console!.DefaultBackground!.Value.ToString().ToLower());
+        public static string DefaultBackgroundCmd => GetCmd(EchoDirectives.b + "", Console!.Settings.DefaultBackground!.Value.ToString().ToLower());
 
         /// <summary>
         /// setup default foreground color
         /// </summary>
-        public static string DefaultForegroundCmd => GetCmd(EchoDirectives.f + "", Console!.DefaultForeground!.Value.ToString().ToLower());
+        public static string DefaultForegroundCmd => GetCmd(EchoDirectives.f + "", Console!.Settings.DefaultForeground!.Value.ToString().ToLower());
 
         /// <summary>
         /// set colors to defaults from shell  default foreground and background colors
@@ -410,7 +410,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
         /// <summary>
         /// tab
         /// </summary>
-        public static string Tab => "".PadLeft(Console!.TabLength, ' ');
+        public static string Tab => "".PadLeft(Console!.Settings.TabLength, ' ');
 
         #endregion
     }

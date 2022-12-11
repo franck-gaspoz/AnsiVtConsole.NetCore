@@ -11,7 +11,6 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         ColorSettings Colors { get; set; }
 
-        object ConsoleLock { get; }
 
 
         TextWriterWrapper StdErr { get; }
