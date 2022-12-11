@@ -38,14 +38,15 @@ System.Console.Out.Writeline($"{Br}{Yellow}{BRed}yellow text on red background{B
 
 <br>
 
-<image src="AnsiVtConsole.NetCore/Doc/Images/2020-06-13 06_18_08-Window.png"/>     
+<image src="Doc/Images/2020-06-13 06_18_08-Window.png"/>     
+
+# Examples
+
+To see these examples, compile and run the project **AnsiVtConsole.NetCore.Examples**:
+
+<image src="Doc/Images/example 1.png"/>    
+<image src="Doc/Images/example 2.png"/>    
+<image src="Doc/Images/example 3.png"/>    
+<image src="Doc/Images/example 4.png"/>    
 
 <hr>
-    
-also contains:
-
-- <b>UI controls</b> for displaying texts and graphical characters in a various way and handling user inputs
-
-- <b>libraries of methods</b> for performing various print operations, data conversions, process management, ..
-
-- <b>data types</b> related to the system and the environment that provides usefull methods
