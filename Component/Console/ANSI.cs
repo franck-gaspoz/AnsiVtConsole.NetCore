@@ -16,8 +16,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         public static readonly string CSI = $"{ESC}[";
 
-        public static string SGR(int n, string seq = null) => $"{ESC}[{n}{(string.IsNullOrWhiteSpace(seq) ? "" : $";{seq}")}m";
-        public static string SGR(string seq = null) => $"{ESC}[{seq}m";
+        public static string SGR(int n, string? seq = null) => $"{ESC}[{n}{(string.IsNullOrWhiteSpace(seq) ? "" : $";{seq}")}m";
+        public static string SGR(string? seq = null) => $"{ESC}[{seq}m";
 
         #endregion
 
@@ -331,7 +331,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <para>format is {n}[,bright] with n from any name in SGR_4BitsColors (both args not in sensitive case). if ,bright is added, the color refers to the 8 colors additional palette - for example Black,bright or red</para>
         /// <param name="o">{n}[,bright]</param>
         /// </summary>
-        public static string SGRF(object o)
+        public static string? SGRF(object o)
         {
             if (o is not string s)
                 return null;
@@ -387,7 +387,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         /// <param name="o">{n},0&lt;=n&lt;=255</param>
         /// <returns>ansi seq</returns>
-        public static string SGRF8(object o)
+        public static string? SGRF8(object o)
         {
             if (o is not string s)
                 return null;
@@ -421,7 +421,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         /// <param name="o">{r}:{g}:{b} 0&lt;=r&lt;=255 0&lt;=g&lt;=255 0&lt;=b&lt;=255</param>
         /// <returns>ansi seq</returns>
-        public static string SGRF24(object o)
+        public static string? SGRF24(object o)
         {
             if (o is not string s)
                 return null;
@@ -462,7 +462,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <para>bright black is gray or darkgray, white is gray or light gray, bright white is white. That depends on console palette</para>
         /// <para>format is {n}[,bright] with n from any name in SGR_4BitsColors (both args not in sensitive case). if ,bright is added, the color refers to the 8 colors additional palette - for example Black,bright or red</para>
         /// </summary>
-        public static string SGRB(object o)
+        public static string? SGRB(object o)
         {
             if (o is not string s)
                 return null;
@@ -491,7 +491,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         /// <param name="o">{n},0&lt;=n&lt;=255</param>
         /// <returns>ansi seq</returns>
-        public static string SGRB8(object o)
+        public static string? SGRB8(object o)
         {
             if (o is not string s)
                 return null;
@@ -525,7 +525,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         /// <param name="o">{r}:{g}:{b} 0&lt;=r&lt;=255 0&lt;=g&lt;=255 0&lt;=b&lt;=255</param>
         /// <returns>ansi seq</returns>
-        public static string SGRB24(object o)
+        public static string? SGRB24(object o)
         {
             if (o is not string s)
                 return null;

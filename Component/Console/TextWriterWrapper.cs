@@ -51,7 +51,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <summary>
         /// get lock
         /// </summary>
-        public object Lock => _textWriter;
+        public object? Lock => _textWriter;
 
         /// <summary>
         /// initial TextWriterInitialCapacity buffer capacity
@@ -384,7 +384,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         public virtual void Flush()
         {
-            lock (Lock)
+            lock (Lock!)
             {
                 if (IsBufferEnabled)
                     return;
@@ -397,7 +397,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         public virtual void EnableBuffer()
         {
-            lock (Lock)
+            lock (Lock!)
             {
                 if (IsBufferEnabled)
                     return;
@@ -412,7 +412,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         public virtual void CloseBuffer()
         {
-            lock (Lock)
+            lock (Lock!)
             {
                 if (!IsBufferEnabled)
                     return;

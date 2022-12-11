@@ -8,13 +8,18 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
 
         public int Index;
 
-        public TreePath SyntacticRule;
+        public TreePath? SyntacticRule;
 
         public bool IsSelected;
 
         public bool IsANSISequence;
 
-        public SyntacticBlock(int index, TreePath syntacticRule, string text, bool isSelected = false, bool isANSISequence = true)
+        public SyntacticBlock(
+            int index,
+            TreePath? syntacticRule,
+            string text,
+            bool isSelected = false,
+            bool isANSISequence = true)
         {
             Index = index;
             SyntacticRule = syntacticRule;

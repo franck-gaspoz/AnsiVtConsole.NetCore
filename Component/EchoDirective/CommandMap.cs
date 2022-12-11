@@ -5,9 +5,18 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
     /// </summary>
     internal sealed class CommandMap
     {
-        public Dictionary<string, (EchoDirectiveProcessor.SimpleCommandDelegate simpleCommand, EchoDirectiveProcessor.CommandDelegate command, object parameter)> Map = null;
+        public Dictionary<
+            string,
+            (EchoDirectiveProcessor.SimpleCommandDelegate? simpleCommand,
+            EchoDirectiveProcessor.CommandDelegate? command,
+            object? parameter)>? Map;
 
-        public CommandMap(Dictionary<string, (EchoDirectiveProcessor.SimpleCommandDelegate simpleCommand, EchoDirectiveProcessor.CommandDelegate command, object parameter)> map) => Map = map;
+        public CommandMap(Dictionary<
+            string,
+            (EchoDirectiveProcessor.SimpleCommandDelegate? simpleCommand,
+            EchoDirectiveProcessor.CommandDelegate? command,
+            object? parameter)> map)
+            => Map = map;
 
     }
 }

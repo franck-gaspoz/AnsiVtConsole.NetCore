@@ -62,17 +62,18 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         #region util
 
-        private static Dictionary<char, string> _codesToNames = null;
-        private static readonly Dictionary<char, string> _codesToTexts = new Dictionary<char, string>() {
-            { NUL , NUL_TXT },
-            { BEL , BEL_TXT },
-            { BS , BS_TXT },
-            { HT , HT_TXT },
-            { LF , LF_TXT },
-            { VT , VT_TXT },
-            { FF , FF_TXT },
-            { CR , CR_TXT },
-            { ESC , ESC_TXT },
+        private static Dictionary<char, string>? _codesToNames = null;
+        private static readonly Dictionary<char, string>? _codesToTexts = new()
+        {
+            { NUL, NUL_TXT },
+            { BEL, BEL_TXT },
+            { BS, BS_TXT },
+            { HT, HT_TXT },
+            { LF, LF_TXT },
+            { VT, VT_TXT },
+            { FF, FF_TXT },
+            { CR, CR_TXT },
+            { ESC, ESC_TXT },
         };
 
         private static void RequireCodesToNames()
@@ -81,18 +82,21 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             _codesToNames = new Dictionary<char, string>();
             var fields = typeof(ASCII).GetFields();
-            foreach (var field in fields)
+            if (fields != null)
             {
-                if (!field.Name.EndsWith("_TXT"))
-                    _codesToNames.Add((char)field.GetValue(null), field.Name);
+                foreach (var field in fields)
+                {
+                    if (!field.Name.EndsWith("_TXT"))
+                        _codesToNames.Add((char)field!.GetValue(null)!, field.Name);
+                }
             }
         }
 
         private static string GetPreferredRepresentation(char c, string labelFormat = "<{0}>", string textFormat = "{0}")
         {
-            if (_codesToTexts.TryGetValue(c, out var txt))
+            if (_codesToTexts!.TryGetValue(c, out var txt))
                 return string.Format(textFormat, txt);
-            return string.Format(labelFormat, _codesToNames[c]);
+            return string.Format(labelFormat, _codesToNames![c]);
         }
 
         public static string GetNonPrintablesCodesAsLabel(string s, bool includeSP, string labelFormat = "<{0}>", string textFormat = "{0}")

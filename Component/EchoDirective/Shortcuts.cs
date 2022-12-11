@@ -22,7 +22,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
             return $"{Console!.CommandBlockBeginChar}{cmd}{Console!.CommandBlockEndChar}";
         }
 
-        public static string GetCmd(EchoDirectives cmd, string value = null)
+        public static string GetCmd(EchoDirectives cmd, string? value = null)
         {
             if (value != null)
                 return $"{Console!.CommandBlockBeginChar}{cmd}{Console!.CommandValueAssignationChar}{value}{Console!.CommandBlockEndChar}";

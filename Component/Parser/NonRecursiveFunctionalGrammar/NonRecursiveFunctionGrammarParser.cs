@@ -218,7 +218,7 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
             TreeNode rootNode,
             TreeNode node,
             SyntacticBlockList paths,
-            TreePath currentPath = null,
+            TreePath? currentPath = null,
             bool returnImmediately = false,
             int recurseLevel = 0
             )
@@ -236,15 +236,6 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
                 var sc = "" + c;
                 matching = false;
                 var beginIndex = i;
-
-                /*if (recurseLevel==0 && node==null) {
-                    // start by grammar multi roots
-                    foreach ( var kv in rootNode.SubNodes ) 
-                    {
-                        _Parse(ref chars,i,rootNode,kv.Value,paths,currentPath,recurseLevel); 
-                    }
-                    SelectPaths(ref chars,ref i,ref matching,ref partialMatching,rootNode,ref node);
-                }*/
 
                 if (!node.IsRoot)
                 {
@@ -428,10 +419,10 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
                             // gram path match
                             var sblock =
                                 new SyntacticBlock(
-                                    currentPath.Index,
+                                    currentPath!.Index,
                                     currentPath,
                                     new string(chars, currentPath.Index, i - currentPath.Index));
-                            var key = sblock.SyntacticRule.Key;
+                            var key = sblock.SyntacticRule!.Key;
                             if (_rulesIndex.TryGetValue(key, out var matchingRule))
                             {
                                 sblock.SyntacticRule.Rule = matchingRule;
@@ -526,7 +517,7 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
                         new string(chars, currentPath.Index, i - currentPath.Index),
                         true
                         );
-                var key = sblock.SyntacticRule.Key;
+                var key = sblock.SyntacticRule!.Key;
                 if (_rulesIndex.TryGetValue(key, out var matchingRule))
                 {
                     sblock.SyntacticRule.Rule = matchingRule;

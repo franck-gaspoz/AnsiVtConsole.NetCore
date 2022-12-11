@@ -6,7 +6,6 @@ using AnsiVtConsole.NetCore.Component.Script;
 using AnsiVtConsole.NetCore.Component.UI;
 using AnsiVtConsole.NetCore.Lib;
 
-using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 using static AnsiVtConsole.NetCore.Component.EchoDirective.Shortcuts;
 using static AnsiVtConsole.NetCore.Lib.Str;
 
@@ -39,10 +38,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
         public string LNBRK =>
                 // fix end of line remained filled with last colors
                 EnableAvoidEndOfLineFilledWithBackgroundColor ?
-                        $"{ANSI.RSTXTA}{ANSI.EL(ANSI.ELParameter.p0)}{CRLF}{GetRestoreDefaultColors}"
-                        : $"{CRLF}";
+                        $"{ANSI.RSTXTA}{ANSI.EL(ANSI.ELParameter.p0)}{ANSI.CRLF}{GetRestoreDefaultColors}"
+                        : $"{ANSI.CRLF}";
 
-        public CSharpScriptEngine CSharpScriptEngine;
+        public CSharpScriptEngine? CSharpScriptEngine;
 
         #endregion
 
@@ -66,6 +65,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         #region init
 
+#pragma warning disable CS8618 // Un champ non-nullable doit contenir une valeur non-null lors de la fermeture du constructeur. Envisagez de déclarer le champ comme nullable.
         public ConsoleTextWriterWrapper(IAnsiVtConsole console) : base() => Init(console);
 
         public ConsoleTextWriterWrapper(IAnsiVtConsole console, TextWriter textWriter) : base(textWriter) => Init(console);
@@ -73,11 +73,12 @@ namespace AnsiVtConsole.NetCore.Component.Console
         public ConsoleTextWriterWrapper(IAnsiVtConsole console, CSharpScriptEngine cSharpScriptEngine) : base() => Init(console, cSharpScriptEngine);
 
         public ConsoleTextWriterWrapper(IAnsiVtConsole console, TextWriter textWriter, CSharpScriptEngine cSharpScriptEngine) : base(textWriter) => Init(console, cSharpScriptEngine);
+#pragma warning restore CS8618 // Un champ non-nullable doit contenir une valeur non-null lors de la fermeture du constructeur. Envisagez de déclarer le champ comme nullable.
 
         /// <summary>
         /// console init + internal init
         /// </summary>
-        private void Init(IAnsiVtConsole console, CSharpScriptEngine cSharpScriptEngine = null)
+        private void Init(IAnsiVtConsole console, CSharpScriptEngine? cSharpScriptEngine = null)
         {
             Console = console;
             console.CheckConsoleHasGeometry();
@@ -95,6 +96,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         private void InitEchoDirectives()
         {
+#pragma warning disable CS8974 // Conversion d’un groupe de méthodes en type non-délégué
             // echo_directive => SimpleCommandDelegate, CommandDelegate, parameter
             var _drtvs = new Dictionary<string,
                     (EchoDirectiveProcessor.SimpleCommandDelegate? simpleCommand,
@@ -282,6 +284,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 { EchoDirectives.CardCarro+"" , (null,UnicodeToString,Unicode.CardCarro) },
 
             };
+#pragma warning restore CS8974 // Conversion d’un groupe de méthodes en type non-délégué
 
             EchoDirectiveProcessor = new EchoDirectiveProcessor(
                 this,
@@ -293,14 +296,14 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         #region commands impl. for echo directives map (avoiding lambdas in map)
 
-        public delegate object Command1pEDParameterDelegate(EDParameter n);
-        public delegate object Command1pELParameterDelegate(ELParameter n);
+        public delegate object Command1pEDParameterDelegate(ANSI.EDParameter n);
+        public delegate object Command1pELParameterDelegate(ANSI.ELParameter n);
 
-        private object ANSIToString(object p) => p as string;
+        private object? ANSIToString(object p) => p as string;
 
         private object UnicodeToString(object p) => ((char)p) + "";
 
-        private object ANSITo2Int(object parameters)
+        private object? ANSITo2Int(object parameters)
         {
             if (parameters is EchoDirectiveProcessor.Command2pIntDelegate com)
                 return com.Invoke();
@@ -322,7 +325,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return null;
         }
 
-        private object ANSIToInt(object parameters)
+        private object? ANSIToInt(object parameters)
         {
             if (parameters is EchoDirectiveProcessor.Command1pIntDelegate com)
                 return com.Invoke();
@@ -341,14 +344,14 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return null;
         }
 
-        private object ANSIToEDParameter(object parameters)
+        private object? ANSIToEDParameter(object parameters)
         {
             if (parameters is ValueTuple<object, string> p)
             {
                 try
                 {
                     var command = (Command1pEDParameterDelegate)p.Item1;
-                    return command.Invoke(Enum.Parse<EDParameter>(p.Item2));
+                    return command.Invoke(Enum.Parse<ANSI.EDParameter>(p.Item2));
                 }
                 catch (Exception)
                 {
@@ -358,14 +361,14 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return null;
         }
 
-        private object ANSIToELParameter(object parameters)
+        private object? ANSIToELParameter(object parameters)
         {
             if (parameters is ValueTuple<object, string> p)
             {
                 try
                 {
                     var command = (Command1pELParameterDelegate)p.Item1;
-                    return command.Invoke(Enum.Parse<ELParameter>(p.Item2));
+                    return command.Invoke(Enum.Parse<ANSI.ELParameter>(p.Item2));
                 }
                 catch (Exception)
                 {
@@ -381,25 +384,25 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return null;
         }
 
-        private object SetForegroundColor(object x)
+        private object? SetForegroundColor(object x)
         {
             SetForeground(TextColor.ParseColor(Console, x));
             return null;
         }
 
-        private object SetForegroundParse8BitColor(object x)
+        private object? SetForegroundParse8BitColor(object x)
         {
             SetForeground(TextColor.Parse8BitColor(Console, x));
             return null;
         }
 
-        private object SetForegroundParse24BitColor(object x)
+        private object? SetForegroundParse24BitColor(object x)
         {
             SetForeground(TextColor.Parse24BitColor(Console, x));
             return null;
         }
 
-        private object SetBackgroundColor(object x)
+        private object? SetBackgroundColor(object x)
         {
             var c = TextColor.ParseColor(Console, x);
             if (c.HasValue)
@@ -407,19 +410,19 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return null;
         }
 
-        private object SetBackgroundParse8BitColor(object x)
+        private object? SetBackgroundParse8BitColor(object x)
         {
             SetBackground(TextColor.Parse8BitColor(Console, x));
             return null;
         }
 
-        private object SetBackgroundParse24BitColor(object x)
+        private object? SetBackgroundParse24BitColor(object x)
         {
             SetBackground(TextColor.Parse24BitColor(Console, x));
             return null;
         }
 
-        private object SetDefaultForeground(object x)
+        private object? SetDefaultForeground(object x)
         {
             var c = TextColor.ParseColor(Console, x);
             if (c.HasValue)
@@ -427,7 +430,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return null;
         }
 
-        private object SetDefaultBackground(object x)
+        private object? SetDefaultBackground(object x)
         {
             var c = TextColor.ParseColor(Console, x);
             if (c.HasValue)
@@ -435,19 +438,20 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return null;
         }
 
-        private object SetCursorX(object x)
+        private object? SetCursorX(object x)
         {
             CursorLeft = Console.GetCursorX(x);
             return null;
         }
 
-        private object SetCursorY(object x)
+        private object? SetCursorY(object x)
         {
             CursorTop = Console.GetCursorY(x);
             return null;
         }
 
-        private object ExecCSharp(object x) => CSharpScriptEngine.ExecCSharp((string)x, this);
+        private object? ExecCSharp(object x)
+            => CSharpScriptEngine!.ExecCSharp((string)x, this);
 
         private void MoveCursorTop() => MoveCursorTop(1);
 
@@ -457,25 +461,25 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         private void MoveCursorRight() => MoveCursorRight(1);
 
-        private object MoveCursorTop(object x)
+        private object? MoveCursorTop(object x)
         {
             MoveCursorTop(Convert.ToInt32(x));
             return null;
         }
 
-        private object MoveCursorDown(object x)
+        private object? MoveCursorDown(object x)
         {
             MoveCursorDown(Convert.ToInt32(x));
             return null;
         }
 
-        private object MoveCursorLeft(object x)
+        private object? MoveCursorLeft(object x)
         {
             MoveCursorLeft(Convert.ToInt32(x));
             return null;
         }
 
-        private object MoveCursorRight(object x)
+        private object? MoveCursorRight(object x)
         {
             MoveCursorRight(Convert.ToInt32(x));
             return null;
@@ -503,7 +507,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         public override void EnableBuffer()
         {
-            lock (Lock)
+            lock (Lock!)
             {
                 if (!IsBufferEnabled)
                 {
@@ -515,7 +519,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         public override void CloseBuffer()
         {
-            lock (Lock)
+            lock (Lock!)
             {
                 if (IsBufferEnabled)
                 {
@@ -535,7 +539,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             var @out = Console.Out;
             var colors = Console.Colors;
-            lock (@out.Lock)
+            lock (@out.Lock!)
             {
                 @out.Echoln($"OS={Environment.OSVersion} {(Environment.Is64BitOperatingSystem ? "64" : "32")}bits plateform={RuntimeEnvironment.OSType}");
                 @out.Echoln($"{Bkf}{colors.HighlightIdentifier}window:{Rsf} left={colors.Numeric}{sc.WindowLeft}{Rsf},top={colors.Numeric}{sc.WindowTop}{Rsf},width={colors.Numeric}{sc.WindowWidth}{Rsf},height={colors.Numeric}{sc.WindowHeight}{Rsf},largest width={colors.Numeric}{sc.LargestWindowWidth}{Rsf},largest height={colors.Numeric}{sc.LargestWindowHeight}{Rsf}");
@@ -557,7 +561,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write(ANSI.RSTXTA);
             }
@@ -567,7 +571,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[H");
             }
@@ -577,7 +581,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[K");
             }
@@ -587,7 +591,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[1K");
             }
@@ -597,7 +601,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[2K");
             }
@@ -607,7 +611,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 FillLineFromCursor(' ', false, false);
             }
@@ -617,7 +621,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[7m");
             }
@@ -627,27 +631,29 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
+                // TODO: not available on many consoles
                 Write($"{(char)27}[5m");
-            }           // not available on many consoles
+            }
         }
 
         public void EnableLowIntensity()
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
+                // TODO: not available on many consoles
                 Write($"{(char)27}[2m");
-            }    // not available on many consoles
+            }
         }
 
         public void EnableUnderline()
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[4m");
             }
@@ -657,19 +663,20 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
+                // TODO: not available on many consoles
                 Write($"{(char)27}[1m");
-            }            // not available on many consoles
+            }
         }
 
         public void DisableTextDecoration()
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
-                Write($"{(char)27}[0m"); /*RestoreDefaultColors();*/
+                Write($"{(char)27}[0m");
             }
         }
 
@@ -677,7 +684,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[{n}B");
             }
@@ -687,7 +694,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[{n}A");
             }
@@ -697,7 +704,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[{n}D");
             }
@@ -707,7 +714,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[{n}C");
             }
@@ -717,7 +724,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write(((char)27) + $"[{n}T");
             }
@@ -727,7 +734,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write(((char)27) + $"[{n}S");
             }
@@ -740,7 +747,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 if (IsBufferEnabled)
                     throw new BufferedOperationNotAvailableException();
@@ -755,7 +762,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 if (IsBufferEnabled)
                     throw new BufferedOperationNotAvailableException();
@@ -767,7 +774,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 SetForeground(Console.DefaultForeground);
             }
@@ -777,7 +784,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 SetBackground(Console.DefaultBackground);
             }
@@ -793,10 +800,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             if (c == null)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 _cachedForegroundColor = c;
-                var s = Set4BitsColorsForeground(To4BitColorNum(c.Value));
+                var s = ANSI.Set4BitsColorsForeground(ANSI.To4BitColorNum(c.Value));
                 Write(s);
             }
         }
@@ -807,10 +814,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             if (c == null)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 _cachedBackgroundColor = c;
-                var s = Set4BitsColorsBackground(To4BitColorNum(c.Value));
+                var s = ANSI.Set4BitsColorsBackground(ANSI.To4BitColorNum(c.Value));
                 Write(s);
             }
         }
@@ -823,7 +830,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[38;5;{c}m");
             }
@@ -837,7 +844,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[48;5;{c}m");
             }
@@ -853,7 +860,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[38;2;{r};{g};{b}m");
             }
@@ -869,7 +876,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write($"{(char)27}[48;2;{r};{g};{b}m");
             }
@@ -883,7 +890,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Console.DefaultForeground = c;
                 sc.ForegroundColor = c;
@@ -894,7 +901,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Console.DefaultBackground = c;
                 sc.BackgroundColor = c;
@@ -905,7 +912,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 SetDefaultForeground(foregroundColor);
                 SetDefaultBackground(backgroundColor);
@@ -919,7 +926,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write(ANSI.RSTXTA);
                 SetForeground(Console.DefaultForeground);
@@ -935,22 +942,24 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 var r = ANSI.RSTXTA;
                 if (Console.DefaultForeground.HasValue)
-                    r += Set4BitsColorsForeground(To4BitColorNum(Console.DefaultForeground.Value));
+                    r += ANSI.Set4BitsColorsForeground(ANSI.To4BitColorNum(Console.DefaultForeground.Value));
                 if (Console.DefaultBackground.HasValue)
-                    r += Set4BitsColorsBackground(To4BitColorNum(Console.DefaultBackground.Value));
+                    r += ANSI.Set4BitsColorsBackground(ANSI.To4BitColorNum(Console.DefaultBackground.Value));
                 if (Console.DefaultForeground.HasValue)
                     sc.ForegroundColor = Console.DefaultForeground.Value;
                 return r;
             }
         }
 
-        public string DefaultColors => Set4BitsColors(To4BitColorNum(Console.DefaultForeground), To4BitColorNum(Console.DefaultBackground));
+        public string DefaultColors => ANSI.Set4BitsColors(
+            ANSI.To4BitColorNum(Console.DefaultForeground),
+            ANSI.To4BitColorNum(Console.DefaultBackground));
 
         public void ClearScreen()
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 if (IsBufferEnabled)
                     throw new BufferedOperationNotAvailableException();
@@ -975,7 +984,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write(LNBRK);
             }
@@ -985,7 +994,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write(ANSI.DECSC);
             }
@@ -1003,7 +1012,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write(ANSI.DECRC);
             }
@@ -1013,7 +1022,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return Task.CompletedTask;
-            lock (Lock)
+            lock (Lock!)
             {
                 return WriteAsync(ANSI.DECRC);
             }
@@ -1023,7 +1032,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 _cursorLeftBackup = CursorLeft;
                 _cursorTopBackup = CursorTop;
@@ -1037,17 +1046,11 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Write(ESC + "[2J" + ESC + $"[{_cursorTopBackup + 1};{_cursorLeftBackup + 1}H");
-                //_textWriter.CursorLeft = _cursorLeftBackup;
-                //_textWriter.CursorTop = _cursorTopBackup;
             }
         }
-
-        //public void SetCursorLeft(int x) => Locked(() => _textWriter.CursorLeft = FixX(x));
-
-        //public void SetCursorTop(int y) => Locked(() => _textWriter.CursorTop = FixY(y));
 
         /// <summary>
         /// get/set cursor column
@@ -1058,7 +1061,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 if (IsMuteOrIsNotConsoleGeometryEnabled)
                     return 0;
-                lock (Lock)
+                lock (Lock!)
                 {
                     return IsBufferEnabled ? _cachedCursorPosition.X : sc.CursorLeft;
                 }
@@ -1067,7 +1070,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 if (IsMuteOrIsNotConsoleGeometryEnabled)
                     return;
-                lock (Lock)
+                lock (Lock!)
                 {
                     _cachedCursorPosition.X = value;
                     Write(ESC + "[" + (value + 1) + "G");
@@ -1084,7 +1087,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 if (IsMuteOrIsNotConsoleGeometryEnabled)
                     return 0;
-                lock (Lock)
+                lock (Lock!)
                 {
                     return IsBufferEnabled ? _cachedCursorPosition.X : sc.CursorTop;
                 }
@@ -1093,11 +1096,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 if (IsMuteOrIsNotConsoleGeometryEnabled)
                     return;
-                lock (Lock)
+                lock (Lock!)
                 {
                     _cachedCursorPosition.Y = value;
-                    Write(/*ESC + "[2J" +*/ ESC + $"[{value + 1};{CursorLeft + 1}H");
-                    //Write( ANSI.  );
+                    Write(ESC + $"[{value + 1};{CursorLeft + 1}H");
                 }
             }
         }
@@ -1108,7 +1110,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 if (IsMuteOrIsNotConsoleGeometryEnabled)
                     return new Point(0, 0);
-                lock (Lock)
+                lock (Lock!)
                 {
                     return new Point(CursorLeft, CursorTop);
                 }
@@ -1117,7 +1119,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 if (IsMuteOrIsNotConsoleGeometryEnabled)
                     return;
-                lock (Lock)
+                lock (Lock!)
                 {
                     Write(ESC + $"[{value.Y + 1};{value.X + 1}H");
                 }
@@ -1128,7 +1130,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 var x = p.X;
                 var y = p.Y;
@@ -1138,8 +1140,6 @@ namespace AnsiVtConsole.NetCore.Component.Console
                     _cachedCursorPosition.X = x;
                     _cachedCursorPosition.Y = y;
                 }
-                //_textWriter.CursorLeft = x;
-                //_textWriter.CursorTop = y;
                 Write(ESC + $"[{y + 1};{x + 1}H");
             }
         }
@@ -1153,7 +1153,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 Console.FixCoords(ref x, ref y);
                 if (IsBufferEnabled)
@@ -1169,7 +1169,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 sc.CursorVisible = false;
             }
@@ -1179,7 +1179,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 sc.CursorVisible = true;
             }
@@ -1201,9 +1201,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
             bool lineBreak = false,
             bool doNotEvaluatePrintDirectives = false,      // TODO: remove this parameter
             bool ignorePrintDirectives = false,
-            EchoSequenceList printSequences = null)
+            EchoSequenceList? printSequences = null)
         {
-            lock (Lock)
+            lock (Lock!)
             {
                 if (string.IsNullOrWhiteSpace(s))
                     return s;
@@ -1229,14 +1229,14 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 var rw = new StreamReader(ms);
                 var txt = rw.ReadToEnd();
                 rw.Close();
-                Console.RedirectOut((StreamWriter)null);
+                Console.RedirectOut((StreamWriter?)null);
                 return txt;
             }
         }
 
         public string GetPrintWithEscapeSequences(string s, bool lineBreak = false)
         {
-            lock (Lock)
+            lock (Lock!)
             {
                 if (string.IsNullOrWhiteSpace(s))
                     return s;
@@ -1252,7 +1252,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 var rw = new StreamReader(ms);
                 var txt = rw.ReadToEnd();
                 rw.Close();
-                Console.RedirectOut((StreamWriter)null);
+                Console.RedirectOut((StreamWriter?)null);
                 return txt;
             }
         }
@@ -1263,7 +1263,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             if (IsMute)
                 return;
             // any print goes here...
-            lock (Lock)
+            lock (Lock!)
             {
                 if (CropX == -1)
                 {
@@ -1339,7 +1339,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             if (RedirectToErr)
             {
                 if (IsReplicationEnabled)
-                    ReplicateStreamWriter.Write(s);
+                    ReplicateStreamWriter!.Write(s);
 
                 Console.Err.Write(s);
             }
@@ -1349,10 +1349,6 @@ namespace AnsiVtConsole.NetCore.Component.Console
                     base.Write(s);
             }
         }
-
-        // TODO: public void Echoln(IEnumerable<string> ls, bool ignorePrintDirectives = false) { foreach (var s in ls) Echoln(s, ignorePrintDirectives); }
-
-        // TODO: public void Echo(IEnumerable<string> ls, bool lineBreak = false, bool ignorePrintDirectives = false) { foreach (var s in ls) Echo(s, lineBreak, ignorePrintDirectives); }
 
         public void Echoln(string s = "", bool ignorePrintDirectives = false) => Echo(s, true, false, !ignorePrintDirectives);
         public void Echoln(object s, bool ignorePrintDirectives = false) => Echo(s, true, false, !ignorePrintDirectives);
@@ -1388,14 +1384,14 @@ namespace AnsiVtConsole.NetCore.Component.Console
             bool preserveColors = false,        // TODO: remove this parameter + SaveColors property
             bool parseCommands = true,
             bool doNotEvalutatePrintDirectives = false,         // TODO: explain this
-            EchoSequenceList printSequences = null,
+            EchoSequenceList? printSequences = null,
             bool avoidANSISequencesAndNonPrintableCharacters = true,
             bool getNonPrintablesASCIICodesAsLabel = true
             )
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 if (o == null)
                 {
@@ -1408,7 +1404,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                     {
                         // call the EchoDirective component
                         EchoDirectiveProcessor.ParseTextAndApplyCommands(
-                            o.ToString(),
+                            o.ToString()!,
                             false,
                             "",
                             doNotEvalutatePrintDirectives,
@@ -1461,7 +1457,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMute)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 if (Console.EnableConstraintConsolePrintInsideWorkArea)
                 {
@@ -1530,7 +1526,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 if (!EnableFillLineFromCursor)
                     return;
@@ -1663,7 +1659,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
             var originalString = s;
             var r = new List<StringSegment>();
-            EchoSequenceList printSequences = null;
+            EchoSequenceList? printSequences = null;
+
             if (cursorX == -1)
                 cursorX = origin.X;
             if (cursorY == -1)
@@ -1671,7 +1668,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             var cursorLineIndex = -1;
             var cursorIndex = -1;
 
-            lock (Lock)
+            lock (Lock!)
             {
                 var index = -1;
                 var (id, x, y, w, h) = Console.ActualWorkArea(fitToVisibleArea);
@@ -1679,7 +1676,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 var y0 = origin.Y;
 
                 var croppedLines = new List<StringSegment>();
-                string pds = null;
+                string? pds = null;
                 var length = s.Length;
                 if (doNotEvaluatePrintDirectives)
                 {
@@ -1698,7 +1695,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                         var currentLine = string.Empty;
                         var lastIndex = 0;
 
-                        foreach (var ps in printSequences)
+                        foreach (var ps in printSequences!)
                         {
                             if (!ps.IsText)
                             {
@@ -1799,7 +1796,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 printSequences = new EchoSequenceList
                 {
-                    new EchoSequence(Console, (string)null, 0, originalString.Length - 1, null, originalString)
+                    new EchoSequence(Console, (string?)null, 0, originalString.Length - 1, null, originalString)
                 };
             }
 
@@ -1830,7 +1827,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
-            lock (Lock)
+            lock (Lock!)
             {
                 var dx = 0;
                 var dy = 0;

@@ -4,7 +4,7 @@
     {
         public readonly List<StringSegment> Splits;
 
-        public readonly EchoSequenceList PrintSequences;
+        public readonly EchoSequenceList? PrintSequences;
 
         public readonly int CursorIndex;
 
@@ -12,7 +12,7 @@
 
         public LineSplitList(
             List<StringSegment> splits,
-            EchoSequenceList printSequences,
+            EchoSequenceList? printSequences,
             int cursorIndex = -1,
             int cursorLineIndex = -1)
         {

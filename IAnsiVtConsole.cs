@@ -4,8 +4,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
 {
     public interface IAnsiVtConsole
     {
-        public EventHandler ViewSizeChanged { get; set; }
-        public EventHandler<WorkAreaScrollEventArgs> WorkAreaScrolled { get; set; }
+        public EventHandler? ViewSizeChanged { get; set; }
+        public EventHandler<WorkAreaScrollEventArgs>? WorkAreaScrolled { get; set; }
         bool EnableConstraintConsolePrintInsideWorkArea { get; set; }
         string CodeBlockBegin { get; set; }
         string CodeBlockEnd { get; set; }
@@ -60,11 +60,11 @@ namespace AnsiVtConsole.NetCore.Component.Console
         void LogError(string s, bool enableForwardLogsToSystemDiagnostics = true);
         void LogException(Exception ex, string message = "", bool enableForwardLogsToSystemDiagnostics = true);
         void LogWarning(string s, bool enableForwardLogsToSystemDiagnostics = true);
-        string Readln(string prompt = null);
-        void RedirectErr(string filepath = null);
-        void RedirectErr(TextWriter sw);
-        void RedirectOut(string filepath = null);
-        void RedirectOut(StreamWriter sw);
+        string? Readln(string? prompt = null);
+        void RedirectErr(string? filepath = null);
+        void RedirectErr(TextWriter? sw);
+        void RedirectOut(string? filepath = null);
+        void RedirectOut(StreamWriter? sw);
         void SetCursorAtWorkAreaTop();
         void Warning(string s = "");
         void Warning(IEnumerable<string> ls);

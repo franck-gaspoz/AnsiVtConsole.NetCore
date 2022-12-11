@@ -81,7 +81,7 @@ namespace AnsiVtConsole.NetCore
         private FileStream? _outputFileStream;
         private readonly string[] _crlf = { Environment.NewLine };
 
-        public object ConsoleLock => Out.Lock;
+        public object ConsoleLock => Out.Lock!;
 
         public bool RedrawUIElementsEnabled = true;
 
@@ -195,7 +195,7 @@ namespace AnsiVtConsole.NetCore
         }
         public void Error(string s, bool lineBreak = false)
         {
-            lock (Out.Lock)
+            lock (Out.Lock!)
             {
                 Out.RedirectToErr = true;
                 Out.Echo($"{Colors.Error}{s}{Colors.Default}", lineBreak);
@@ -217,15 +217,15 @@ namespace AnsiVtConsole.NetCore
         }
         public void Warning(string s, bool lineBreak = false)
         {
-            lock (Out.Lock)
+            lock (Out.Lock!)
             {
                 Out.Echo($"{Colors.Warning}{s}{Colors.Default}", lineBreak);
             }
         }
 
-        public string Readln(string prompt = null)
+        public string? Readln(string? prompt = null)
         {
-            lock (Out.Lock)
+            lock (Out.Lock!)
             {
                 if (prompt != null)
                     Out.Echo(prompt);
@@ -235,7 +235,7 @@ namespace AnsiVtConsole.NetCore
 
         public void Infos()
         {
-            lock (Out.Lock)
+            lock (Out.Lock!)
             {
                 Out.Echoln($"OS={Environment.OSVersion} {(Environment.Is64BitOperatingSystem ? "64" : "32")}bits plateform={RuntimeEnvironment.OSType}");
                 Out.Echoln($"{White}{Bkf}{Colors.HighlightIdentifier}window:{Rsf} left={Colors.Numeric}{sc.WindowLeft}{Rsf},top={Colors.Numeric}{sc.WindowTop}{Rsf},width={Colors.Numeric}{sc.WindowWidth}{Rsf},height={Colors.Numeric}{sc.WindowHeight}{Rsf},largest width={Colors.Numeric}{sc.LargestWindowWidth}{Rsf},largest height={Colors.Numeric}{sc.LargestWindowHeight}{Rsf}");
@@ -350,7 +350,7 @@ namespace AnsiVtConsole.NetCore
         {
             if (!IsConsoleGeometryEnabled || _workArea.Rect.IsEmpty)
                 return;     // TODO: set cursor even if workarea empty?
-            lock (Out.Lock)
+            lock (Out.Lock!)
             {
                 Out.SetCursorPos(_workArea.Rect.X, _workArea.Rect.Y);
             }
@@ -430,7 +430,7 @@ namespace AnsiVtConsole.NetCore
             }
         }
 
-        public void RedirectErr(string filepath = null)
+        public void RedirectErr(string? filepath = null)
         {
             if (filepath != null)
             {
@@ -442,12 +442,12 @@ namespace AnsiVtConsole.NetCore
             }
             else
             {
-                _errorStreamWriter.Flush();
+                _errorStreamWriter!.Flush();
                 _errorStreamWriter.Close();
                 _errorStreamWriter = null;
-                sc.SetOut(_errorWriter);
+                sc.SetOut(_errorWriter!);
                 _errorWriter = null;
-                Err.Redirect((string)null);
+                Err.Redirect((string?)null);
             }
         }
 
@@ -467,7 +467,7 @@ namespace AnsiVtConsole.NetCore
                 LogError($"wrong cursor x: {x}");
             if (!IsConsoleGeometryEnabled)
                 return 0;
-            lock (Out.Lock)
+            lock (Out.Lock!)
             {
                 return sc.CursorLeft;
             }
@@ -485,7 +485,7 @@ namespace AnsiVtConsole.NetCore
                 LogError($"wrong cursor y: {x}");
             if (!IsConsoleGeometryEnabled)
                 return 0;
-            lock (Out.Lock)
+            lock (Out.Lock!)
             {
                 return sc.CursorTop;
             }

@@ -41,7 +41,7 @@ namespace AnsiVtConsole.NetCore.Lib
         }
 
         // TODO: implements parameter short or fullName
-        public static string FriendlyName(this Type type, bool useKeywords = true, bool showGenericArguments = true, bool showDeclaringType = true, bool compactNullable = true)
+        public static string FriendlyName(this Type? type, bool useKeywords = true, bool showGenericArguments = true, bool showDeclaringType = true, bool compactNullable = true)
         {
             if (type == null)
                 return string.Empty;
@@ -50,8 +50,11 @@ namespace AnsiVtConsole.NetCore.Lib
             return b.ToString();
         }
 
-        private static void BuildFriendlyName(StringBuilder builder, Type type, bool useKeywords, bool showGenericArguments, bool showDeclaringType, bool compactNullable)
+        private static void BuildFriendlyName(StringBuilder builder, Type? type, bool useKeywords, bool showGenericArguments, bool showDeclaringType, bool compactNullable)
         {
+            if (type == null)
+                return;
+
             var isBasic = true;
             if (showDeclaringType && type.IsNested && !type.IsGenericParameter)
             {

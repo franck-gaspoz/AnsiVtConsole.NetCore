@@ -67,8 +67,8 @@ namespace AnsiVtConsole.NetCore.Lib.Process
         {
             if (StdOutCallBack != null)
             {
-                string str;
-                while ((str = Process.StandardOutput.ReadLine()) != null)
+                string? str;
+                while ((str = Process!.StandardOutput.ReadLine()) != null)
                 {
                     _out.AppendLine(str);
                     StdOutCallBack(str);
@@ -81,8 +81,8 @@ namespace AnsiVtConsole.NetCore.Lib.Process
         {
             if (StdErrCallBack != null)
             {
-                string str;
-                while ((str = Process.StandardError.ReadLine()) != null)
+                string? str;
+                while ((str = Process!.StandardError.ReadLine()) != null)
                 {
                     _err.AppendLine(str);
                     StdErrCallBack(str);
@@ -153,7 +153,7 @@ namespace AnsiVtConsole.NetCore.Lib.Process
         /// <summary>
         /// build a process wrapper that wraps a process runned within the provided process start infos in a separated thread that wait the process end and then call the callback function if not null
         /// </summary>
-        public static ProcessWrapper ThreadRun(sys.ProcessStartInfo psi, ProcessCounter pc = null)
+        public static ProcessWrapper ThreadRun(sys.ProcessStartInfo psi, ProcessCounter? pc = null)
         {
             var sw = new ProcessWrapper
             {
@@ -163,7 +163,7 @@ namespace AnsiVtConsole.NetCore.Lib.Process
                 pc.Increase();
             InitPSI(psi);
             sw.Process = sys.Process.Start(psi);
-            Action callBack = null;
+            Action? callBack = null;
             if (pc != null)
                 callBack = pc.Decrease;
             sw.PC = pc;
@@ -175,7 +175,12 @@ namespace AnsiVtConsole.NetCore.Lib.Process
         /// <summary>
         /// build a process wrapper that wraps a process runned within the provided process start infos in a separated thread that wait the process end and then call the callback function if not null
         /// </summary>
-        public static ProcessWrapper ThreadRun(sys.ProcessStartInfo psi, ProcessCounter pc = null, Action callBack = null, Action<string> stdOutCallBack = null, Action<string> stdErrCallBack = null)
+        public static ProcessWrapper ThreadRun(
+            sys.ProcessStartInfo psi,
+            ProcessCounter? pc = null,
+            Action? callBack = null,
+            Action<string>? stdOutCallBack = null,
+            Action<string>? stdErrCallBack = null)
         {
             var sw = new ProcessWrapper
             {

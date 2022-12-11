@@ -8,7 +8,7 @@ namespace AnsiVtConsole.NetCore.Lib
             List<(int count, string separator, OSPlatform eol)> eolCounts,
             string[] lines) GetEOLCounts(string txt)
         {
-            string[] r = null;
+            string[]? r = null;
 
             var sep_crcrlf = "\r\r\n";
             var sep_linux = "\n";
@@ -64,7 +64,7 @@ namespace AnsiVtConsole.NetCore.Lib
 
             // check by order which encoding has the most count
             (int count, string separator, OSPlatform eol)? matchEOL = null;
-            
+
             foreach (var eol in eols)
             {
                 var check = counts.Where(x => x.separator == eol.separator).First();

@@ -18,8 +18,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
             EchoDirectives? printDirective,
             int firstIndex,
             int lastIndex,
-            string value,
-            string text,
+            string? value,
+            string? text,
             int relIndex = 0)
         {
             _console = console;
@@ -35,8 +35,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
             string? printDirective,
             int firstIndex,
             int lastIndex,
-            string value,
-            string text,
+            string? value,
+            string? text,
             int relIndex = 0)
         {
             _console = console;

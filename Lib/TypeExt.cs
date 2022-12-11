@@ -42,9 +42,9 @@ namespace AnsiVtConsole.NetCore.Lib
         }
 
         // TODO: implements parameter fullName
-        public static string UnmangledName(this Type type, bool fullName = false) => TypesManglingExt.FriendlyName(type);
+        public static string UnmangledName(this Type? type) => TypesManglingExt.FriendlyName(type);
 
-        public static bool InheritsFrom(this Type type, Type ancestorType)
+        public static bool InheritsFrom(this Type? type, Type ancestorType)
         {
             while (type != null)
             {
@@ -55,9 +55,12 @@ namespace AnsiVtConsole.NetCore.Lib
             return false;
         }
 
-        public static List<Type> GetInheritanceChain(this Type type, bool includeRoot = true)
+        public static List<Type> GetInheritanceChain(this Type? type, bool includeRoot = true)
         {
             var r = new List<Type>();
+            if (type == null)
+                return r;
+
             if (includeRoot)
                 r.Add(type);
             type = type.BaseType;
@@ -71,8 +74,8 @@ namespace AnsiVtConsole.NetCore.Lib
             return r;
         }
 
-        public static bool HasInterface(this Type type, Type interfaceType)
-            => type.GetInterface(interfaceType.FullName) != null;
+        public static bool HasInterface(this Type? type, Type interfaceType)
+            => type != null && type!.GetInterface(interfaceType.FullName!) != null;
 
         public static List<MemberInfo> GetFieldsAndProperties(this object o)
         {
@@ -89,13 +92,13 @@ namespace AnsiVtConsole.NetCore.Lib
             return r;
         }
 
-        public static object GetMemberValue(this MemberInfo mi, object obj, bool throwException = true)
+        public static object? GetMemberValue(this MemberInfo mi, object obj, bool throwException = true)
         {
             if (mi is FieldInfo f)
                 return f.GetValue(obj);
             if (mi is PropertyInfo p)
             {
-                if (p.GetGetMethod().GetParameters().Length == 0)
+                if (p.GetGetMethod()?.GetParameters().Length == 0)
                 {
                     return p.GetValue(obj);
                 }
@@ -140,7 +143,7 @@ namespace AnsiVtConsole.NetCore.Lib
             return r;
         }
 
-        public static Type GetMemberValueType(this MemberInfo memberInfo)
+        public static Type? GetMemberValueType(this MemberInfo memberInfo)
         {
             if (memberInfo is FieldInfo field)
                 return field.FieldType;

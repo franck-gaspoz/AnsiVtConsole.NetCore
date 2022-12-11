@@ -10,10 +10,10 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
     /// </summary>
     internal sealed class EchoDirectiveProcessor
     {
-        public delegate object Command1pIntDelegate(int n = 1);
-        public delegate object Command2pIntDelegate(int x = 1, int y = 1);
-        public delegate object Command2pDelegate(object parameter, object argument);
-        public delegate object CommandDelegate(object x);
+        public delegate object? Command1pIntDelegate(int n = 1);
+        public delegate object? Command2pIntDelegate(int x = 1, int y = 1);
+        public delegate object? Command2pDelegate(object parameter, object argument);
+        public delegate object? CommandDelegate(object x);
         public delegate void SimpleCommandDelegate();
         public readonly ConsoleTextWriterWrapper Writer;
         public readonly CommandMap CommandMap;
@@ -39,15 +39,17 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
             EchoSequenceList? printSequences = null,
             int startIndex = 0)
         {
-            lock (Writer.Lock)
+            lock (Writer.Lock!)
             {
                 var i = 0;
-                KeyValuePair<string, (SimpleCommandDelegate simpleCommand, CommandDelegate command, object parameter)>? cmd = null;
+                KeyValuePair<string,
+                    (SimpleCommandDelegate? simpleCommand,
+                    CommandDelegate? command,
+                    object? parameter)>? cmd = null;
                 var n = s.Length;
                 var isAssignation = false;
                 var cmdindex = -1;
 
-                //var tmpsb = new StringBuilder(tmps, s.Length * 20);
                 _tmpsb.Clear();
                 _tmpsb.Append(tmps);
 
@@ -55,7 +57,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                 {
                     if (s[i] == _console.CommandBlockBeginChar)
                     {
-                        foreach (var ccmd in CommandMap.Map)
+                        foreach (var ccmd in CommandMap.Map!)
                         {
                             if (s.IndexOf(_console.CommandBlockBeginChar + ccmd.Key, i) == i)
                             {
@@ -65,12 +67,10 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                             }
                         }
                         if (cmd == null)
-                            //tmps += s[i];
                             _tmpsb.Append(s[i]);
                     }
                     else
                     {
-                        //tmps += s[i];
                         _tmpsb.Append(s[i]);
                     }
 
@@ -81,12 +81,12 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
 
                 if (cmd == null)
                 {
-                    Writer.ConsolePrint(/*tmps*/stmps, false);
+                    Writer.ConsolePrint(stmps, false);
 
                     printSequences?.Add(
                         new EchoSequence(
                             _console,
-                            (string)null,
+                            (string?)null,
                             0,
                             i - 1,
                             null,
@@ -103,14 +103,22 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                 {
                     Writer.ConsolePrint(stmps);
 
-                    printSequences?.Add(new EchoSequence(_console, (string)null, 0, i - 1, null, /*tmps*/stmps, startIndex));
+                    printSequences?.Add(
+                        new EchoSequence(
+                            _console,
+                            (string?)null,
+                            0,
+                            i - 1,
+                            null,
+                            stmps,
+                            startIndex));
                 }
 
                 _tmpsb.Clear();
 
                 var firstCommandEndIndex = 0;
                 var k = -1;
-                string value = null;
+                string? value = null;
                 if (isAssignation)
                 {
                     firstCommandEndIndex = s.IndexOf(_console.CommandValueAssignationChar, i + 1);
@@ -131,7 +139,15 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                             {
                                 Writer.ConsolePrint(s);
 
-                                printSequences?.Add(new EchoSequence(_console, (string)null, i, s.Length - 1, null, s, startIndex));
+                                printSequences?.Add(
+                                    new EchoSequence(
+                                        _console,
+                                        (string?)null,
+                                        i,
+                                        s.Length - 1,
+                                        null,
+                                        s,
+                                        startIndex));
                                 return;
                             }
                         }
@@ -163,7 +179,15 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                 {
                     Writer.ConsolePrint(s);
 
-                    printSequences?.Add(new EchoSequence(_console, (string)null, i, j, null, s, startIndex));
+                    printSequences?.Add(
+                        new EchoSequence(
+                            _console,
+                            (string?)null,
+                            i,
+                            j,
+                            null,
+                            s,
+                            startIndex));
                     return;
                 }
 
@@ -171,7 +195,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                 if (firstCommandSeparatorCharIndex > -1)
                     cmdtxt = cmdtxt[..(firstCommandSeparatorCharIndex - i)/*-1*/];
 
-                object result = null;
+                object? result = null;
                 if (isAssignation)
                 {
                     if (value == null)
