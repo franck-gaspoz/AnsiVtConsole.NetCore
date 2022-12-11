@@ -29,7 +29,12 @@ namespace AnsiVtConsole.NetCore
 
         public ColorSettings Colors { get; private set; }
 
-        #region work area settings        
+        #region work area        
+
+        /// <summary>
+        /// cursor
+        /// </summary>
+        public Cursor Cursor { get; private set; }
 
         public WorkArea WorkArea { get; private set; }
 
@@ -68,11 +73,6 @@ namespace AnsiVtConsole.NetCore
         /// input stream
         /// </summary>
         public Inp Inp { get; private set; }
-
-        /// <summary>
-        /// cursor
-        /// </summary>
-        public Cursor Cursor { get; private set; }
 
         /// <summary>
         /// logger
@@ -120,12 +120,6 @@ namespace AnsiVtConsole.NetCore
             Logger = new(this, Out, Err);
             Shortcuts.Initialize(this);
         }
-
-        #region log methods
-
-
-
-        #endregion
 
         #region operations
 
@@ -236,12 +230,6 @@ namespace AnsiVtConsole.NetCore
                 StdErr.Redirect((string?)null);
             }
         }
-
-        #endregion
-
-        #region implementation methods
-
-
 
         #endregion
 
