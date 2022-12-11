@@ -1,5 +1,5 @@
 # AnsiVtConsole.NetCore
-<b>AnsiVtConsole.NetCore library</b> helps build fastly nice multi-plateform (windows, osx, arm) console applications using C# and .NET Core 6
+<b>AnsiVtConsole.NetCore library</b> helps build fastly nice multi-plateform (windows, linux, osx, arm) console applications using C# and .NET Core 6
 
 [![licence mit](https://img.shields.io/badge/licence-MIT-blue.svg)](license.md) This project is licensed under the terms of the MIT license: [LICENSE.md](LICENSE.md)  
 
@@ -19,17 +19,24 @@ The toolkit provides functionalities needed to build console applications runnin
 # Usage
 
 ``` csharp
-// -- example of a string containing print directives --
-    
-// 1) from the toolkit shell command line:
-echo "(br,f=yellow,b=red)yellow text on red background(br)(f=cyan)current time is: (exec=System.DateTime.Now,br)"
-    
-// 2) invoking the toolkit:
-orbsh.exe "(br,f=yellow,b=red)yellow text on red background(br)(f=cyan)current time is: (exec=System.DateTime.Now,br)"
-    
-// 3) from C# using DotNetConsole.cs
-Echo($"{Br}{Yellow}{BRed}yellow text on red background{Br}{Cyan}current time is: {System.DateTime.Now}{Br}");
+using AnsiVtConsole.NetCore;
+// get a ansi vt console
+var console = new AnsiVTConsole();
 ```
+
+## 1. using the text parser:
+``` csharp
+console.Echo("(br,f=yellow,b=red)yellow text on red background(br)(f=cyan)current time is: (exec=System.DateTime.Now,br)");
+```
+
+## 2. using the constants/methods:
+
+``` csharp
+using static AnsiVtConsole.NetCore.Component.EchoDirective;
+System.Console.Out.Writeline($"{Br}{Yellow}{BRed}yellow text on red background{Br}{Cyan}current time is: {System.DateTime.Now}{Br}");
+```
+
+<br>
 
 <image src="Doc/Images/2020-06-13 06_18_08-Window.png"/>     
 
