@@ -21,18 +21,21 @@
     <InformationalVersion>1.0.9</InformationalVersion>
 
 	<PackageReleaseNotes>milestone 1</PackageReleaseNotes>
-	<PackageLicenseExpression>MIT</PackageLicenseExpression>
-	  <PackageProjectUrl>https://orbitalshell.github.io/Orbital-Shell/</PackageProjectUrl>
-	  <RepositoryUrl>https://github.com/OrbitalShell/Orbital-Shell.git</RepositoryUrl>
+	  <PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
-	<PackageTags>ansi vt vt100 color shell prompt bash powershell linux csharp netcore6 cli command-line-tool</PackageTags>
+	<PackageTags>ansi vt vt100 color shell prompt bash powershell linux csharp netcore6 cli cmd command line tool</PackageTags>
 	<PackageIcon>content\assets\robotazteque.png</PackageIcon>
 	  
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
 	<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
 
-	<Platforms>AnyCPU;x86</Platforms>
+	<Platforms>AnyCPU;x64</Platforms>
+
+	<PackageReadmeFile>content\README.md</PackageReadmeFile>
+
+	<PackageLicenseFile>content\LICENSE.md</PackageLicenseFile>
 		
   </PropertyGroup>
 
@@ -78,6 +81,23 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.8.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LICENSE.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+    </None>
   </ItemGroup>
 
 </Project>
