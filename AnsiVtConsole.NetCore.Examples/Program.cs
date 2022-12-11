@@ -22,7 +22,7 @@ console.Out.Echoln("(f=blue)var (f=cyan)console (f=darkgray)= (f=blue)new (f=dar
 console.Out.Echoln("(uon,bon)console.Infos():(br)");
 console.Infos();
 
-console.Out.Echoln("(br,uon,bon)console.Out.Echo():");
+console.Out.Echoln("(br,uon,bon)console.Out.Echo(\"a string with echo directives tokens\"):");
 console.Out.Echoln("(br,b=red,f=yellow,uon)Hello, World!");
 
 console.Out.Echoln("(br,uon,bon)console.Logger,console.Warn,console.Err:(br)");
