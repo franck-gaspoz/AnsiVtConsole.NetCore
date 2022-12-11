@@ -1,10 +1,16 @@
+<hr>
+
 # AnsiVtConsole.NetCore
+
+<hr>
+
 <b>AnsiVtConsole.NetCore library</b> helps build fastly nice multi-plateform (windows, linux, osx, arm) console applications using C# and .NET Core 6
 
 [![licence mit](https://img.shields.io/badge/licence-MIT-blue.svg)](license.md) This project is licensed under the terms of the MIT license: [LICENSE.md](LICENSE.md)  
 
 ![last commit](https://img.shields.io/github/last-commit/franck-gaspoz/AnsiVtConsole.NetCore?style=plastic)
 ![version](https://img.shields.io/github/v/tag/franck-gaspoz/AnsiVtConsole.NetCore?style=plastic)
+<hr>
 
 # Features
 
