@@ -33,7 +33,7 @@ public class Cursor
         }
 
         if (_console.Settings.TraceCommandErrors)
-            _console.LogError($"wrong cursor x: {x}");
+            _console.Logger.LogError($"wrong cursor x: {x}");
         if (!_console.WorkArea.IsConsoleGeometryEnabled)
             return 0;
         lock (_out.Lock!)
@@ -51,7 +51,7 @@ public class Cursor
         }
 
         if (_console.Settings.TraceCommandErrors)
-            _console.LogError($"wrong cursor y: {x}");
+            _console.Logger.LogError($"wrong cursor y: {x}");
         if (!_console.WorkArea.IsConsoleGeometryEnabled)
             return 0;
         lock (_out.Lock!)

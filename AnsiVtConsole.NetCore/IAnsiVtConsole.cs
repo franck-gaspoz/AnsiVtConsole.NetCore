@@ -26,19 +26,11 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         WorkArea WorkArea { get; }
 
+        Logger Logger { get; }
+
         void Exit(int r = 0);
 
         void Infos();
-
-        void Log(string s, bool enableForwardLogsToSystemDiagnostics = true);
-
-        void LogError(Exception ex, bool enableForwardLogsToSystemDiagnostics = true);
-
-        void LogError(string s, bool enableForwardLogsToSystemDiagnostics = true);
-
-        void LogException(Exception ex, string message = "", bool enableForwardLogsToSystemDiagnostics = true);
-
-        void LogWarning(string s, bool enableForwardLogsToSystemDiagnostics = true);
 
         void RedirectErr(string? filepath = null);
 

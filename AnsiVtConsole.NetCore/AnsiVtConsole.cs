@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 using AnsiVtConsole.NetCore.Component.Console;
@@ -43,7 +42,7 @@ namespace AnsiVtConsole.NetCore
         /// <summary>
         /// ansi vt std redirectable/bufferable stream
         /// </summary>
-        public ConsoleTextWriterWrapper Out { get; set; }
+        public ConsoleTextWriterWrapper Out { get; private set; }
 
         /// <summary>
         /// ansi vr error output stream
@@ -63,17 +62,22 @@ namespace AnsiVtConsole.NetCore
         /// <summary>
         /// standard input stream
         /// </summary>
-        public TextReader In { get; set; } = System.Console.In;
+        public TextReader In { get; private set; } = System.Console.In;
 
         /// <summary>
         /// input stream
         /// </summary>
-        public Inp Inp { get; set; }
+        public Inp Inp { get; private set; }
 
         /// <summary>
         /// cursor
         /// </summary>
-        public Cursor Cursor { get; set; }
+        public Cursor Cursor { get; private set; }
+
+        /// <summary>
+        /// logger
+        /// </summary>
+        public Logger Logger { get; private set; }
 
         #endregion
 
@@ -97,8 +101,6 @@ namespace AnsiVtConsole.NetCore
 
         private FileStream? _outputFileStream;
 
-        private readonly string[] _crlf = { Environment.NewLine };
-
         #endregion
 
         public AnsiVtConsole()
@@ -115,82 +117,13 @@ namespace AnsiVtConsole.NetCore
             Inp = new(Out);
             Cursor = new(this, Out);
             WorkArea = new(Out);
+            Logger = new(this, Out, Err);
             Shortcuts.Initialize(this);
         }
 
         #region log methods
 
-        public void LogError(Exception ex, bool enableForwardLogsToSystemDiagnostics = true)
-        {
-            if (Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
-                System.Diagnostics.Debug.WriteLine(ex + "");
-            if (Settings.DumpExceptions)
-            {
-                LogException(ex);
-            }
-            else
-            {
-                var msg = ex.Message;
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
-                    msg += Environment.NewLine + ex.Message;
-                }
-                var ls = msg.Split(_crlf, StringSplitOptions.None)
-                    .Select(x => Colors.Error + x);
-                Err.Logln(ls);
-            }
-        }
 
-        public void LogException(Exception ex, string message = "", bool enableForwardLogsToSystemDiagnostics = true)
-        {
-            if (Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
-                System.Diagnostics.Debug.WriteLine(message + _crlf + ex + "");
-            var ls = new List<string>();
-            if (Settings.DumpExceptions)
-            {
-                ls = (ex + "").Split(_crlf, StringSplitOptions.None)
-                .Select(x => Colors.Error + x)
-                .ToList();
-                if (message != null)
-                    ls.Insert(0, $"{Colors.Error}{message}");
-            }
-            else
-            {
-                ls.Insert(0, $"{Colors.Error}{message}: {ex.Message}");
-            }
-
-            Err.Logln(ls);
-        }
-
-        public void LogError(string s, bool enableForwardLogsToSystemDiagnostics = true)
-        {
-            if (Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
-                System.Diagnostics.Debug.WriteLine(s);
-            var ls = (s + "").Split(_crlf, StringSplitOptions.None)
-                .Select(x => Colors.Error + x);
-            Err.Logln(ls);
-        }
-
-        public void LogWarning(string s, bool enableForwardLogsToSystemDiagnostics = true)
-        {
-            if (Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
-                System.Diagnostics.Debug.WriteLine(s);
-            var ls = (s + "").Split(_crlf, StringSplitOptions.None)
-                .Select(x => Colors.Warning + x);
-            Err.Logln(ls);
-        }
-
-        public void Log(string s, bool enableForwardLogsToSystemDiagnostics = true)
-        {
-            if (Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
-                System.Diagnostics.Debug.WriteLine(s);
-            var ls = (s + "").Split(_crlf, StringSplitOptions.None)
-                .Select(x => Colors.Log + x);
-            //Out.Echoln(ls);
-            foreach (var l in ls)
-                Out.Echoln(l);
-        }
 
         #endregion
 
