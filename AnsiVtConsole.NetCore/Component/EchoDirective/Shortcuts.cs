@@ -1,5 +1,3 @@
-using AnsiVtConsole.NetCore.Component.Console;
-
 namespace AnsiVtConsole.NetCore.Component.EchoDirective
 {
     /// <summary>

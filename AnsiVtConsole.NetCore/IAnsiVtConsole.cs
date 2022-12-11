@@ -1,6 +1,7 @@
-﻿using AnsiVtConsole.NetCore.Component.Settings;
+﻿using AnsiVtConsole.NetCore.Component.Console;
+using AnsiVtConsole.NetCore.Component.Settings;
 
-namespace AnsiVtConsole.NetCore.Component.Console
+namespace AnsiVtConsole.NetCore
 {
     public interface IAnsiVtConsole
     {
