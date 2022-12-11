@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Doc\**" />
+    <EmbeddedResource Remove="Doc\**" />
+    <None Remove="Doc\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AnsiVtConsole.NetCore\AnsiVtConsole.NetCore.csproj" />
   </ItemGroup>
 
