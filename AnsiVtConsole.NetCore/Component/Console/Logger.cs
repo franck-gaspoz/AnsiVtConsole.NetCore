@@ -24,7 +24,7 @@ public class Logger
             System.Diagnostics.Debug.WriteLine(ex + "");
         if (_console.Settings.DumpExceptions)
         {
-            LogException(ex);
+            LogError(ex, string.Empty, enableForwardLogsToSystemDiagnostics);
         }
         else
         {
@@ -40,7 +40,7 @@ public class Logger
         }
     }
 
-    public void LogException(Exception ex, string message = "", bool enableForwardLogsToSystemDiagnostics = true)
+    public void LogError(Exception ex, string message = "", bool enableForwardLogsToSystemDiagnostics = true)
     {
         if (_console.Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
             System.Diagnostics.Debug.WriteLine(message + _crlf + ex + "");
