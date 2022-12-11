@@ -16,7 +16,12 @@ namespace AnsiVtConsole.NetCore.Component.Parser.ANSI
         static ANSIParser()
         {
             var ap = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            var p = Path.Combine(Path.GetDirectoryName(ap), "Component", "Parser", "ANSI", GrammarFileName);
+            var p = Path.Combine(
+                Path.GetDirectoryName(ap)!,
+                "Component",
+                "Parser",
+                "ANSI",
+                GrammarFileName);
             var lines = File.ReadLines(p);
             _parser = new NonRecursiveFunctionGrammarParser(lines);
         }

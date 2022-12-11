@@ -55,7 +55,7 @@
             t.Join();
         }
 
-        void WaitForLessThanNInternal(int n)
+        private void WaitForLessThanNInternal(int n)
         {
             var end = false;
             while (!end)

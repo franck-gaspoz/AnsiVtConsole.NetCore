@@ -6,8 +6,6 @@ namespace AnsiVtConsole.NetCore.Component.Console
     /// </summary>
     public static class ASCII
     {
-#pragma warning disable CS1591 // Commentaire XML manquant pour le type ou le membre visible publiquement
-
         #region codes
 
         public const char NUL = (char)0;
@@ -112,7 +110,5 @@ namespace AnsiVtConsole.NetCore.Component.Console
         }
 
         #endregion
-#pragma warning restore CS1591 // Commentaire XML manquant pour le type ou le membre visible publiquement
-
     }
 }

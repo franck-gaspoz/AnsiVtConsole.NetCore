@@ -13,9 +13,9 @@ namespace AnsiVtConsole.NetCore.Component.Parser.Json
     {
         public List<(string name, object value)> ReadJSonObjectFromFile(
             string path,
-            AddObjectDelegate addObjectDelegate = null,
-            AddPropertyDelegate addPropertyDelegate = null,
-            DebugDelegate debugDelegate = null
+            AddObjectDelegate? addObjectDelegate = null,
+            AddPropertyDelegate? addPropertyDelegate = null,
+            DebugDelegate? debugDelegate = null
             )
         {
             using var fileReader = File.OpenText(path);
@@ -35,9 +35,9 @@ namespace AnsiVtConsole.NetCore.Component.Parser.Json
 
         public List<(string name, object value)> ReadJSonObjectFromText(
             string text,
-            AddObjectDelegate addObjectDelegate = null,
-            AddPropertyDelegate addPropertyDelegate = null,
-            DebugDelegate debugDelegate = null
+            AddObjectDelegate? addObjectDelegate = null,
+            AddPropertyDelegate? addPropertyDelegate = null,
+            DebugDelegate? debugDelegate = null
             )
         {
             using var textReader = new StringReader(text);
@@ -58,10 +58,10 @@ namespace AnsiVtConsole.NetCore.Component.Parser.Json
         private List<(string name, object value)> ReadJSonObject(
             JsonTextReader reader,
             List<string> path,
-            ref string lastPropertyName,
-            AddObjectDelegate addObjectDelegate = null,
-            AddPropertyDelegate addPropertyDelegate = null,
-            DebugDelegate debugDelegate = null
+            ref string? lastPropertyName,
+            AddObjectDelegate? addObjectDelegate = null,
+            AddPropertyDelegate? addPropertyDelegate = null,
+            DebugDelegate? debugDelegate = null
             )
         {
             static string Path(List<string> s) => string.Join(".", s.Skip(1));
@@ -102,14 +102,14 @@ namespace AnsiVtConsole.NetCore.Component.Parser.Json
                         currentSequence.Clear();
                         break;
                     case JsonToken.EndArray:
-                        var tprop = (PathVar(path, lastPropertyName), currentSequence.ToArray());
+                        var tprop = (PathVar(path, lastPropertyName!), currentSequence.ToArray());
                         properties.Add(tprop);
                         allProperties.Add(tprop);
                         lastPropertyName = null;
                         inArray = false;
                         break;
                     case JsonToken.PropertyName:
-                        lastPropertyName = (string)reader.Value;
+                        lastPropertyName = (string?)reader.Value;
                         break;
                     case JsonToken.Boolean:
                     case JsonToken.Bytes:
@@ -120,15 +120,15 @@ namespace AnsiVtConsole.NetCore.Component.Parser.Json
                     case JsonToken.String:
                         if (!inArray)
                         {
-                            var prop = (PathVar(path, lastPropertyName), reader.Value);
+                            var prop = (PathVar(path, lastPropertyName!), reader.Value!);
                             properties.Add(prop);
                             allProperties.Add(prop);
                             lastPropertyName = null;
-                            addPropertyDelegate?.Invoke(prop.Item1, prop.Value);
+                            addPropertyDelegate?.Invoke(prop.Item1, prop.Item2);
                         }
                         else
                         {
-                            currentSequence.Add(reader.Value);
+                            currentSequence.Add(reader.Value!);
                         }
                         break;
                     case JsonToken.EndObject:

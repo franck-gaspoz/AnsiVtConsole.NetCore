@@ -11,7 +11,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
     /// </summary>
     public static class Shortcuts
     {
-        public static IAnsiVtConsole? Console;
+        public static IAnsiVtConsole? Console { get; set; }
 
         public static void Initialize(IAnsiVtConsole console) => Console = console;
 

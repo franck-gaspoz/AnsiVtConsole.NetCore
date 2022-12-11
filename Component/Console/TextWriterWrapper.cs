@@ -46,7 +46,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <summary>
         /// initial buffer capacity
         /// </summary>
-        public static int InitialBufferCapacity = 1_000_000;
+        public static int InitialBufferCapacity { get; set; } = 1_000_000;
 
         /// <summary>
         /// get lock
