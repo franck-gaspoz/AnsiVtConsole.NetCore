@@ -49,9 +49,9 @@ System.Console.Out.Writeline($"{Br}{Yellow}{BRed}yellow text on red background{B
 
 To see these examples, compile and run the project **AnsiVtConsole.NetCore.Examples**:
 
-<image src="Doc/Images/example 1.png"/>    
-<image src="Doc/Images/example 2.png"/>    
-<image src="Doc/Images/example 3.png"/>    
-<image src="Doc/Images/example 4.png"/>    
+<image src="Doc/Images/example1.png"/>    
+<image src="Doc/Images/example2.png"/>    
+<image src="Doc/Images/example3.png"/>    
+<image src="Doc/Images/example4.png"/>    
 
 <hr>
