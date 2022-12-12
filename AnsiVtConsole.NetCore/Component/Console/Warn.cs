@@ -36,7 +36,7 @@ public class Warn
     {
         lock (_out.Lock!)
         {
-            _out.Echo($"{_colors.Warning}{s}{_colors.Default}", lineBreak);
+            _out.Write($"{_colors.Warning}{s}{_colors.Default}", lineBreak);
         }
     }
 }

@@ -432,7 +432,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// writes a string to the stream
         /// </summary>
         /// <param name="s">string to be written to the stream</param>
-        public virtual void Write(string s)
+        public virtual void WriteStream(string s)
         {
             if (IsMute)
                 return;

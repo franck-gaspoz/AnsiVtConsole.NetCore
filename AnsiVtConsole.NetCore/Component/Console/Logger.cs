@@ -86,6 +86,6 @@ public class Logger
         var ls = (s + "").Split(_crlf, StringSplitOptions.None)
             .Select(x => _console.Colors.Log + x);
         foreach (var l in ls)
-            _out.Echoln(l);
+            _out.WriteLn(l);
     }
 }

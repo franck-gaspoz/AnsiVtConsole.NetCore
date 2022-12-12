@@ -14,7 +14,7 @@ public class Inp
         lock (_out.Lock!)
         {
             if (prompt != null)
-                _out.Echo(prompt);
+                _out.Write(prompt);
         }
         return sc.ReadLine();
     }

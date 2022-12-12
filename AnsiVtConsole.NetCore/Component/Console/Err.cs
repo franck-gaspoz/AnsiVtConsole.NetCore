@@ -34,7 +34,7 @@ public sealed class Err
         lock (_out.Lock!)
         {
             _out.RedirectToErr = true;
-            _out.Echo($"{_colors.Error}{s}{_colors.Default}", lineBreak);
+            _out.Write($"{_colors.Error}{s}{_colors.Default}", lineBreak);
             _out.RedirectToErr = false;
         }
     }

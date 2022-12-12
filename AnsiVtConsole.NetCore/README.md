@@ -31,7 +31,7 @@ var console = new cons.AnsiVTConsole();
 
 ## 1. using the text parser:
 ``` csharp
-console.Echo("(br,f=yellow,b=red)yellow text on red background(br)(f=cyan)current time is: (exec=System.DateTime.Now,br)");
+console.Write("(br,f=yellow,b=red)yellow text on red background(br)(f=cyan)current time is: (exec=System.DateTime.Now,br)");
 ```
 
 ## 2. using the methods :

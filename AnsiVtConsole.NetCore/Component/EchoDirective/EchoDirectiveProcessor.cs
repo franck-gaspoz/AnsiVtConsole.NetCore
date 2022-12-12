@@ -300,7 +300,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                     printSequences?.Add(new EchoSequence(_console, cmd.Value.Key, i, j, value, null, startIndex));
                 }
                 if (result != null)
-                    Writer.Echo(result, false);    // recurse
+                    Writer.Write(result, false);    // recurse
 
                 if (firstCommandSeparatorCharIndex > -1)
                 {
