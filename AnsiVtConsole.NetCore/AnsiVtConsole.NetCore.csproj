@@ -13,9 +13,9 @@
 	<PackageId>AnsiVtConsole.NetCore</PackageId>
 	<IsPackable>true</IsPackable>
     <Authors>Franck Gaspoz</Authors>
-    <Company>AnsiVtConsole.NetCore</Company>
+    <Company>Franck Gaspoz</Company>
     <Product>AnsiVtConsole.NetCore</Product>
-    <Description>ANSI VT console library for .Net Core</Description>
+    <Description>ANSI VT console library for .Net Core system console</Description>
     <Copyright>(c) 2020 Licence MIT</Copyright>
     <Version>1.0.9</Version>
     <InformationalVersion>1.0.9</InformationalVersion>
@@ -36,6 +36,8 @@
 	<PackageReadmeFile>content\README.md</PackageReadmeFile>
 
 	<PackageLicenseFile>content\LICENSE.md</PackageLicenseFile>
+
+	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		
   </PropertyGroup>
 
@@ -46,9 +48,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.8.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
-    <PackageReference Include="Newtonsoft.json" Version="12.0.3" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.4.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.json" Version="13.0.2" />
   </ItemGroup>
 
   <ItemGroup>
