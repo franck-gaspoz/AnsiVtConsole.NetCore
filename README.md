@@ -1,6 +1,6 @@
-<hr>
+___
 
-# ![AnsiVtConsole.NetCore](assets/ascii-icon.png "AnsiVtConsole.NetCore") AnsiVtConsole.NetCore
+# ![AnsiVtConsole.NetCore](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/ascii-icon.png "AnsiVtConsole.NetCore") AnsiVtConsole.NetCore
 
 ___
 
@@ -14,9 +14,8 @@ ___
 # Features
 
 The library provides functionalities needed to build console applications running in a terminal (WSL/WSL2, cmd.exe, ConEmu, bash, ...) with text interface. That includes:
-- **a text printer engine** that supports **print directives** allowing to manage console functionalities from text itself, as html would do but with a simplest grammar (that can be configured). That makes possible colored outputs, cursor control, text scrolling and also dynamic C# execution (scripting), based on <b>System.Console</b> and <b> ANSI VT100 / VT52 (VT100 type Fp or 3Fp, Fs, CSI, SGR)</b>. 
+- **a text printer engine** that supports **print directives** allowing to manage console functionalities from text itself, as html would do but with a simplest grammar (that can be configured). That makes possible colored outputs, cursor control, text scrolling and also dynamic C# execution (scripting), based on **System.Console** and **ANSI VT100 / VT52 (VT100 type Fp or 3Fp, Fs, CSI, SGR)** 
 - The console output can be controlled by:
-
     - tokens in a string (print directives)
     - as string shortcuts (dynamic ansi vt strings)
     - throught API methods
