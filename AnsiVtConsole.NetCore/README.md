@@ -27,14 +27,11 @@ using cons=AnsiVtConsole.NetCore;
 // get the ansi vt console
 var console = new cons.AnsiVTConsole();
 ```
-
 ## 1. using the text parser:
 ``` csharp
 console.Echo("(br,f=yellow,b=red)yellow text on red background(br)(f=cyan)current time is: (exec=System.DateTime.Now,br)");
 ```
-
 ## 2. using the methods :
-
 ``` csharp
 using static AnsiVtConsole.NetCore.Component.EchoDirective;
 
@@ -43,7 +40,7 @@ System.Console.Out.Writeline($"{Br}{Yellow}{BRed}yellow text on red background{B
 
 ### both outputs:
 
-![output](assets/output.png "output")
+![output](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/output.png "output")
 
 # Print directives:
 
@@ -53,7 +50,6 @@ text can contains echo directives that changes the echo behavior. the echo direc
 - an echo directive value can be written inside a 'code' text block, depending on each echo directive, with the syntax: `[[...]]`
 - symbols of this grammar can be configured throught the class:
     `AnsiVtConsole.NetCore.Component.Settings`
-
 ## 1. Colorization
 
 ```yaml
@@ -74,7 +70,6 @@ rdc                 : restore default colors```
 
 ConsoleColor := darkblue|darkgreen|darkcyan|darkred|darkmagenta|darkyellow|gray|darkgray|blue|green|cyan|red|magenta|yellow|white (not case sensitive)
 ```
-
 ## 2. Text decoration (vt100)
 
 ```yaml
@@ -85,7 +80,6 @@ lion                : ligt colors
 bon                 : bold on
 blon                : blink on (not supported on Windows)
 ```
-
 ## 3. Echo flow control
 
 ```yaml
@@ -109,28 +103,25 @@ clright             : clear line from cursor right
 chome               : move cursor to upper left corner
 tab                 : add a tab
 ```
-
 ## 4. Script engine
 
 ```yaml
 exec=CodeBlock|[[CodeBlock]] : executes and echo result of a C# code block
 ```
-
 ## 5. Application control
 
 ```yaml
 info                : output infos about the console
 exit                : exit the current process
 ```
-
 # Examples
 
-To see these examples, compile and run the project **AnsiVtConsole.NetCore.Examples**:
+To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examples**:
 
-![example1](assets/example1.png "example1")
-![example1](assets/example2.png "example2")
-![example1](assets/example3.png "example3")
-![example1](assets/example4.png "example4")
+![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example1.png "example1")
+![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example2.png "example2")
+![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example3.png "example3")
+![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example4.png "example4")
 
 ___
 
