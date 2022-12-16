@@ -1,6 +1,6 @@
 ___
 
-# ![AnsiVtConsole.NetCore](assets/ascii-icon.png "AnsiVtConsole.NetCore") AnsiVtConsole.NetCore
+# ![AnsiVtConsole.NetCore](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/ascii-icon.png "AnsiVtConsole.NetCore") AnsiVtConsole.NetCore
 
 ___
 
