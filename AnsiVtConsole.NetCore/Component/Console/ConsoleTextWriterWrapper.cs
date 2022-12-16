@@ -1180,7 +1180,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
                 try
                 {
-                    WriteLine(ANSI.RSTXTA);         // reset text attr
+                    WriteLineStream(ANSI.RSTXTA);         // reset text attr
 
                     System.Threading.Thread.Sleep(10);
 
@@ -1694,7 +1694,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 Console.StdErr.WriteStream(s);
                 if (lineBreak)
-                    Console.StdErr.WriteLine(string.Empty);
+                    Console.StdErr.WriteLineStream(string.Empty);
             }
         }
 
@@ -1761,7 +1761,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
                     if (lineBreak)
                     {
-                        WriteLine(string.Empty);
+                        WriteLineStream(string.Empty);
                         EchoDebug(string.Empty, true);
                     }
                 }

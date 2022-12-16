@@ -487,13 +487,15 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// writes a string to the stream
         /// </summary>
         /// <param name="s">string to be written to the stream</param>
-        public virtual void WriteLine(string s)
+        public virtual void WriteLineStream(string s)
         {
             if (IsMute)
                 return;
-            IsModified = true;
 
-            if (IsRecordingEnabled)
+            var modifiantStr = !string.IsNullOrEmpty(s);
+            IsModified |= modifiantStr;
+
+            if (modifiantStr && IsRecordingEnabled)
                 Recording.AppendLine(s);
 
             if (IsReplicationEnabled)
