@@ -17,8 +17,8 @@
     <Product>AnsiVtConsole.NetCore</Product>
     <Description>ANSI VT console library for .Net Core system console</Description>
     <Copyright>(c) 2020 Licence MIT</Copyright>
-    <Version>1.0.11</Version>
-    <InformationalVersion>1.0.11</InformationalVersion>
+    <Version>1.0.12</Version>
+    <InformationalVersion>1.0.12</InformationalVersion>
 
 	<PackageReleaseNotes>milestone 1</PackageReleaseNotes>
 	  <PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</PackageProjectUrl>
@@ -109,5 +109,9 @@
 		<PackageCopyToOutput>true</PackageCopyToOutput>
 	</None>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(ProjectDir)README.md&quot; &quot;$(SolutionDir)&quot; /Y" />
+  </Target>
 
 </Project>

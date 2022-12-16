@@ -135,5 +135,12 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 ![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example3.png "example3")
 ![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example4.png "example4")
 
+# Version history
+
+1.0.12
+
+    - rename Writeln methods by WriteLine
+    - rename Log,Logn methods by Write,WriteLine
+
 ___
 
