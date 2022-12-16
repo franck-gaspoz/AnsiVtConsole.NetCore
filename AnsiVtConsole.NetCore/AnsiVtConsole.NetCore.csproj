@@ -17,15 +17,15 @@
     <Product>AnsiVtConsole.NetCore</Product>
     <Description>ANSI VT console library for .Net Core system console</Description>
     <Copyright>(c) 2020 Licence MIT</Copyright>
-    <Version>1.0.9</Version>
-    <InformationalVersion>1.0.9</InformationalVersion>
+    <Version>1.0.10</Version>
+    <InformationalVersion>1.0.10</InformationalVersion>
 
 	<PackageReleaseNotes>milestone 1</PackageReleaseNotes>
 	  <PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</PackageProjectUrl>
 	  <RepositoryUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
 	<PackageTags>ansi vt vt100 console color shell prompt bash powershell linux csharp netcore6 cli cmd command line tool</PackageTags>
-	<PackageIcon>content\assets\game-ascii-icon-200x200.png</PackageIcon>
+	<PackageIcon>content\assets\ascii-icon.png</PackageIcon>
 	  
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
@@ -60,19 +60,54 @@
 		<PackagePath>contentFiles/any/;content/</PackagePath>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
     </None>
-    <None Update="README.md">
-		<Pack>True</Pack>
+	<None Update="README.md">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>True</Pack>
 		<PackagePath>contentFiles/any/;content/</PackagePath>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
-    </None>
-	  <None Update="assets/game-ascii-icon-200x200.png">
-		  <Pack>True</Pack>
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		  <Pack>True</Pack>
-		  <PackagePath>contentFiles/any/;content/</PackagePath>
-		  <PackageCopyToOutput>true</PackageCopyToOutput>
-	  </None>
+	</None>
+	<None Update="assets/ascii-icon.png">
+		<Pack>True</Pack>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+	</None>
+	<None Update="assets/output.png">
+		<Pack>True</Pack>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+	</None>
+	<None Update="assets/example1.png">
+		<Pack>True</Pack>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+	</None>
+	<None Update="assets/example2.png">
+		<Pack>True</Pack>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+	</None>
+	<None Update="assets/example3.png">
+		<Pack>True</Pack>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+	</None>
+	<None Update="assets/example4.png">
+		<Pack>True</Pack>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+	</None>
   </ItemGroup>
 
 </Project>

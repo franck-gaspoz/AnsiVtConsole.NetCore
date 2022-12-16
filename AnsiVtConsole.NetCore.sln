@@ -11,21 +11,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		LICENSE.md = LICENSE.md
-		README.md = README.md
+		AnsiVtConsole.NetCore\README.md = AnsiVtConsole.NetCore\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnsiVtConsole.NetCore.Examples", "AnsiVtConsole.NetCore.Examples\AnsiVtConsole.NetCore.Examples.csproj", "{81478669-85E5-4F1E-9A87-8D9E85F75B50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnsiVtConsole.NetCore.Examples", "AnsiVtConsole.NetCore.Examples\AnsiVtConsole.NetCore.Examples.csproj", "{81478669-85E5-4F1E-9A87-8D9E85F75B50}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{A9D88C30-8559-4458-85E3-48209627D2E0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{36CB4816-2FB5-423C-B3E4-8E56180D355F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{5F978492-9C45-40F3-9D70-B3283498F57D}"
 	ProjectSection(SolutionItems) = preProject
-		Doc\Images\2020-06-13 06_18_08-Window.png = Doc\Images\2020-06-13 06_18_08-Window.png
-		Doc\Images\example1.png = Doc\Images\example1.png
-		Doc\Images\example2.png = Doc\Images\example2.png
-		Doc\Images\example3.png = Doc\Images\example3.png
-		Doc\Images\example4.png = Doc\Images\example4.png
-		Doc\Images\game-ascii-icon-200x200.png = Doc\Images\game-ascii-icon-200x200.png
+		assets\ascii-icon.png = assets\ascii-icon.png
+		assets\example1.png = assets\example1.png
+		assets\example2.png = assets\example2.png
+		assets\example3.png = assets\example3.png
+		assets\example4.png = assets\example4.png
+		assets\output.png = assets\output.png
 	EndProjectSection
 EndProject
 Global
@@ -57,8 +55,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A9D88C30-8559-4458-85E3-48209627D2E0} = {196A14D8-B446-482A-8B5E-9CD986A0C5A3}
-		{36CB4816-2FB5-423C-B3E4-8E56180D355F} = {A9D88C30-8559-4458-85E3-48209627D2E0}
+		{5F978492-9C45-40F3-9D70-B3283498F57D} = {196A14D8-B446-482A-8B5E-9CD986A0C5A3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8B5B602-B2FB-4A96-9DA0-5085D1844222}
