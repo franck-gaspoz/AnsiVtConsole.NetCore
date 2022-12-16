@@ -29,11 +29,12 @@ var console = new cons.AnsiVTConsole();
 ```
 
 ## 1. using the text parser:
+
 ``` csharp
-console.Echo("(br,f=yellow,b=red)yellow text on red background(br)(f=cyan)current time is: (exec=System.DateTime.Now,br)");
+console.Write("(br,f=yellow,b=red)yellow text on red background(br)(f=cyan)current time is: (exec=System.DateTime.Now,br)");
 ```
 
-## 2. using the methods :
+## 2. using the string shortcuts :
 
 ``` csharp
 using static AnsiVtConsole.NetCore.Component.EchoDirective;
@@ -43,7 +44,7 @@ System.Console.Out.Writeline($"{Br}{Yellow}{BRed}yellow text on red background{B
 
 ### both outputs:
 
-![output](assets/output.png "output")
+![output](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/output.png "output")
 
 # Print directives:
 
@@ -53,6 +54,7 @@ text can contains echo directives that changes the echo behavior. the echo direc
 - an echo directive value can be written inside a 'code' text block, depending on each echo directive, with the syntax: `[[...]]`
 - symbols of this grammar can be configured throught the class:
     `AnsiVtConsole.NetCore.Component.Settings`
+- alternatively to the print directives you can use the strings shortcuts from the class: `AnsiVtConsole.NetCore.Component.EchoDirective`
 
 ## 1. Colorization
 
@@ -81,7 +83,7 @@ ConsoleColor := darkblue|darkgreen|darkcyan|darkred|darkmagenta|darkyellow|gray|
 uon                 : underline on
 invon               : inverted colors on
 tdoff               : text decoration off and reset default colors
-lion                : ligt colors
+lion                : ligtht colors
 bon                 : bold on
 blon                : blink on (not supported on Windows)
 ```
@@ -125,12 +127,12 @@ exit                : exit the current process
 
 # Examples
 
-To see these examples, compile and run the project **AnsiVtConsole.NetCore.Examples**:
+To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examples**:
 
-![example1](assets/example1.png "example1")
-![example1](assets/example2.png "example2")
-![example1](assets/example3.png "example3")
-![example1](assets/example4.png "example4")
+![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example1.png "example1")
+![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example2.png "example2")
+![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example3.png "example3")
+![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example4.png "example4")
 
 ___
 
