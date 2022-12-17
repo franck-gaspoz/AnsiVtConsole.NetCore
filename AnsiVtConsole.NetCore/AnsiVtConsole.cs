@@ -134,17 +134,17 @@ namespace AnsiVtConsole.NetCore
         {
             lock (Out.Lock!)
             {
-                Out.WriteLn($"OS={Environment.OSVersion} {(Environment.Is64BitOperatingSystem ? "64" : "32")}bits plateform={RuntimeEnvironment.OSType}");
-                Out.WriteLn($"{White}{Bkf}{Colors.HighlightIdentifier}window:{Rsf} left={Colors.Numeric}{sc.WindowLeft}{Rsf},top={Colors.Numeric}{sc.WindowTop}{Rsf},width={Colors.Numeric}{sc.WindowWidth}{Rsf},height={Colors.Numeric}{sc.WindowHeight}{Rsf},largest width={Colors.Numeric}{sc.LargestWindowWidth}{Rsf},largest height={Colors.Numeric}{sc.LargestWindowHeight}{Rsf}");
-                Out.WriteLn($"{Colors.HighlightIdentifier}buffer:{Rsf} width={Colors.Numeric}{sc.BufferWidth}{Rsf},height={Colors.Numeric}{sc.BufferHeight}{Rsf} | input encoding={Colors.Numeric}{sc.InputEncoding.EncodingName}{Rsf} | output encoding={Colors.Numeric}{sc.OutputEncoding.EncodingName}{Rsf}");
-                Out.WriteLn($"{White}default background color={Bkf}{Colors.KeyWord}{Settings.DefaultBackground}{Rsf} | default foreground color={Colors.KeyWord}{Settings.DefaultForeground}{Rsf}");
+                Out.WriteLine($"OS={Environment.OSVersion} {(Environment.Is64BitOperatingSystem ? "64" : "32")}bits plateform={RuntimeEnvironment.OSType}");
+                Out.WriteLine($"{White}{Bkf}{Colors.HighlightIdentifier}window:{Rsf} left={Colors.Numeric}{sc.WindowLeft}{Rsf},top={Colors.Numeric}{sc.WindowTop}{Rsf},width={Colors.Numeric}{sc.WindowWidth}{Rsf},height={Colors.Numeric}{sc.WindowHeight}{Rsf},largest width={Colors.Numeric}{sc.LargestWindowWidth}{Rsf},largest height={Colors.Numeric}{sc.LargestWindowHeight}{Rsf}");
+                Out.WriteLine($"{Colors.HighlightIdentifier}buffer:{Rsf} width={Colors.Numeric}{sc.BufferWidth}{Rsf},height={Colors.Numeric}{sc.BufferHeight}{Rsf} | input encoding={Colors.Numeric}{sc.InputEncoding.EncodingName}{Rsf} | output encoding={Colors.Numeric}{sc.OutputEncoding.EncodingName}{Rsf}");
+                Out.WriteLine($"{White}default background color={Bkf}{Colors.KeyWord}{Settings.DefaultBackground}{Rsf} | default foreground color={Colors.KeyWord}{Settings.DefaultForeground}{Rsf}");
                 if (RuntimeEnvironment.OSType == OSPlatform.Windows)
                 {
 #pragma warning disable CA1416 // Valider la compatibilité de la plateforme
-                    Out.WriteLn($"number lock={Colors.Numeric}{sc.NumberLock}{Rsf} | capslock={Colors.Numeric}{sc.CapsLock}{Rsf}");
+                    Out.WriteLine($"number lock={Colors.Numeric}{sc.NumberLock}{Rsf} | capslock={Colors.Numeric}{sc.CapsLock}{Rsf}");
 #pragma warning restore CA1416 // Valider la compatibilité de la plateforme
 #pragma warning disable CA1416 // Valider la compatibilité de la plateforme
-                    Out.WriteLn($"cursor visible={Colors.Numeric}{sc.CursorVisible}{Rsf} | cursor size={Colors.Numeric}{sc.CursorSize}");
+                    Out.WriteLine($"cursor visible={Colors.Numeric}{sc.CursorVisible}{Rsf} | cursor size={Colors.Numeric}{sc.CursorSize}");
 #pragma warning restore CA1416 // Valider la compatibilité de la plateforme
                 }
             }

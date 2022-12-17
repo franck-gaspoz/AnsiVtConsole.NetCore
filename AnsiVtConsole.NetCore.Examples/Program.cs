@@ -10,25 +10,25 @@ var console = new cons.AnsiVtConsole();
 var title = $"| AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version} |";
 var sep = "".PadLeft(title.Length, '-');
 
-console.Out.WriteLn($"(bon,f=cyan){sep}");
-console.Out.WriteLn($"(bon,f=cyan){title}");
-console.Out.WriteLn($"(bon,f=cyan){sep}(br)");
+console.Out.WriteLine($"(bon,f=cyan){sep}");
+console.Out.WriteLine($"(bon,f=cyan){title}");
+console.Out.WriteLine($"(bon,f=cyan){sep}(br)");
 
-console.Out.WriteLn("(uon,bon)init:(br)");
+console.Out.WriteLine("(uon,bon)init:(br)");
 
-console.Out.WriteLn("(f=blue)using (f=darkgray)cons = AnsiVtConsole.NetCore;");
-console.Out.WriteLn("(f=blue)var (f=cyan)console (f=darkgray)= (f=blue)new (f=darkgray)cons.(f=green)AnsiVtConsole(f=white)();(br)");
+console.Out.WriteLine("(f=blue)using (f=darkgray)cons = AnsiVtConsole.NetCore;");
+console.Out.WriteLine("(f=blue)var (f=cyan)console (f=darkgray)= (f=blue)new (f=darkgray)cons.(f=green)AnsiVtConsole(f=white)();(br)");
 
-console.Out.WriteLn("(uon,bon)console.Infos():(br)");
+console.Out.WriteLine("(uon,bon)console.Infos():(br)");
 console.Infos();
 
-console.Out.WriteLn("(br,uon,bon)console.Out.Echo(\"a string with echo directives tokens\"):(br)");
+console.Out.WriteLine("(br,uon,bon)console.Out.Echo(\"a string with echo directives tokens\"):(br)");
 console.Out.Write("(f=blue)console(f=darkgray).(f=yellow)Out(f=darkgray).(f=green)Echo(f=white)(");
 console.Out.Write("\"(b=red,f=yellow,uon)Hello, World!\"", false, true);
-console.Out.WriteLn("(f=white))");
-console.Out.WriteLn("(br,b=red,f=yellow,uon)Hello, World!");
+console.Out.WriteLine("(f=white))");
+console.Out.WriteLine("(br,b=red,f=yellow,uon)Hello, World!");
 
-console.Out.WriteLn("(br,uon,bon)console.Logger,console.Warn,console.Err:(br)");
+console.Out.WriteLine("(br,uon,bon)console.Logger,console.Warn,console.Err:(br)");
 console.Logger.Log("console.Logger.Log(\"log\")");
 console.Logger.LogWarning("console.Logger.LogWarning(\"warning\")");
 console.Logger.LogError("console.Logger.LogError(\"error\")");
@@ -36,13 +36,13 @@ console.Logger.LogError(
     new ArgumentException("bad argument exception"),
     "console.Logger.LogError(exception):");
 
-console.Out.WriteLn("(br,uon,bon)ansi vt methods (ANSI,Shortcuts) - colors test:(br)");
+console.Out.WriteLine("(br,uon,bon)ansi vt methods (ANSI,Shortcuts) - colors test:(br)");
 
 AnsiColorTest(console);
 
-console.Out.WriteLn();
+console.Out.WriteLine();
 
-console.Out.WriteLn("(br,uon,bon)echo directives:(br)");
+console.Out.WriteLine("(br,uon,bon)echo directives:(br)");
 
 const string PrintDocText =
 @"(rdc)text can contains (uon)echo directives(tdoff) that changes the echo behavior. 
@@ -115,9 +115,9 @@ current print directives are:
     (f=darkyellow)ConsoleColor := darkblue|darkgreen|darkcyan|darkred|darkmagenta|darkyellow|gray|darkgray|blue|green|cyan|red|magenta|yellow|white(rdc) (not case sensitive)
 ";
 
-console.Out.WriteLn(PrintDocText);
+console.Out.WriteLine(PrintDocText);
 
-console.Out.WriteLn();
+console.Out.WriteLine();
 
 void AnsiColorTest(cons.IAnsiVtConsole console)
 {
@@ -129,13 +129,13 @@ void AnsiColorTest(cons.IAnsiVtConsole console)
     string r;
     var x2 = 0;
 
-    console.Out.WriteLn("(f=blue)using static (f=darkgray)AnsiVtConsole.NetCore.Component.Console.(f=green)ANSI(f=darkgray);");
-    console.Out.WriteLn("(f=blue)using static (f=darkgray)AnsiVtConsole.NetCore.Component.EchoDirective.(f=green)Shortcuts(f=darkgray);(br)");
+    console.Out.WriteLine("(f=blue)using static (f=darkgray)AnsiVtConsole.NetCore.Component.Console.(f=green)ANSI(f=darkgray);");
+    console.Out.WriteLine("(f=blue)using static (f=darkgray)AnsiVtConsole.NetCore.Component.EchoDirective.(f=green)Shortcuts(f=darkgray);(br)");
 
-    console.Out.WriteLn("(uon,bon)3 bits (8 color mode)");
-    console.Out.WriteLn();
-    console.Out.WriteLn("Background | Foreground colors");
-    console.Out.WriteLn(hsep);
+    console.Out.WriteLine("(uon,bon)3 bits (8 color mode)");
+    console.Out.WriteLine();
+    console.Out.WriteLine("Background | Foreground colors");
+    console.Out.WriteLine(hsep);
     for (var j = 0; j <= 7; j++)
     {
         var str1 = $" ESC[4{j}m   | {esc}[4{j}m";
@@ -146,16 +146,16 @@ void AnsiColorTest(cons.IAnsiVtConsole console)
             str2 += Set4BitsColors(i | 0b1000, j) + $" [3{i}m   ";
         }
 
-        console.Out.WriteLn(str1 + "");
-        console.Out.WriteLn(str2 + "");
-        console.Out.WriteLn(hsep);
+        console.Out.WriteLine(str1 + "");
+        console.Out.WriteLine(str2 + "");
+        console.Out.WriteLine(hsep);
     }
-    console.Out.WriteLn();
+    console.Out.WriteLine();
 
     // 8 bits colors
-    console.Out.WriteLn("(uon,bon)8 bits (256 color mode)");
-    console.Out.WriteLn();
-    console.Out.WriteLn("216 colors: 16 + 36 × r + 6 × g + b (0 <= r, g, b <= 5)(br)");
+    console.Out.WriteLine("(uon,bon)8 bits (256 color mode)");
+    console.Out.WriteLine();
+    console.Out.WriteLine("216 colors: 16 + 36 × r + 6 × g + b (0 <= r, g, b <= 5)(br)");
     var n = 16;
     for (var y = 0; y < 6; y++)
     {
@@ -174,8 +174,8 @@ void AnsiColorTest(cons.IAnsiVtConsole console)
         console.Out.Write(r);
     }
 
-    console.Out.WriteLn();
-    console.Out.WriteLn("(uon,bon)grayscale colors (24 colors) : 232 + l (0 <= l <= 24)(br)");
+    console.Out.WriteLine();
+    console.Out.WriteLine("(uon,bon)grayscale colors (24 colors) : 232 + l (0 <= l <= 24)(br)");
     r = White;
     x2 = 0;
     for (var x = 232; x <= 255; x++)
@@ -188,8 +188,8 @@ void AnsiColorTest(cons.IAnsiVtConsole console)
     }
     console.Out.Write(r);
 
-    console.Out.WriteLn();
-    console.Out.WriteLn("(uon,bon)24 bits (16777216 colors): 0 <= r,g,b <= 255 (br) ");
+    console.Out.WriteLine();
+    console.Out.WriteLine("(uon,bon)24 bits (16777216 colors): 0 <= r,g,b <= 255 (br) ");
 
     string cl(int r, int v, int b) =>
         esc + "[48;2;" + r + ";" + v + ";" + b + "m ";
@@ -199,37 +199,37 @@ void AnsiColorTest(cons.IAnsiVtConsole console)
     int cr, cb = 0, cv = 0;
     for (cr = 0; cr < 255; cr += stp)
         r += cl(cr, cv, cb);
-    console.Out.WriteLn(r);
+    console.Out.WriteLine(r);
 
     r = "";
     cr = 0;
     for (cv = 0; cv < 255; cv += stp)
         r += cl(cr, cv, cb);
-    console.Out.WriteLn(r);
+    console.Out.WriteLine(r);
 
     cv = 0;
     r = "";
     for (cb = 0; cb < 255; cb += stp)
         r += cl(cr, cv, cb);
-    console.Out.WriteLn(r);
+    console.Out.WriteLine(r);
 
     r = "";
     for (cb = 0; cb < 255; cb += stp)
         r += cl(cb, cb, 0);
-    console.Out.WriteLn(r);
+    console.Out.WriteLine(r);
 
     r = "";
     for (cb = 0; cb < 255; cb += stp)
         r += cl(cb, 0, cb);
-    console.Out.WriteLn(r);
+    console.Out.WriteLine(r);
 
     r = "";
     for (cb = 0; cb < 255; cb += stp)
         r += cl(0, cb, cb);
-    console.Out.WriteLn(r);
+    console.Out.WriteLine(r);
 
     r = "";
     for (cb = 0; cb < 255; cb += stp)
         r += cl(cb, cb, cb);
-    console.Out.WriteLn(r);
+    console.Out.WriteLine(r);
 }

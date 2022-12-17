@@ -137,10 +137,10 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 # Version history
 
-1.0.12
+1.0.12 - 12-17-2022
 
     - rename Writeln methods by WriteLine
-    - rename Log,Logn methods by Write,WriteLine
-
+    - suppress Log,Logln & logger refactoring
+    - add code documentation
 ___
 

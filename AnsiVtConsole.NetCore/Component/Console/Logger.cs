@@ -119,6 +119,6 @@ public sealed class Logger
         var ls = (message + "").Split(_crlf, StringSplitOptions.None)
             .Select(x => _console.Colors.Log + x);
         foreach (var l in ls)
-            _out.WriteLn(l);
+            _out.WriteLine(l);
     }
 }

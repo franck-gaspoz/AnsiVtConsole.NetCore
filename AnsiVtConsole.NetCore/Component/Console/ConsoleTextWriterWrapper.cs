@@ -654,14 +654,14 @@ namespace AnsiVtConsole.NetCore.Component.Console
             var colors = Console.Colors;
             lock (@out.Lock!)
             {
-                @out.WriteLn($"OS={Environment.OSVersion} {(Environment.Is64BitOperatingSystem ? "64" : "32")}bits plateform={RuntimeEnvironment.OSType}");
-                @out.WriteLn($"{Bkf}{colors.HighlightIdentifier}window:{Rsf} left={colors.Numeric}{sc.WindowLeft}{Rsf},top={colors.Numeric}{sc.WindowTop}{Rsf},width={colors.Numeric}{sc.WindowWidth}{Rsf},height={colors.Numeric}{sc.WindowHeight}{Rsf},largest width={colors.Numeric}{sc.LargestWindowWidth}{Rsf},largest height={colors.Numeric}{sc.LargestWindowHeight}{Rsf}");
-                @out.WriteLn($"{colors.HighlightIdentifier}buffer:{Rsf} width={colors.Numeric}{sc.BufferWidth}{Rsf},height={colors.Numeric}{sc.BufferHeight}{Rsf} | input encoding={colors.Numeric}{sc.InputEncoding.EncodingName}{Rsf} | output encoding={colors.Numeric}{sc.OutputEncoding.EncodingName}{Rsf}");
-                @out.WriteLn($"default background color={Bkf}{colors.KeyWord}{Console.Settings.DefaultBackground}{Rsf} | default foreground color={colors.KeyWord}{Console.Settings.DefaultForeground}{Rsf}");
+                @out.WriteLine($"OS={Environment.OSVersion} {(Environment.Is64BitOperatingSystem ? "64" : "32")}bits plateform={RuntimeEnvironment.OSType}");
+                @out.WriteLine($"{Bkf}{colors.HighlightIdentifier}window:{Rsf} left={colors.Numeric}{sc.WindowLeft}{Rsf},top={colors.Numeric}{sc.WindowTop}{Rsf},width={colors.Numeric}{sc.WindowWidth}{Rsf},height={colors.Numeric}{sc.WindowHeight}{Rsf},largest width={colors.Numeric}{sc.LargestWindowWidth}{Rsf},largest height={colors.Numeric}{sc.LargestWindowHeight}{Rsf}");
+                @out.WriteLine($"{colors.HighlightIdentifier}buffer:{Rsf} width={colors.Numeric}{sc.BufferWidth}{Rsf},height={colors.Numeric}{sc.BufferHeight}{Rsf} | input encoding={colors.Numeric}{sc.InputEncoding.EncodingName}{Rsf} | output encoding={colors.Numeric}{sc.OutputEncoding.EncodingName}{Rsf}");
+                @out.WriteLine($"default background color={Bkf}{colors.KeyWord}{Console.Settings.DefaultBackground}{Rsf} | default foreground color={colors.KeyWord}{Console.Settings.DefaultForeground}{Rsf}");
                 if (RuntimeEnvironment.OSType == itpsrv.OSPlatform.Windows)
                 {
 #pragma warning disable CA1416 // Valider la compatibilité de la plateforme
-                    @out.WriteLn($"{Bkf}number lock={colors.Numeric}{sc.NumberLock}{Rsf} | capslock={colors.Numeric}{sc.CapsLock}{Rsf}");
+                    @out.WriteLine($"{Bkf}number lock={colors.Numeric}{sc.NumberLock}{Rsf} | capslock={colors.Numeric}{sc.CapsLock}{Rsf}");
 #pragma warning restore CA1416 // Valider la compatibilité de la plateforme
 #pragma warning disable CA1416 // Valider la compatibilité de la plateforme
                     @out.Write($"{Bkf}cursor visible={colors.Numeric}{sc.CursorVisible}{Rsf} | cursor size={colors.Numeric}{sc.CursorSize}");
@@ -1594,22 +1594,19 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
-        public void WriteLn(string s = "", bool ignorePrintDirectives = false) => WriteInternal(s, true, !ignorePrintDirectives);
-        public void WriteLn(object s, bool ignorePrintDirectives = false) => WriteInternal(s, true, !ignorePrintDirectives);
+        public void WriteLine(string text = "", bool ignorePrintDirectives = false) => WriteInternal(text, true, !ignorePrintDirectives);
+
+        public void WriteLine(object obj, bool ignorePrintDirectives = false) => WriteInternal(obj, true, !ignorePrintDirectives);
 
         public void Write(
-            string s = "",
-            bool lineBreak = false,
-            bool ignorePrintDirectives = false) => WriteInternal(s, lineBreak, !ignorePrintDirectives);
+            string text = "",
+            bool ignorePrintDirectives = false) => WriteInternal(text, false, !ignorePrintDirectives);
 
-        public void Echoln(char s, bool ignorePrintDirectives = false) => WriteInternal(s + "", true, !ignorePrintDirectives);
+        public void WriteLine(char character, bool ignorePrintDirectives = false) => WriteInternal(character + "", true, !ignorePrintDirectives);
 
-        public void Write(char s, bool lineBreak = false, bool ignorePrintDirectives = false) => WriteInternal(s + "", lineBreak, !ignorePrintDirectives);
+        public void Write(char character, bool ignorePrintDirectives = false) => WriteInternal(character + "", false, !ignorePrintDirectives);
 
-        public void Write(
-            object o,
-            bool lineBreak = false)
-            => WriteInternal(o, lineBreak);
+        public void Write(object obj) => WriteInternal(obj, false);
 
         /// <summary>
         /// output to stream
