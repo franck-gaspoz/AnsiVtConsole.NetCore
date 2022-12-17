@@ -137,7 +137,7 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 # Version history
 
-1.0.14 - 12-17-2022
+1.0.14,1.0.15 - 12-17-2022****
 
 - fix LogError,LogWarning
 
