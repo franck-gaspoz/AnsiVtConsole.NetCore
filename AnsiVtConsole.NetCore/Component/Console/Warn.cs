@@ -1,14 +1,14 @@
 ﻿namespace AnsiVtConsole.NetCore.Component.Console;
 
-public class Warn
+internal class Warn
 {
     private readonly ConsoleTextWriterWrapper _out;
-    private readonly Err _err;
+    private readonly Error _err;
     private readonly ColorSettings _colors;
 
     public Warn(
         ConsoleTextWriterWrapper outStream,
-        Err err,
+        Error err,
         ColorSettings colors)
     {
         _out = outStream;

@@ -1,11 +1,11 @@
 ﻿namespace AnsiVtConsole.NetCore.Component.Console;
 
-public sealed class Err
+internal sealed class Error
 {
     private readonly ConsoleTextWriterWrapper _out;
     private readonly ColorSettings _colors;
 
-    public Err(
+    public Error(
         ConsoleTextWriterWrapper outStream,
         ColorSettings colors)
     {

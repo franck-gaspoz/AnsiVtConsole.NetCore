@@ -1,38 +1,50 @@
 ﻿namespace AnsiVtConsole.NetCore.Component.Console;
 
-public class Logger
+/// <summary>
+/// logger
+/// <para>log to console, can forwards to System.Diagnostics.Debug</para>
+/// </summary>
+public sealed class Logger
 {
     private readonly ConsoleTextWriterWrapper _out;
     private readonly IAnsiVtConsole _console;
-    private readonly Err _err;
+    private readonly Error _err;
+    private readonly Warn _warn;
     private readonly string[] _crlf = { Environment.NewLine };
 
-    public Logger(
+    internal Logger(
         IAnsiVtConsole console,
         ConsoleTextWriterWrapper @out,
-        Err err
+        Error err,
+        Warn warn
         )
     {
         _console = console;
         _out = @out;
         _err = err;
+        _warn = warn;
     }
 
-    public void LogError(Exception ex, bool enableForwardLogsToSystemDiagnostics = true)
+    /// <summary>
+    /// log an error
+    /// </summary>
+    /// <param name="exception">exception</param>
+    /// <param name="enableForwardLogsToSystemDiagnostics">enable or disable to replicate log to System.Diagnostics.Debug</param>
+    public void LogError(Exception exception, bool enableForwardLogsToSystemDiagnostics = true)
     {
         if (_console.Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
-            System.Diagnostics.Debug.WriteLine(ex + "");
+            System.Diagnostics.Debug.WriteLine(exception + "");
         if (_console.Settings.DumpExceptions)
         {
-            LogError(ex, string.Empty, enableForwardLogsToSystemDiagnostics);
+            LogError(exception, string.Empty, enableForwardLogsToSystemDiagnostics);
         }
         else
         {
-            var msg = ex.Message;
-            while (ex.InnerException != null)
+            var msg = exception.Message;
+            while (exception.InnerException != null)
             {
-                ex = ex.InnerException;
-                msg += _crlf + ex.Message;
+                exception = exception.InnerException;
+                msg += _crlf + exception.Message;
             }
             var ls = msg.Split(_crlf, StringSplitOptions.None)
                 .Select(x => _console.Colors.Error + x);
@@ -40,14 +52,20 @@ public class Logger
         }
     }
 
-    public void LogError(Exception ex, string message = "", bool enableForwardLogsToSystemDiagnostics = true)
+    /// <summary>
+    /// log an error
+    /// </summary>
+    /// <param name="exception">exception</param>
+    /// <param name="message">message</param>
+    /// <param name="enableForwardLogsToSystemDiagnostics">enable or disable to replicate log to System.Diagnostics.Debug</param>
+    public void LogError(Exception exception, string message = "", bool enableForwardLogsToSystemDiagnostics = true)
     {
         if (_console.Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
-            System.Diagnostics.Debug.WriteLine(message + _crlf + ex + "");
+            System.Diagnostics.Debug.WriteLine(message + _crlf + exception + "");
         var ls = new List<string>();
         if (_console.Settings.DumpExceptions)
         {
-            ls = (ex + "").Split(_crlf, StringSplitOptions.None)
+            ls = (exception + "").Split(_crlf, StringSplitOptions.None)
             .Select(x => _console.Colors.Error + x)
             .ToList();
             if (message != null)
@@ -55,35 +73,50 @@ public class Logger
         }
         else
         {
-            ls.Insert(0, $"{_console.Colors.Error}{message}: {ex.Message}");
+            ls.Insert(0, $"{_console.Colors.Error}{message}: {exception.Message}");
         }
 
         _err.Logln(ls);
     }
 
-    public void LogError(string s, bool enableForwardLogsToSystemDiagnostics = true)
+    /// <summary>
+    /// log an error
+    /// </summary>
+    /// <param name="message">message</param>
+    /// <param name="enableForwardLogsToSystemDiagnostics">enable or disable to replicate log to System.Diagnostics.Debug</param>
+    public void LogError(string message, bool enableForwardLogsToSystemDiagnostics = true)
     {
         if (_console.Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
-            System.Diagnostics.Debug.WriteLine(s);
-        var ls = (s + "").Split(_crlf, StringSplitOptions.None)
+            System.Diagnostics.Debug.WriteLine(message);
+        var ls = (message + "").Split(_crlf, StringSplitOptions.None)
             .Select(x => _console.Colors.Error + x);
         _err.Logln(ls);
     }
 
-    public void LogWarning(string s, bool enableForwardLogsToSystemDiagnostics = true)
+    /// <summary>
+    /// log a warning
+    /// </summary>
+    /// <param name="message">message</param>
+    /// <param name="enableForwardLogsToSystemDiagnostics">enable or disable to replicate log to System.Diagnostics.Debug</param>
+    public void LogWarning(string message, bool enableForwardLogsToSystemDiagnostics = true)
     {
         if (_console.Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
-            System.Diagnostics.Debug.WriteLine(s);
-        var ls = (s + "").Split(_crlf, StringSplitOptions.None)
+            System.Diagnostics.Debug.WriteLine(message);
+        var ls = (message + "").Split(_crlf, StringSplitOptions.None)
             .Select(x => _console.Colors.Warning + x);
-        _err.Logln(ls);
+        _warn.Logln(ls);
     }
 
-    public void Log(string s, bool enableForwardLogsToSystemDiagnostics = true)
+    /// <summary>
+    /// log a message
+    /// </summary>
+    /// <param name="message">message</param>
+    /// <param name="enableForwardLogsToSystemDiagnostics">enable or disable to replicate log to System.Diagnostics.Debug</param>
+    public void Log(string message, bool enableForwardLogsToSystemDiagnostics = true)
     {
         if (_console.Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
-            System.Diagnostics.Debug.WriteLine(s);
-        var ls = (s + "").Split(_crlf, StringSplitOptions.None)
+            System.Diagnostics.Debug.WriteLine(message);
+        var ls = (message + "").Split(_crlf, StringSplitOptions.None)
             .Select(x => _console.Colors.Log + x);
         foreach (var l in ls)
             _out.WriteLn(l);

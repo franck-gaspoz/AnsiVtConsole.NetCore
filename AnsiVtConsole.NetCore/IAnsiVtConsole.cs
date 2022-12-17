@@ -9,10 +9,6 @@ namespace AnsiVtConsole.NetCore
 
         public WorkAreaSettings WorkAreaSettings { get; }
 
-        public Err Err { get; }
-
-        public Warn Warn { get; }
-
         public Inp Inp { get; }
 
         ColorSettings Colors { get; }
@@ -35,7 +31,7 @@ namespace AnsiVtConsole.NetCore
 
         void RedirectErr(string? filepath = null);
 
-        void RedirectErr(TextWriter? sw);
+        void RedirectErr(StreamWriter? sw);
 
         void RedirectOut(string? filepath = null);
 

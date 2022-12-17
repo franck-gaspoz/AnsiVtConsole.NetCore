@@ -35,8 +35,6 @@ console.Logger.LogError("console.Logger.LogError(\"error\")");
 console.Logger.LogError(
     new ArgumentException("bad argument exception"),
     "console.Logger.LogError(exception):");
-console.Warn.Logln("console.Warn.Log(\"err\")");
-console.Err.Logln("console.Err.Log(\"err\")");
 
 console.Out.WriteLn("(br,uon,bon)ansi vt methods (ANSI,Shortcuts) - colors test:(br)");
 

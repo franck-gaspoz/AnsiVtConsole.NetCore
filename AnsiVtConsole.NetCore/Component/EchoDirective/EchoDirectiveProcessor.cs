@@ -218,7 +218,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                                 catch (Exception ex)
                                 {
                                     if (_console.Settings.TraceCommandErrors)
-                                        _console.Err.Log(ex.Message);
+                                        _console.Error.Log(ex.Message);
                                 }
                             }
                             else
@@ -230,7 +230,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                                 catch (Exception ex)
                                 {
                                     if (_console.Settings.TraceCommandErrors)
-                                        _console.Err.Log(ex.Message);
+                                        _console.Error.Log(ex.Message);
                                 }
                             }
                         }
@@ -244,7 +244,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                             catch (Exception ex)
                             {
                                 if (_console.Settings.TraceCommandErrors)
-                                    _console.Err.Log(ex.Message);
+                                    _console.Error.Log(ex.Message);
                             }
                             result = null;
                         }
@@ -271,7 +271,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                             catch (Exception ex)
                             {
                                 if (_console.Settings.TraceCommandErrors)
-                                    _console.Err.Log(ex.Message);
+                                    _console.Error.Log(ex.Message);
                             }
                         }
                         else
@@ -285,7 +285,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
                                 catch (Exception ex)
                                 {
                                     if (_console.Settings.TraceCommandErrors)
-                                        _console.Err.Log(ex.Message);
+                                        _console.Error.Log(ex.Message);
                                 }
                                 result = null;
                             }

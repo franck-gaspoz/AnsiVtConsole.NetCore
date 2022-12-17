@@ -14,15 +14,16 @@ namespace AnsiVtConsole.NetCore
 {
     /// <summary>
     /// AnsiVtConsole.NetCore helps build fastly nice console applications
-    /// <para>
-    /// slowness due to:
-    /// - many system calls on both linux (ConsolePal.Unix.cs) and windows (ConsolePal.Windows.cs)
-    /// - the .net core make use of interop for each console method call in windows (ConsolePal.Windows.cs)
-    /// </para>
     /// </summary>
     [DebuggerDisplay("[Console : ID={Settings.ID} Out={Out} In={In} Err={StdErr}]")]
     public sealed class AnsiVtConsole : IAnsiVtConsole
     {
+        /*
+         * slowness due to:
+        - many system calls on both linux (ConsolePal.Unix.cs) and windows (ConsolePal.Windows.cs)
+        - the .net core make use of interop for each console method call in windows (ConsolePal.Windows.cs)
+        */
+
         #region public properties
 
         public AnsiVtConsoleSettings Settings { get; private set; } = new();
@@ -52,12 +53,12 @@ namespace AnsiVtConsole.NetCore
         /// <summary>
         /// ansi vr error output stream
         /// </summary>
-        public Err Err { get; private set; }
+        private readonly Error _error;
 
         /// <summary>
         /// ansi vr warning output stream
         /// </summary>
-        public Warn Warn { get; private set; }
+        private readonly Warn _warn;
 
         /// <summary>
         /// system standard err stream wrapper
@@ -103,6 +104,9 @@ namespace AnsiVtConsole.NetCore
 
         #endregion
 
+        /// <summary>
+        /// new instance of an ansi vt console
+        /// </summary>
         public AnsiVtConsole()
         {
             lock (_instanceLock)
@@ -113,16 +117,19 @@ namespace AnsiVtConsole.NetCore
             WorkArea = new(this);
             Out = new ConsoleTextWriterWrapper(this, sc.Out);
             Colors = new ColorSettings(this);
-            Err = new(Out, Colors);
-            Warn = new(Out, Err, Colors);
+            _error = new(Out, Colors);
+            _warn = new(Out, _error, Colors);
             Inp = new(Out);
             Cursor = new(this, Out);
-            Logger = new(this, Out, Err);
+            Logger = new(this, Out, _error, _warn);
             Shortcuts.Initialize(this);
         }
 
         #region operations
 
+        /// <summary>
+        /// output infos about the system and the console host
+        /// </summary>
         public void Infos()
         {
             lock (Out.Lock!)
@@ -153,13 +160,17 @@ namespace AnsiVtConsole.NetCore
 
         #region stream methods
 
-        public void RedirectOut(StreamWriter? sw)
+        /// <summary>
+        /// redirects outputs to a stream writer
+        /// </summary>
+        /// <param name="streamWriter">stream writer - set null to disable redirect</param>
+        public void RedirectOut(StreamWriter? streamWriter)
         {
-            if (sw != null)
+            if (streamWriter != null)
             {
-                Out.Redirect(sw);
+                Out.Redirect(streamWriter);
                 _outputWriter = sc.Out;
-                sc.SetOut(sw);
+                sc.SetOut(streamWriter);
                 Settings.IsOutputRedirected = true;
             }
             else
@@ -171,13 +182,17 @@ namespace AnsiVtConsole.NetCore
             }
         }
 
-        public void RedirectErr(TextWriter? sw)
+        /// <summary>
+        /// redirects errors to a stream writer
+        /// </summary>
+        /// <param name="streamWriter">stream writer - set null to disable redirect</param>
+        public void RedirectErr(StreamWriter? streamWriter)
         {
-            if (sw != null)
+            if (streamWriter != null)
             {
-                StdErr.Redirect(sw);
+                StdErr.Redirect(streamWriter);
                 _errorWriter = sc.Error;
-                sc.SetError(sw);
+                sc.SetError(streamWriter);
                 Settings.IsErrorRedirected = true;
             }
             else
@@ -189,12 +204,16 @@ namespace AnsiVtConsole.NetCore
             }
         }
 
-        public void RedirectOut(string? filepath = null)
+        /// <summary>
+        /// redirects outputs to a file
+        /// </summary>
+        /// <param name="filePath">file path - set null to disable redirect</param>
+        public void RedirectOut(string? filePath = null)
         {
-            if (filepath != null)
+            if (filePath != null)
             {
                 _outputWriter = sc.Out;
-                _outputFileStream = new FileStream(filepath, FileMode.Append, FileAccess.Write);
+                _outputFileStream = new FileStream(filePath, FileMode.Append, FileAccess.Write);
                 _outputStreamWriter = new StreamWriter(_outputFileStream);
                 sc.SetOut(_outputStreamWriter);
                 Out.Redirect(_outputStreamWriter);
@@ -210,12 +229,16 @@ namespace AnsiVtConsole.NetCore
             }
         }
 
-        public void RedirectErr(string? filepath = null)
+        /// <summary>
+        /// redirects errors to a file
+        /// </summary>
+        /// <param name="filePath">file path - set null to disable redirect</param>
+        public void RedirectErr(string? filePath = null)
         {
-            if (filepath != null)
+            if (filePath != null)
             {
                 _errorWriter = sc.Error;
-                _errorFileStream = new FileStream(filepath, FileMode.Append, FileAccess.Write);
+                _errorFileStream = new FileStream(filePath, FileMode.Append, FileAccess.Write);
                 _errorStreamWriter = new StreamWriter(_errorFileStream);
                 sc.SetOut(_errorStreamWriter);
                 StdErr.Redirect(_errorStreamWriter);
