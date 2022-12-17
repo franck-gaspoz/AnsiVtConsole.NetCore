@@ -140,6 +140,7 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 1.0.13 - 12-17-2022
 
 - fix refactoring Write,WriteLine
+- add default empty string to log methods
 
 1.0.12 - 12-17-2022
 
