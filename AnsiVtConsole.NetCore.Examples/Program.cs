@@ -24,7 +24,7 @@ console.Infos();
 
 console.Out.WriteLine("(br,uon,bon)console.Out.Echo(\"a string with echo directives tokens\"):(br)");
 console.Out.Write("(f=blue)console(f=darkgray).(f=yellow)Out(f=darkgray).(f=green)Echo(f=white)(");
-console.Out.Write("\"(b=red,f=yellow,uon)Hello, World!\"", false, true);
+console.Out.Write("\"(b=red,f=yellow,uon)Hello, World!\"", true);
 console.Out.WriteLine("(f=white))");
 console.Out.WriteLine("(br,b=red,f=yellow,uon)Hello, World!");
 
