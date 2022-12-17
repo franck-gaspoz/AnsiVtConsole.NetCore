@@ -84,7 +84,7 @@ public sealed class Logger
     /// </summary>
     /// <param name="message">message</param>
     /// <param name="enableForwardLogsToSystemDiagnostics">enable or disable to replicate log to System.Diagnostics.Debug</param>
-    public void LogError(string message, bool enableForwardLogsToSystemDiagnostics = true)
+    public void LogError(string message = "", bool enableForwardLogsToSystemDiagnostics = true)
     {
         if (_console.Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
             System.Diagnostics.Debug.WriteLine(message);
@@ -98,7 +98,7 @@ public sealed class Logger
     /// </summary>
     /// <param name="message">message</param>
     /// <param name="enableForwardLogsToSystemDiagnostics">enable or disable to replicate log to System.Diagnostics.Debug</param>
-    public void LogWarning(string message, bool enableForwardLogsToSystemDiagnostics = true)
+    public void LogWarning(string message = "", bool enableForwardLogsToSystemDiagnostics = true)
     {
         if (_console.Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
             System.Diagnostics.Debug.WriteLine(message);
@@ -112,7 +112,7 @@ public sealed class Logger
     /// </summary>
     /// <param name="message">message</param>
     /// <param name="enableForwardLogsToSystemDiagnostics">enable or disable to replicate log to System.Diagnostics.Debug</param>
-    public void Log(string message, bool enableForwardLogsToSystemDiagnostics = true)
+    public void Log(string message = "", bool enableForwardLogsToSystemDiagnostics = true)
     {
         if (_console.Settings.ForwardLogsToSystemDiagnostics && enableForwardLogsToSystemDiagnostics)
             System.Diagnostics.Debug.WriteLine(message);
