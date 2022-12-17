@@ -3,38 +3,35 @@
 internal sealed class Error
 {
     private readonly ConsoleTextWriterWrapper _out;
-    private readonly ColorSettings _colors;
 
-    public Error(
-        ConsoleTextWriterWrapper outStream,
-        ColorSettings colors)
+    public Error(ConsoleTextWriterWrapper outStream)
+        => _out = outStream;
+
+    public void Log(string text = "") => LogInternal(text, false);
+
+    public void LogLine(string text = "") => LogInternal(text, true);
+
+    public void LogLine(IEnumerable<string> texts)
     {
-        _out = outStream;
-        _colors = colors;
+        foreach (var s in texts)
+            LogLine(s);
     }
 
-    public void Log(string s = "") => Log(s, false);
-
-    public void Logln(string s = "") => Log(s, true);
-
-    public void Logln(IEnumerable<string> ls)
+    public void Log(IEnumerable<string> texts)
     {
-        foreach (var s in ls)
-            Logln(s);
-    }
-
-    public void Log(IEnumerable<string> ls)
-    {
-        foreach (var s in ls)
+        foreach (var s in texts)
             Log(s);
     }
 
-    public void Log(string s, bool lineBreak = false)
+    private void LogInternal(string text, bool lineBreak = false)
     {
         lock (_out.Lock!)
         {
             _out.RedirectToErr = true;
-            _out.Write($"{_colors.Error}{s}{_colors.Default}", lineBreak);
+            if (!lineBreak)
+                _out.Write(text);
+            else
+                _out.WriteLine(text);
             _out.RedirectToErr = false;
         }
     }

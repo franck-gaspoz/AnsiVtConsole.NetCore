@@ -117,8 +117,8 @@ namespace AnsiVtConsole.NetCore
             WorkArea = new(this);
             Out = new ConsoleTextWriterWrapper(this, sc.Out);
             Colors = new ColorSettings(this);
-            _error = new(Out, Colors);
-            _warn = new(Out, _error, Colors);
+            _error = new(Out);
+            _warn = new(Out, _error);
             Inp = new(Out);
             Cursor = new(this, Out);
             Logger = new(this, Out, _error, _warn);

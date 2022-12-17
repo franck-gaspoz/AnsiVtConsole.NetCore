@@ -137,6 +137,10 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 # Version history
 
+1.0.14 - 12-17-2022
+
+- fix LogError,LogWarning
+
 1.0.13 - 12-17-2022
 
 - fix refactoring Write,WriteLine

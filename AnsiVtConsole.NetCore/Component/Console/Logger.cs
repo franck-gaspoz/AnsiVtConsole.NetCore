@@ -48,7 +48,7 @@ public sealed class Logger
             }
             var ls = msg.Split(_crlf, StringSplitOptions.None)
                 .Select(x => _console.Colors.Error + x);
-            _err.Logln(ls);
+            _err.LogLine(ls);
         }
     }
 
@@ -76,7 +76,7 @@ public sealed class Logger
             ls.Insert(0, $"{_console.Colors.Error}{message}: {exception.Message}");
         }
 
-        _err.Logln(ls);
+        _err.LogLine(ls);
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public sealed class Logger
             System.Diagnostics.Debug.WriteLine(message);
         var ls = (message + "").Split(_crlf, StringSplitOptions.None)
             .Select(x => _console.Colors.Error + x);
-        _err.Logln(ls);
+        _err.LogLine(ls);
     }
 
     /// <summary>
@@ -104,7 +104,7 @@ public sealed class Logger
             System.Diagnostics.Debug.WriteLine(message);
         var ls = (message + "").Split(_crlf, StringSplitOptions.None)
             .Select(x => _console.Colors.Warning + x);
-        _warn.Logln(ls);
+        _warn.LogLine(ls);
     }
 
     /// <summary>
