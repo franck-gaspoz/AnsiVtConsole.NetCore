@@ -5,6 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<AssemblyVersion>1.0.15.0</AssemblyVersion>
+	<FileVersion>1.0.15.0</FileVersion>
 	  
     <RootNamespace>AnsiVtConsole.NetCore</RootNamespace>
     <AssemblyName>AnsiVtConsole.NetCore</AssemblyName>    

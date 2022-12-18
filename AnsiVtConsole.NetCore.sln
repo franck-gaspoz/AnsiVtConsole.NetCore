@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{5F9784
 		assets\output.png = assets\output.png
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnsiVtConsole.NetCore.CommandLine", "AnsiVtConsole.NetCore.CommandLine\AnsiVtConsole.NetCore.CommandLine.csproj", "{035A4809-9FC6-422F-88FD-5F9CC8DE1BBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,14 @@ Global
 		{81478669-85E5-4F1E-9A87-8D9E85F75B50}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81478669-85E5-4F1E-9A87-8D9E85F75B50}.Release|x86.ActiveCfg = Release|Any CPU
 		{81478669-85E5-4F1E-9A87-8D9E85F75B50}.Release|x86.Build.0 = Release|Any CPU
+		{035A4809-9FC6-422F-88FD-5F9CC8DE1BBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{035A4809-9FC6-422F-88FD-5F9CC8DE1BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{035A4809-9FC6-422F-88FD-5F9CC8DE1BBC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{035A4809-9FC6-422F-88FD-5F9CC8DE1BBC}.Debug|x86.Build.0 = Debug|Any CPU
+		{035A4809-9FC6-422F-88FD-5F9CC8DE1BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{035A4809-9FC6-422F-88FD-5F9CC8DE1BBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{035A4809-9FC6-422F-88FD-5F9CC8DE1BBC}.Release|x86.ActiveCfg = Release|Any CPU
+		{035A4809-9FC6-422F-88FD-5F9CC8DE1BBC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

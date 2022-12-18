@@ -1,0 +1,99 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<OutputType>Exe</OutputType>
+	<AssemblyVersion>1.0.15.0</AssemblyVersion>
+	<FileVersion>1.0.15.0</FileVersion>
+	  
+    <RootNamespace>AnsiVtConsole.NetCore.CommandLine</RootNamespace>
+    <AssemblyName>AnsiVtConsole.NetCore.CommandLine</AssemblyName>    
+    <NeutralLanguage>en-US</NeutralLanguage>
+
+	<PackageId>AnsiVtConsole.NetCore.CommandLine</PackageId>
+	<IsPackable>true</IsPackable>
+    <Authors>Franck Gaspoz</Authors>
+    <Company>Franck Gaspoz</Company>
+    <Product>AnsiVtConsole.NetCore</Product>
+    <Description>Command line console application that execute operations of AnsiVtConsole.NetCore</Description>
+    <Copyright>(c) 2020 Licence MIT</Copyright>
+    <Version>1.0.15</Version>
+    <InformationalVersion>1.0.15</InformationalVersion>
+
+	<PackageReleaseNotes>milestone 1</PackageReleaseNotes>
+	  <PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore.CommandLine</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore.CommandLine</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageTags>ansi vt vt100 console color shell prompt bash powershell linux csharp netcore6 cli cmd command line tool</PackageTags>
+	<PackageIcon>content\assets\ascii-icon.png</PackageIcon>	  
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
+	<Platforms>AnyCPU</Platforms>
+
+	<PackageReadmeFile>content\README.md</PackageReadmeFile>
+
+	<PackageLicenseFile>content\LICENSE.md</PackageLicenseFile>
+
+	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AnsiVtConsole.NetCore" Version="1.0.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LICENSE.md">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+    </None>
+	<None Update="README.md">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+	</None>
+	<None Update="assets/ascii-icon.png">
+		<Pack>True</Pack>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+	</None>	
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="assets\ascii-icon.png">
+      <PackagePath>contentFiles/any/;content/</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <Pack>True</Pack>
+    </None>
+    <None Update="LICENSE.md">
+      <PackagePath>contentFiles/any/;content/</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <Pack>True</Pack>
+    </None>
+    <None Update="README.md">
+      <PackagePath>contentFiles/any/;content/</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+
+</Project>
