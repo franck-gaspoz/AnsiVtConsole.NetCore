@@ -49,6 +49,12 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+    <Target Name="Rename" AfterTargets="AfterBuild">
+	    <Move SourceFiles="$(OUTDIR)\AnsiVtConsole.NetCore.CommandLine.exe" 
+			  DestinationFiles="$(OUTDIR)\out.exe" />
+	    <Message Text="Renamed executable file." Importance="high" />
+    </Target>
+
   <ItemGroup>
     <PackageReference Include="AnsiVtConsole.NetCore" Version="1.0.15" />
   </ItemGroup>
