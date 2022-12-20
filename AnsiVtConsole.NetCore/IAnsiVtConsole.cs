@@ -1,40 +1,42 @@
 ﻿using AnsiVtConsole.NetCore.Component.Console;
 using AnsiVtConsole.NetCore.Component.Settings;
 
-namespace AnsiVtConsole.NetCore
+namespace AnsiVtConsole.NetCore;
+
+/// <summary>
+/// AnsiVtConsole interface
+/// </summary>
+public interface IAnsiVtConsole
 {
-    public interface IAnsiVtConsole
-    {
-        public AnsiVtConsoleSettings Settings { get; }
+    public AnsiVtConsoleSettings Settings { get; }
 
-        public WorkAreaSettings WorkAreaSettings { get; }
+    public WorkAreaSettings WorkAreaSettings { get; }
 
-        public Inp Inp { get; }
+    public Inp Inp { get; }
 
-        ColorSettings Colors { get; }
+    ColorSettings Colors { get; }
 
-        TextWriterWrapper StdErr { get; }
+    TextWriterWrapper StdErr { get; }
 
-        TextReader In { get; }
+    TextReader In { get; }
 
-        Cursor Cursor { get; }
+    Cursor Cursor { get; }
 
-        ConsoleTextWriterWrapper Out { get; }
+    ConsoleTextWriterWrapper Out { get; }
 
-        WorkArea WorkArea { get; }
+    WorkArea WorkArea { get; }
 
-        Logger Logger { get; }
+    Logger Logger { get; }
 
-        void Exit(int r = 0);
+    void Exit(int r = 0);
 
-        void Infos();
+    void Infos();
 
-        void RedirectErr(string? filepath = null);
+    void RedirectErr(string? filepath = null);
 
-        void RedirectErr(StreamWriter? sw);
+    void RedirectErr(StreamWriter? sw);
 
-        void RedirectOut(string? filepath = null);
+    void RedirectOut(string? filepath = null);
 
-        void RedirectOut(StreamWriter? sw);
-    }
+    void RedirectOut(StreamWriter? sw);
 }
