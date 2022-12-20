@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<OutputType>Exe</OutputType>
-	<AssemblyVersion>1.0.15.0</AssemblyVersion>
-	<FileVersion>1.0.15.0</FileVersion>
+	<AssemblyVersion>1.0.16.0</AssemblyVersion>
+	<FileVersion>1.0.16.0</FileVersion>
 	  
     <RootNamespace>AnsiVtConsole.NetCore.CommandLine</RootNamespace>
     <AssemblyName>AnsiVtConsole.NetCore.CommandLine</AssemblyName>    
@@ -20,8 +20,8 @@
     <Product>AnsiVtConsole.NetCore</Product>
     <Description>Command line console application that execute operations of AnsiVtConsole.NetCore</Description>
     <Copyright>(c) 2020 Licence MIT</Copyright>
-    <Version>1.0.15</Version>
-    <InformationalVersion>1.0.15</InformationalVersion>
+    <Version>1.0.16</Version>
+    <InformationalVersion>1.0.16</InformationalVersion>
 
 	<PackageReleaseNotes>milestone 1</PackageReleaseNotes>
 	  <PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore.CommandLine</PackageProjectUrl>
