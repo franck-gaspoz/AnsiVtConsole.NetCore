@@ -11,7 +11,7 @@ echo githubkey=%githubkey%
 echo version=%1%
 echo --------------------------------------------------------------------------------------
 
-git tag -a "v%0%" -m "v%0%";
-git push origin v%0%
-rem nuget push AnsiVtConsole.NetCore/bin/Release/AnsiVtConsole.NetCore.1.0.15.nupkg oy2aew5pvvred4ogzazq2qqa45n36mfubanxwqjp2nxsli -Source https://api.nuget.org/v3/index.json -Verbosity detailed
-rem dotnet nuget push "AnsiVtConsole.NetCore/bin/Release/AnsiVtConsole.NetCore.1.0.15.nupkg" --api-key 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 --source "github"
+git tag -a "v%1%" -m "v%1%";
+git push origin v%1%
+rem nuget push AnsiVtConsole.NetCore/bin/Release/AnsiVtConsole.NetCore.%1%.nupkg %nugetkey% -Source https://api.nuget.org/v3/index.json -Verbosity detailed
+rem dotnet nuget push "AnsiVtConsole.NetCore/bin/Release/AnsiVtConsole.NetCore.%1%.nupkg" --api-key %githubkey% --source "github"
