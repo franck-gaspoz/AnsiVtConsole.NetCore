@@ -23,22 +23,17 @@
     <InformationalVersion>1.0.16</InformationalVersion>
 
 	<PackageReleaseNotes>milestone 1</PackageReleaseNotes>
-	  <PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</PackageProjectUrl>
-	  <RepositoryUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</RepositoryUrl>
+	<PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
 	<PackageTags>ansi vt vt100 console color shell prompt bash powershell linux csharp netcore6 cli cmd command line tool</PackageTags>
 	<PackageIcon>content\assets\ascii-icon.png</PackageIcon>
 	  
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-
 	<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
-
 	<Platforms>AnyCPU</Platforms>
-
 	<PackageReadmeFile>content\README.md</PackageReadmeFile>
-
 	<PackageLicenseFile>content\LICENSE.md</PackageLicenseFile>
-
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		
   </PropertyGroup>
