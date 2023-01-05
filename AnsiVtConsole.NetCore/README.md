@@ -23,6 +23,30 @@ The library provides functionalities needed to build console applications runnin
 
 # Usage
 
+download the nuget from command line or add it from Visual Studio
+
+``` dos
+@rem version 1.0.16 or any new one
+dotnet add package AnsiVtConsole.NetCore --version 1.0.16
+```
+
+> **Warning**
+>
+> When installing the package, the following files are copied into your project:
+> - LICENSE.md
+> - README.md
+> - assets/example1.png
+> - assets/example2.png
+> - assets/example3.png
+> - assets/example4.png
+> - assets/output.png
+> - assets/ascii-icon.png
+>
+> you can delete any of these files 
+>
+> these files are set as `Content` and are copied to output folder on build
+
+
 ``` csharp
 using cons=AnsiVtConsole.NetCore;
 // get the ansi vt console
@@ -137,16 +161,20 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 # Version history
 
-`1.0.14,1.0.15` - 12-17-2022
+`1.0.16` - 01-05-2022
+- fix nupkg. add deployment of documentation files
+- update doc
+
+`1.0.14,1.0.15` - 17-12<-2022
 
 - fix LogError,LogWarning
 
-`1.0.13` - 12-17-2022
+`1.0.13` - 17-12-2022
 
 - fix refactoring Write,WriteLine
 - add default empty string to log methods
 
-`1.0.12` - 12-17-2022
+`1.0.12` - 17-12-2022
 
 - rename Writeln methods by WriteLine
 - suppress Log,Logln & logger refactoring

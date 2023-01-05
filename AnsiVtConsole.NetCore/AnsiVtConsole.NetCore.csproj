@@ -35,6 +35,7 @@
 	<PackageReadmeFile>content\README.md</PackageReadmeFile>
 	<PackageLicenseFile>content\LICENSE.md</PackageLicenseFile>
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	<PackageFlatten>false</PackageFlatten>
 		
   </PropertyGroup>
 
@@ -45,66 +46,84 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.4.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-    <PackageReference Include="Newtonsoft.json" Version="13.0.2" />
+    <None Remove="assets\ascii-icon.png" />
+    <None Remove="assets\example1.png" />
+    <None Remove="assets\example2.png" />
+    <None Remove="assets\example3.png" />
+    <None Remove="assets\example4.png" />
+    <None Remove="assets\output.png" />
+    <None Remove="LICENSE.md" />
+    <None Remove="README.md" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="LICENSE.md">
-		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="assets\ascii-icon.png">
+		<CopyToOuput>true</CopyToOuput>
+		<copyToOuput>true</copyToOuput>
+		<IncludeInPackage>true</IncludeInPackage>
+		<BuildAction>Content</BuildAction>
+		<copyToOutput>true</copyToOutput>
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<CopyToPublishDirectory>Always</CopyToPublishDirectory>
 		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/;content/</PackagePath>
+		<PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
-    </None>
-	<None Update="README.md">
-		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
-	</None>
-	<None Update="assets/ascii-icon.png">
-		<Pack>True</Pack>
-		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
-	</None>
-	<None Update="assets/output.png">
-		<Pack>True</Pack>
-		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
-	</None>
-	<None Update="assets/example1.png">
-		<Pack>True</Pack>
-		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
-	</None>
-	<None Update="assets/example2.png">
-		<Pack>True</Pack>
-		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
-	</None>
-	<None Update="assets/example3.png">
-		<Pack>True</Pack>
-		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
-	</None>
-	<None Update="assets/example4.png">
-		<Pack>True</Pack>
-		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
-	</None>
+    </Content>
+    <Content Include="assets\example1.png">
+      <Pack>True</Pack>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <IncludeInPackage>true</IncludeInPackage>
+    </Content>
+    <Content Include="assets\example2.png">
+      <Pack>True</Pack>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+	  <IncludeInPackage>true</IncludeInPackage>
+	</Content>
+    <Content Include="assets\example3.png">
+      <Pack>True</Pack>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+	  <IncludeInPackage>true</IncludeInPackage>
+    </Content>
+    <Content Include="assets\example4.png">
+      <Pack>True</Pack>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+	  <IncludeInPackage>true</IncludeInPackage>
+    </Content>
+    <Content Include="assets\output.png">
+      <Pack>True</Pack>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <IncludeInPackage>true</IncludeInPackage>
+	</Content>
+    <Content Include="LICENSE.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>True</Pack>
+      <PackagePath>contentFiles/any/any/;content/</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <IncludeInPackage>true</IncludeInPackage>
+	</Content>
+    <Content Include="README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>True</Pack>
+      <PackagePath>contentFiles/any/any/;content/</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <IncludeInPackage>true</IncludeInPackage>
+	</Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.4.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.json" Version="13.0.2" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
