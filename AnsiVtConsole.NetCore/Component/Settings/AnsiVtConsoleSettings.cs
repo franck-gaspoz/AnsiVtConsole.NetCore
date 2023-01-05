@@ -34,4 +34,6 @@ public class AnsiVtConsoleSettings
     public bool ForwardLogsToSystemDiagnostics { get; set; } = true;
 
     public int TabLength { get; set; } = 7;
+
+    public bool IsAnsiVtDisabled { get; set; } = false;
 }
