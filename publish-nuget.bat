@@ -13,5 +13,5 @@ echo ---------------------------------------------------------------------------
 
 git tag -a v%1 -m v%1
 git push origin v%1
-nuget push CommandLine.NetCore/bin/Release/CommandLine.NetCore.%1.nupkg %nugetkey% -SkipDuplicate -Source https://api.nuget.org/v3/index.json -Verbosity detailed
-dotnet nuget push "CommandLine.NetCore/bin/Release/CommandLine.NetCore.%1.nupkg" --skip-duplicate --api-key %githubkey% --source "github"
+nuget push CommandLine.NetCore/bin/Release/AnsiVtConsole.NetCore.%1.nupkg %nugetkey% -SkipDuplicate -Source https://api.nuget.org/v3/index.json -Verbosity detailed
+dotnet nuget push "CommandLine.NetCore/bin/Release/AnsiVtConsole.NetCore.%1.nupkg" --skip-duplicate --api-key %githubkey% --source "github"
