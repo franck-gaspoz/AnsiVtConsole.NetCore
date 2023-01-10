@@ -1,4 +1,9 @@
-﻿using System.Reflection;
+﻿//#define Enable_Buffer
+using System.Reflection;
+using System.Text;
+
+using AnsiVtConsole.NetCore.Component.Console;
+using AnsiVtConsole.NetCore.Component.Parser.ANSI;
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 using static AnsiVtConsole.NetCore.Component.EchoDirective.Shortcuts;
@@ -9,6 +14,10 @@ var console = new cons.AnsiVtConsole();
 
 var title = $"| AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version} |";
 var sep = "".PadLeft(title.Length, '-');
+
+#if Enable_Buffer
+console.Out.EnableBuffer();
+#endif
 
 console.Out.WriteLine($"(bon,f=cyan){sep}");
 console.Out.WriteLine($"(bon,f=cyan){title}");
@@ -118,6 +127,79 @@ current print directives are:
 console.Out.WriteLine(PrintDocText);
 
 console.Out.WriteLine();
+console.Out.WriteLine("(br,uon,bon)console markup and ANSI parsing settings:(br)");
+
+var text = "(f=red,b=yellow,uon)a text written in red with a yellow foreground(f=white,b=black,tdoff)";
+var text2 = $"{SGR_Underline}an underlined text defined with escaped characters (without markup){SGR_Reset}";
+
+var ascii = new StringBuilder();
+ascii.Append(ASCII.FF);
+ascii.Append(ASCII.LF);
+ascii.Append(ASCII.ACK);
+ascii.Append(ASCII.BEL);
+ascii.Append(ASCII.CR);
+ascii.Append(ASCII.DC1);
+
+console.Out.WriteLine(text);
+console.Out.WriteLine(text2);
+console.Out.WriteLine();
+console.Out.WriteLine("(f=green)console.Settings.IsMarkupDisabled = true;");
+console.Out.WriteLine();
+console.Settings.IsMarkupDisabled = true;
+console.Out.WriteLine(text);
+console.Out.WriteLine(text2);
+
+console.Settings.IsMarkupDisabled = false;
+console.Out.WriteLine();
+console.Out.WriteLine("(f=green)console.Settings.IsRawOutputEnabled = true;");
+console.Out.WriteLine();
+console.Settings.IsMarkupDisabled = false;
+console.Settings.IsRawOutputEnabled = true;
+console.Out.WriteLine(text);
+console.Out.WriteLine(text2);
+
+console.Settings.IsMarkupDisabled = false;
+console.Settings.IsRawOutputEnabled = false;
+console.Out.WriteLine();
+console.Out.WriteLine("(f=green)console.Settings.IsRawOutputEnabled = true;");
+console.Out.WriteLine("(f=green)console.Settings.ReplaceNonPrintableCharactersByTheirName = false;");
+console.Out.WriteLine();
+console.Settings.IsRawOutputEnabled = true;
+console.Settings.ReplaceNonPrintableCharactersByTheirName = false;
+console.Out.WriteLine(text);
+console.Out.WriteLine(text2);
+
+console.Settings.ReplaceNonPrintableCharactersByTheirName = true;
+console.Settings.IsRawOutputEnabled = console.Settings.IsMarkupDisabled = false;
+
+console.Out.WriteLine();
+console.Out.WriteLine("(f=green)console.Out.GetText(str)");
+console.Out.WriteLine();
+console.Out.WriteLine(console.Out.GetText(text));
+console.Out.WriteLine(console.Out.GetText(text2));
+
+console.Out.WriteLine();
+console.Out.WriteLine("(f=green)console.Out.GetRawText(str,false)");
+console.Out.WriteLine();
+
+console.Out.WriteLine(console.Out.GetRawText(text + ascii));
+console.Out.WriteLine(console.Out.GetRawText(text2 + ascii));
+console.Out.WriteLine(console.Out.GetRawText(text + ascii, false));
+console.Out.WriteLine(console.Out.GetRawText(text2 + ascii, false));
+
+console.Out.WriteLine();
+console.Out.WriteLine("(f=green)console.Settings.RemoveANSISequences = true;");
+console.Out.WriteLine();
+console.Settings.RemoveANSISequences = true;
+console.Out.WriteLine(ANSIParser.GetText(text));
+console.Out.WriteLine(ANSIParser.GetText(text2));
+console.Settings.RemoveANSISequences = false;
+
+console.Out.WriteLine("(rdc)");
+
+#if Enable_Buffer
+console.Out.CloseBuffer();
+#endif
 
 void AnsiColorTest(cons.IAnsiVtConsole console)
 {

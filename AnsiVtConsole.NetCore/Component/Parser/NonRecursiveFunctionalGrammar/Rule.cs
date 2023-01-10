@@ -1,6 +1,6 @@
 namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
 {
-    internal sealed class Rule : List<string>
+    public sealed class Rule : List<string>
     {
         private static int _counter = 0;
         private static readonly object _counterLock = new();

@@ -1,6 +1,6 @@
 namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
 {
-    internal sealed class SyntacticBlockList : List<SyntacticBlock>
+    public sealed class SyntacticBlockList : List<SyntacticBlock>
     {
         public bool IsSelected;
 

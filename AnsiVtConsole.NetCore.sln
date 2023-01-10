@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{5F9784
 		assets\example2.png = assets\example2.png
 		assets\example3.png = assets\example3.png
 		assets\example4.png = assets\example4.png
+		assets\example5.png = assets\example5.png
 		assets\output.png = assets\output.png
 	EndProjectSection
 EndProject

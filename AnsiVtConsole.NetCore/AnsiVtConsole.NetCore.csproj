@@ -52,6 +52,7 @@
     <None Remove="assets\example3.png" />
     <None Remove="assets\example4.png" />
     <None Remove="assets\output.png" />
+    <None Remove="Component\Parser\ANSI\ansi-seq-patterns.txt" />
     <None Remove="LICENSE.md" />
     <None Remove="README.md" />
   </ItemGroup>
@@ -104,6 +105,18 @@
       <PackageCopyToOutput>true</PackageCopyToOutput>
       <IncludeInPackage>true</IncludeInPackage>
 	</Content>
+    <Content Include="Component\Parser\ANSI\ansi-seq-patterns.txt">
+		<CopyToOuput>true</CopyToOuput>
+		<copyToOuput>true</copyToOuput>
+		<IncludeInPackage>true</IncludeInPackage>
+		<BuildAction>Content</BuildAction>
+		<copyToOutput>true</copyToOutput>
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/any/Component/Parser/ANSI;content/Component/Parser/ANSI;lib/$(TargetFramework)/Component/Parser/ANSI/;content;contentFiles</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+	</Content>
     <Content Include="LICENSE.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Pack>True</Pack>
@@ -123,7 +136,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.4.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-    <PackageReference Include="Newtonsoft.json" Version="13.0.2" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -35,5 +35,23 @@ public class AnsiVtConsoleSettings
 
     public int TabLength { get; set; } = 7;
 
-    public bool IsAnsiVtDisabled { get; set; } = false;
+    /// <summary>
+    /// if set markup (print directives) is removed from outputs
+    /// </summary>
+    public bool IsMarkupDisabled { get; set; } = false;
+
+    /// <summary>
+    /// if set markup is not handled and outputed
+    /// </summary>
+    public bool IsRawOutputEnabled { get; set; } = false;
+
+    /// <summary>
+    /// if set and IsRawOutputEnabled, non printable characters are replaced by their name
+    /// </summary>
+    public bool ReplaceNonPrintableCharactersByTheirName { get; set; } = true;
+
+    /// <summary>
+    /// if set, any ansi sequence is removed from output
+    /// </summary>
+    public bool RemoveANSISequences { get; set; } = false;
 }

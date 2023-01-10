@@ -3,7 +3,7 @@ using System.Text;
 
 namespace AnsiVtConsole.NetCore.Component.Console
 {
-    internal sealed class EchoSequenceList : IEnumerable<EchoSequence>
+    public sealed class EchoSequenceList : IEnumerable<EchoSequence>
     {
         public readonly List<EchoSequence> List
             = new List<EchoSequence>();
@@ -36,8 +36,11 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 var n = 0;
                 foreach (var seq in List)
+                {
                     if (seq.IsText)
                         n += seq.Length;
+                }
+
                 return n;
             }
         }

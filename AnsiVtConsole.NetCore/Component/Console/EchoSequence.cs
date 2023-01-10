@@ -2,7 +2,7 @@
 
 namespace AnsiVtConsole.NetCore.Component.Console
 {
-    internal sealed class EchoSequence
+    public sealed class EchoSequence
     {
         public readonly EchoDirectives? PrintDirective;
         public readonly int FirstIndex;

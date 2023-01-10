@@ -90,21 +90,36 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
-        private static string GetPreferredRepresentation(char c, string labelFormat = "<{0}>", string textFormat = "{0}")
+        private static string GetPreferredRepresentation(
+            char c,
+            string labelFormat = "<{0}>",
+            string textFormat = "{0}",
+            bool escapablesOnly = false)
         {
             if (_codesToTexts!.TryGetValue(c, out var txt))
                 return string.Format(textFormat, txt);
-            return string.Format(labelFormat, _codesToNames![c]);
+            return escapablesOnly ?
+                c + ""
+                : string.Format(labelFormat, _codesToNames![c]);
         }
 
-        public static string GetNonPrintablesCodesAsLabel(string s, bool includeSP, string labelFormat = "<{0}>", string textFormat = "{0}")
+        public static string GetNonPrintablesCodesAsLabel(
+            string s,
+            bool includeSP,
+            bool escapablesOnly = false,
+            string labelFormat = "<{0}>",
+            string textFormat = "{0}")
         {
             RequireCodesToNames();
             var r = "";
             foreach (var c in s)
             {
                 var min = SP + (includeSP ? 0 : -1);
-                r += (c <= min) ? GetPreferredRepresentation(c, labelFormat, textFormat) : "" + c;
+                r += (c <= min) ? GetPreferredRepresentation(
+                    c,
+                    labelFormat,
+                    textFormat,
+                    escapablesOnly) : "" + c;
             }
             return r;
         }

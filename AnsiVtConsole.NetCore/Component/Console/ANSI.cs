@@ -552,14 +552,6 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
-        /*
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>ansi seq</returns>
-        public static string SGR_ => $"{SGR()}";
-        */
-
         #endregion
 
         #region color support

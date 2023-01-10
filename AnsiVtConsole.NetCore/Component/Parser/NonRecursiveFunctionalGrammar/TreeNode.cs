@@ -1,6 +1,6 @@
 namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
 {
-    internal sealed class TreeNode
+    public sealed class TreeNode
     {
         private static int _counter = 0;
         private static readonly object _counterLock = new();

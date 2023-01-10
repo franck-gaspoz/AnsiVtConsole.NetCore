@@ -1,7 +1,10 @@
-﻿using System.Drawing;
+﻿#define Ignore_BufferedOperationNotAvailableException
+
+using System.Drawing;
 using System.Runtime.CompilerServices;
 
 using AnsiVtConsole.NetCore.Component.EchoDirective;
+using AnsiVtConsole.NetCore.Component.Parser.ANSI;
 using AnsiVtConsole.NetCore.Component.Script;
 using AnsiVtConsole.NetCore.Component.UI;
 using AnsiVtConsole.NetCore.Lib;
@@ -922,8 +925,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             lock (Lock!)
             {
+#if !Ignore_BufferedOperationNotAvailableException
                 if (IsBufferEnabled)
                     throw new BufferedOperationNotAvailableException();
+#endif
                 _foregroundBackup = sc.ForegroundColor;
             }
         }
@@ -937,8 +942,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             lock (Lock!)
             {
+#if !Ignore_BufferedOperationNotAvailableException
                 if (IsBufferEnabled)
                     throw new BufferedOperationNotAvailableException();
+#endif
                 _backgroundBackup = sc.BackgroundColor;
             }
         }
@@ -1175,9 +1182,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             lock (Lock!)
             {
+#if !Ignore_BufferedOperationNotAvailableException
                 if (IsBufferEnabled)
                     throw new BufferedOperationNotAvailableException();
-
+#endif
                 try
                 {
                     WriteLineStream(ANSI.RSTXTA);         // reset text attr
@@ -1437,14 +1445,24 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <returns>text visible characters only</returns>
         public string GetText(string s)
         {
-            var r = GetPrint(s, false, false);
+            var r = GetPrint(s, true, true);
             return r;
         }
 
-        private string GetPrint(
+        /// <summary>
+        /// get text with or without print directives and ansi
+        /// </summary>
+        /// <param name="s">text to be filtered</param>
+        /// <param name="removeANSI">if set remove ansi sequences</param>
+        /// <param name="ignorePrintDirectives">if true remove print directives</param>
+        /// <param name="lineBreak">if true append a line break to the end</param>
+        /// <param name="printSequences">if not null is filled with the parsed sequences</param>
+        /// <returns>text visible characters only</returns>
+        public string GetPrint(
             string s,
+            bool removeANSI = true,
+            bool ignorePrintDirectives = true,
             bool lineBreak = false,
-            bool ignorePrintDirectives = false,
             EchoSequenceList? printSequences = null)
         {
             lock (Lock!)
@@ -1456,10 +1474,13 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 Console.RedirectOut(sw);
                 var e = Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea;
                 Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea = false;
-                if (!ignorePrintDirectives)
-                {
-                    // directives are removed
+
+                if (removeANSI)
                     s = ANSI.GetText(s);    // also removed ansi sequences
+
+                if (ignorePrintDirectives)
+                {
+                    // directives are removed                    
                     WriteInternal(s, lineBreak, true, true, printSequences);
                 }
                 else
@@ -1467,9 +1488,11 @@ namespace AnsiVtConsole.NetCore.Component.Console
                     // directives are keeped
                     WriteInternal(s, lineBreak, false, true, printSequences, false, false);
                 }
-                ms.Position = 0;
                 Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea = e;
+
                 sw.Flush();
+                ms.Position = 0;
+
                 var rw = new StreamReader(ms);
                 var txt = rw.ReadToEnd();
                 rw.Close();
@@ -1478,7 +1501,19 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
-        public string GetPrintWithEscapeSequences(string s, bool lineBreak = false)
+        public string GetRawText(
+            string txt,
+            bool escapableOnly = true,
+            bool useHexa = true)
+        {
+            var s = GetPrint(txt, false);
+            s = ASCII.GetNonPrintablesCodesAsLabel(s, false, escapableOnly);
+            if (useHexa)
+                s = ANSI.AvoidANSISequencesAndNonPrintableCharacters(s);
+            return s;
+        }
+
+        public string GetPrint(string s, bool lineBreak = false)
         {
             lock (Lock!)
             {
@@ -1628,6 +1663,11 @@ namespace AnsiVtConsole.NetCore.Component.Console
             bool getNonPrintablesASCIICodesAsLabel = true
             )
         {
+            doNotEvalutatePrintDirectives |= Console.Settings.IsMarkupDisabled;
+            parseCommands &= !Console.Settings.IsRawOutputEnabled;
+            getNonPrintablesASCIICodesAsLabel &= !(Console.Settings.IsRawOutputEnabled
+                && !Console.Settings.ReplaceNonPrintableCharactersByTheirName);
+
             if (IsMute)
                 return;
             lock (Lock!)
@@ -1639,11 +1679,15 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 }
                 else
                 {
+                    var txt = o.ToString()!;
+                    if (Console.Settings.RemoveANSISequences)
+                        txt = ANSIParser.GetText(txt);
+
                     if (parseCommands)
                     {
                         // call the EchoDirective component
                         EchoDirectiveProcessor.ParseTextAndApplyCommands(
-                            o.ToString()!,
+                            txt,
                             false,
                             "",
                             doNotEvalutatePrintDirectives,
@@ -1651,7 +1695,6 @@ namespace AnsiVtConsole.NetCore.Component.Console
                     }
                     else
                     {
-                        var txt = o.ToString()!;
                         if (getNonPrintablesASCIICodesAsLabel)
                         {
                             txt = ASCII.GetNonPrintablesCodesAsLabel(
@@ -1925,7 +1968,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 {
                     pds = s;
                     printSequences = new EchoSequenceList();
-                    s = GetPrint(s, false, ignorePrintDirectives, printSequences);
+                    s = GetPrint(s, !ignorePrintDirectives, !ignorePrintDirectives, false, printSequences);
                 }
                 var xr = x0 + s.Length - 1;
                 var xm = x + w - 1;

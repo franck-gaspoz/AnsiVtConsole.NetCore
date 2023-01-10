@@ -169,17 +169,14 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 - fix nupkg. add deployment of documentation files
 - update doc
 
-`1.0.14,1.0.15` - 12-17<-2022
-
+`1.0.14,1.0.15` - 12-17-2022
 - fix LogError,LogWarning
 
 `1.0.13` - 12-17-2022
-
 - fix refactoring Write,WriteLine
 - add default empty string to log methods
 
 `1.0.12` - 12-17-2022
-
 - rename Writeln methods by WriteLine
 - suppress Log,Logln & logger refactoring
 - add code documentation

@@ -19,12 +19,12 @@ namespace AnsiVtConsole.NetCore.Component.Console
         public override string ToString() => $"[text writer wrapper: id={ID} isMute={IsMute}]";
 
         /// <summary>
-        /// is oputput not mute
+        /// is oputput not muted
         /// </summary>
         public bool IsNotMute => !IsMute;
 
         /// <summary>
-        /// is output mut
+        /// is output muted
         /// </summary>
         public bool IsMute { get; set; }
 

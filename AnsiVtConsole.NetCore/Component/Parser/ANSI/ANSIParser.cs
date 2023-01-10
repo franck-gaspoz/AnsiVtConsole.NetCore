@@ -2,7 +2,7 @@ using AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar;
 
 namespace AnsiVtConsole.NetCore.Component.Parser.ANSI
 {
-    internal static class ANSIParser
+    public static class ANSIParser
     {
         #region attributes
 

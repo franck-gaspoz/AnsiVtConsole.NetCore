@@ -2,7 +2,7 @@ using AnsiVtConsole.NetCore.Component.Console;
 
 namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
 {
-    internal sealed class SyntacticBlock
+    public sealed class SyntacticBlock
     {
         public string Text;
 

@@ -1,6 +1,6 @@
 namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
 {
-    internal sealed class TreePath : List<TreeNode>
+    public sealed class TreePath : List<TreeNode>
     {
         public Rule? Rule;
 
