@@ -117,6 +117,9 @@
     /// &#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;<br/>
     /// &#128313; Unicode characters:<br/>
     /// &#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;<br/>    
+    /// DoubleUnderline<br/>
+    /// Cross<br/>
+    /// OutlinedCross<br/>
     /// Lire<br/>
     /// Yen<br/>
     /// None<br/>
@@ -661,6 +664,9 @@
 
         #region unicode characters
 
+        DoubleUnderline,
+        Cross,
+        OutlinedCross,
         Lire,
         Yen,
         None,

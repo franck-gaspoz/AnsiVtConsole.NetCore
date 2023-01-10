@@ -5,9 +5,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
     /// </summary>
     public static class Unicode
     {
-        /*public const char DoubleUnderline = '‗';
+        public const char DoubleUnderline = '‗';
         public const char Cross = '┼';  // 8224
-        public const char OutlinedCross = '╬';*/
+        public const char OutlinedCross = '╬';
         public const char Lire = '£';
         public const char Yen = '¥';
         public const char None = 'ø';
@@ -36,7 +36,6 @@ namespace AnsiVtConsole.NetCore.Component.Console
         public const char ArrowUpDownUnderline = '↨';
         public const char MoreOrLess = '±';
         public const char CornerBottomLeft = '∟';
-        //public const char BarVertical2 = '│';
         public const char BarSmallDottedVertical = '¦';
         public const char LeftChevron = '«';
         public const char RightChevron = '»';

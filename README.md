@@ -14,7 +14,9 @@ ___
 # Features
 
 The library provides functionalities needed to build console applications running in a terminal (WSL/WSL2, cmd.exe, ConEmu, bash, ...) with text interface. That includes:
-- **a text printer engine** that supports **print directives** allowing to manage console functionalities from text itself, as html would do but with a simplest grammar (that can be configured). That makes possible colored outputs, cursor control, text scrolling and also dynamic C# execution (scripting), based on **System.Console** and **ANSI VT100 / VT52 (VT100 type Fp or 3Fp, Fs, CSI, SGR)** 
+- **a text printer engine** that supports **print directives** (markup) allowing to manage console functionalities from text itself, as html would do but with a simplest grammar (that can be configured). That makes possible colored outputs, cursor control, text scrolling and also dynamic C# execution (scripting), based on **System.Console** and **ANSI VT100 / VT52 (VT100 type Fp or 3Fp, Fs, CSI, SGR)** 
+
+- A ANSI Parser that can identify/remove escape sequences in a text
 
 - The console output can be controlled by:
     - tokens in a string (print directives)
@@ -26,23 +28,25 @@ The library provides functionalities needed to build console applications runnin
 download the nuget from command line or add it from Visual Studio
 
 ``` dos
-@rem version 1.0.16 or any new one
-dotnet add package AnsiVtConsole.NetCore --version 1.0.16
+@rem version 1.0.17 or any new one
+dotnet add package AnsiVtConsole.NetCore --version 1.0.17
 ```
 
-> **Warning**
+> **Notice**
 >
 > When installing the package, the following files are copied into your project:
 > - LICENSE.md
 > - README.md
+> - Component/Parser/ANSI/ansi-seq-patterns.txt
 > - assets/example1.png
 > - assets/example2.png
 > - assets/example3.png
 > - assets/example4.png
+> - assets/example5.png
 > - assets/output.png
 > - assets/ascii-icon.png
 >
-> you can delete any of these files 
+> you can delete these files **EXCEPT `ansi-seq-patterns.txt`** (ANSI grammar) that is required for the ANSI parser to work
 >
 > these files are set as `Content` and are copied to output folder on build
 
@@ -53,7 +57,7 @@ using cons=AnsiVtConsole.NetCore;
 var console = new cons.AnsiVTConsole();
 ```
 
-## 1. using the text parser:
+## 1. using the markup :
 
 ``` csharp
 console.Write("(br,f=yellow,b=red)yellow text on red background(br)(f=cyan)current time is: (exec=System.DateTime.Now,br)");
@@ -71,7 +75,7 @@ System.Console.Out.Writeline($"{Br}{Yellow}{BRed}yellow text on red background{B
 
 ![output](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/output.png "output")
 
-# Print directives:
+# Print directives (markup):
 
 text can contains echo directives that changes the echo behavior. the echo directive syntax is formed according to this pattern: `(printDirective) or (printDirective=printDirectiveValue)`
 
@@ -81,7 +85,9 @@ text can contains echo directives that changes the echo behavior. the echo direc
     `AnsiVtConsole.NetCore.Component.Settings`
 - alternatively to the print directives you can use the strings shortcuts from the class: `AnsiVtConsole.NetCore.Component.EchoDirective`
 
-## 1. Colorization
+Available echo directives are defined in the class ``
+
+## 1. Colorization with SGR (Select Graphic Rendition)
 
 ```yaml
 f=ConsoleColor      : set foreground color
@@ -102,7 +108,7 @@ rdc                 : restore default colors```
 ConsoleColor := darkblue|darkgreen|darkcyan|darkred|darkmagenta|darkyellow|gray|darkgray|blue|green|cyan|red|magenta|yellow|white (not case sensitive)
 ```
 
-## 2. Text decoration (vt100)
+## 2. Text decoration (vt100) with SGR (Select Graphic Rendition)
 
 ```yaml
 uon                 : underline on
@@ -110,10 +116,10 @@ invon               : inverted colors on
 tdoff               : text decoration off and reset default colors
 lion                : ligtht colors
 bon                 : bold on
-blon                : blink on (not supported on Windows)
+blon                : blink on
 ```
 
-## 3. Echo flow control
+## 3. CSI (Control Sequence Introducer)
 
 ```yaml
 cls                 : clear screen
@@ -122,6 +128,8 @@ bkcr                : backup cursor position
 rscr                : restore cursor position
 crx=Int32           : set cursor x (0<=x<=WindowWidth)
 cry=Int32           : set cursor y (0<=y<=WindowHeight)
+crh                 : hide cursor
+crs                 : show cursor
 cleft               : move cursor left
 cright              : move cursor right
 cup                 : move cursor up
@@ -133,6 +141,7 @@ cndown=Int32        : move cursor n lines down
 cl                  : clear line
 clleft              : clear line from cursor left
 clright             : clear line from cursor right
+fillright           : fill line from cursor right
 chome               : move cursor to upper left corner
 tab                 : add a tab
 ```
@@ -143,6 +152,15 @@ tab                 : add a tab
 exec=CodeBlock|[[CodeBlock]] : executes and echo result of a C# code block
 ```
 
+```csharp
+using static AnsiVtConsole.NetCore.Component.Parser.ANSI;
+using cons=AnsiVtConsole.NetCore;
+// get the ansi vt console
+var console = new cons.AnsiVTConsole();
+
+console.Out.WriteLine("current date is: (exec=System.DateTime.Now.Date)");
+```
+
 ## 5. Application control
 
 ```yaml
@@ -150,19 +168,64 @@ info                : output infos about the console
 exit                : exit the current process
 ```
 
+## 6. ANSI Sequences
+
+ANSI sequences are defined in `AnsiVtConsole.NetCore.Component.Console` and can be used directly to build ANSI strings
+
+```csharp
+using static AnsiVtConsole.NetCore.Component.Parser.ANSI;
+using cons=AnsiVtConsole.NetCore;
+// get the ansi vt console
+var console = new cons.AnsiVTConsole();
+
+var str = $"{SGR_Underline}{SGR_CrossedOut}my text{SGR_SetBackgroundColor24bits(15,152,123)}in color";
+System.Console.WriteLine(str);
+
+// is equivalent to:
+
+cons.Out.WriteLine("(SGR_Underline,SGR_SlowBlink)my text(SGRB24=15:152:123)in color");
+
+// or to:
+
+cons.Out.WriteLine("(uon,blon)my text(f24=15:152:123)in color");
+
+```
+
+## 7. Unicode characters
+
+Unicode characters are defined in the class `AnsiVtConsole.NetCore.Component.Console`.
+
+```csharp
+
+using static AnsiVtConsole.NetCore.Component.Console.Unicode;
+using cons=AnsiVtConsole.NetCore;
+// get the ansi vt console
+var console = new cons.AnsiVTConsole();
+
+console.Out.WriteLine($"it's the (bkf,f=red){Demi}(rsf) or the (bkf,f=yellow){Quar}(rsf) of it");
+
+console.Out.WriteLine("(f=cyan,EdgeTopLeft,BarHorizontal,EdgeTopRight)");
+console.Out.WriteLine("(f=cyan,BarVertical,f=blue,Box,f=cyan,BarVertical)");
+console.Out.WriteLine("(f=cyan,EdgeBottomLeft,BarHorizontal,EdgeBottomRight)");
+```
+
 # Examples
 
 To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examples**:
 
 ![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example1.png "example1")
-![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example2.png "example2")
-![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example3.png "example3")
-![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example4.png "example4")
+![example2](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example2.png "example2")
+![example3](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example3.png "example3")
+![example4](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example4.png "example4")
+![example5](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example5.png "example5")
 
 # Version history
 
-`1.0.17` - 01-05-2023
-- add setting that make it possible to disable ansi/vt in console ouputs: `AnsiVtConsole.NetCore.Component.Settings.IsAnsiVtDisabled`
+`1.0.17` - 01-10-2023
+- add setting that make it possible to disable ansi/vt in console ouputs: `AnsiVtConsole.NetCore.Component.Settings` : `IsMarkupDisabled`,`IsRawOutputEnabled`,`ReplaceNonPrintableCharactersByTheirName`,`RemoveANSISequences`
+- add methods to get output text in various formats (without ansi,with unparsed markup,in shell escaped characters) : `GetText`,`GetRawText`,`ANSIParser.GetText` 
+- add grammar file for ANSI parser
+- enable buffering mode for any print directive
 - update doc
 
 `1.0.16` - 01-05-2022

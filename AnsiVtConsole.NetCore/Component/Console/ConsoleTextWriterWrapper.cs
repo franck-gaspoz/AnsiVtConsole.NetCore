@@ -254,6 +254,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
                 // Unicode characters
 
+                { EchoDirectives.DoubleUnderline+"" , (null,UnicodeToString,Unicode.DoubleUnderline) },
+                { EchoDirectives.Cross+"" , (null,UnicodeToString,Unicode.Cross) },
+                { EchoDirectives.OutlinedCross+"" , (null,UnicodeToString,Unicode.OutlinedCross) },
                 { EchoDirectives.Lire+"" , (null,UnicodeToString,Unicode.Lire) },
                 { EchoDirectives.Yen+"" , (null,UnicodeToString,Unicode.Yen) },
                 { EchoDirectives.None+"" , (null,UnicodeToString,Unicode.None) },

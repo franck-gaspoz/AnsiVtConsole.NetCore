@@ -6,6 +6,7 @@ using AnsiVtConsole.NetCore.Component.Console;
 using AnsiVtConsole.NetCore.Component.Parser.ANSI;
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
+using static AnsiVtConsole.NetCore.Component.Console.Unicode;
 using static AnsiVtConsole.NetCore.Component.EchoDirective.Shortcuts;
 
 using cons = AnsiVtConsole.NetCore;
@@ -127,6 +128,14 @@ current print directives are:
 console.Out.WriteLine(PrintDocText);
 
 console.Out.WriteLine();
+console.Out.WriteLine("(br,uon,bon)console markup and Unicode:(br)");
+
+console.Out.WriteLine($"it's the (bkf,f=red){Demi}(rsf) or the (bkf,f=yellow){Quar}(rsf) of it");
+
+console.Out.WriteLine("(f=cyan,EdgeTopLeft,BarHorizontal,EdgeTopRight)");
+console.Out.WriteLine("(f=cyan,BarVertical,f=blue,Box,f=cyan,BarVertical)");
+console.Out.WriteLine("(f=cyan,EdgeBottomLeft,BarHorizontal,EdgeBottomRight)");
+
 console.Out.WriteLine("(br,uon,bon)console markup and ANSI parsing settings:(br)");
 
 var text = "(f=red,b=yellow,uon)a text written in red with a yellow foreground(f=white,b=black,tdoff)";
