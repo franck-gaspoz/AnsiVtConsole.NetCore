@@ -208,6 +208,7 @@ console.Out.WriteLine("(f=cyan,EdgeTopLeft,BarHorizontal,EdgeTopRight)");
 console.Out.WriteLine("(f=cyan,BarVertical,f=blue,Box,f=cyan,BarVertical)");
 console.Out.WriteLine("(f=cyan,EdgeBottomLeft,BarHorizontal,EdgeBottomRight)");
 ```
+![example6](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example6.png "example6")
 
 # Examples
 
