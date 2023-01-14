@@ -238,6 +238,7 @@ this tool accepts these arguments:
 out.exe <text> [--raw [--esc-only] [--hexa] ] 
 ```
 
+- if `--err` outputs to standard error stream instead of standard output stream
 - if `--raw`, parse ANSI and non printable characters to show them by their names or representations
 - if `--raw` these options are avalaibles :
     - `--esc-only` : disable only knowns non printable characters (from ASCII)
