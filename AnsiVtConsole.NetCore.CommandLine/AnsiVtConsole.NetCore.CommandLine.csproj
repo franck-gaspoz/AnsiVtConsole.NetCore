@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<OutputType>Exe</OutputType>
-	<AssemblyVersion>1.0.0.0</AssemblyVersion>
-	<FileVersion>1.0.0.0</FileVersion>
+	<AssemblyVersion>1.0.18.0</AssemblyVersion>
+	<FileVersion>1.0.18.0</FileVersion>
 	  
     <RootNamespace>AnsiVtConsole.NetCore.CommandLine</RootNamespace>
     <AssemblyName>AnsiVtConsole.NetCore.CommandLine</AssemblyName>    
@@ -17,9 +17,9 @@
     <Company>Franck Gaspoz</Company>
 	<Product>AnsiVtConsole.NetCoreCommandLine</Product>
     <Description>Command line console application 'echo' with powerfull support of ANSI/VT based on AnsiVtConsole.NetCore</Description>
-    <Copyright>(c) 2020 Licence MIT</Copyright>
-    <Version>1.0.0</Version>
-    <InformationalVersion>1.0.0</InformationalVersion>
+    <Copyright>(c) Franck Gaspoz 2023 Licence MIT</Copyright>
+    <Version>1.18.0</Version>
+    <InformationalVersion>1.18.0</InformationalVersion>
 
 	<Platforms>AnyCPU</Platforms>
   </PropertyGroup>
