@@ -31,7 +31,7 @@
   </PropertyGroup>
 
     <Target Name="Rename" AfterTargets="AfterBuild">
-	    <Move SourceFiles="$(OUTDIR)\AnsiVtConsole.NetCore.CommandLine.exe" DestinationFiles="$(OUTDIR)\out.exe" />
+	    <Move SourceFiles="$(OUTDIR)\AnsiVtConsole.NetCore.CommandLine.exe" DestinationFiles="$(OUTDIR)\echo.exe" />
 	    <Message Text="Renamed executable file." Importance="high" />
     </Target>
 

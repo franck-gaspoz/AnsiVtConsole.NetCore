@@ -213,12 +213,15 @@ console.Out.WriteLine("(f=cyan,EdgeBottomLeft,BarHorizontal,EdgeBottomRight)");
 
 # Examples
 
+### Colorization
+
 To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examples**:
 
 ![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example1.png "example1")
 ![example2](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example2.png "example2")
-![example3](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example3.png "example3")
-![example4](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example4.png "example4")
+
+### AnsiVtConsole markup and Ansi/Vt parsing
+
 ![example5](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example5.png "example5")
 
 # Version history
