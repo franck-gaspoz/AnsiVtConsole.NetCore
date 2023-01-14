@@ -1,5 +1,10 @@
-﻿namespace AnsiVtConsole.NetCore.Component.Console
+﻿#pragma warning disable CS1591
+
+namespace AnsiVtConsole.NetCore.Component.Console
 {
+    /// <summary>
+    /// acutal work area
+    /// </summary>
     public sealed class ActualWorkArea
     {
         public readonly string Id;
@@ -27,3 +32,4 @@
         }
     }
 }
+#pragma warning restore CS1591

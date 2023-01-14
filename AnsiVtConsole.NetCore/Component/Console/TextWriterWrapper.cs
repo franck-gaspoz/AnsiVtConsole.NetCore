@@ -3,19 +3,26 @@ using System.Text;
 
 namespace AnsiVtConsole.NetCore.Component.Console
 {
+    /// <summary>
+    /// base clase for console text writer
+    /// </summary>
     public class TextWriterWrapper
     {
         #region attributes
 
         static int _instanceCounter = 1000;
 
-        static readonly object _instanceLock = new object();
+        static readonly object _instanceLock = new();
 
         /// <summary>
         /// id
         /// </summary>
         public int ID;
 
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>string</returns>
         public override string ToString() => $"[text writer wrapper: id={ID} isMute={IsMute}]";
 
         /// <summary>

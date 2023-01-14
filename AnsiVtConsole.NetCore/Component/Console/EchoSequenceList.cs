@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable CS1591
+
+using System.Collections;
 using System.Text;
 
 namespace AnsiVtConsole.NetCore.Component.Console
@@ -6,7 +8,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
     public sealed class EchoSequenceList : IEnumerable<EchoSequence>
     {
         public readonly List<EchoSequence> List
-            = new List<EchoSequence>();
+            = new();
 
         public void Add(EchoSequence printSequence) => List.Add(printSequence);
 

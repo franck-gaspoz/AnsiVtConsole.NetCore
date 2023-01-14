@@ -26,6 +26,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         public bool AvoidConsoleAutoLineBreakAtEndOfLine = false;
 
+        /// <summary>
+        /// work area of a console
+        /// </summary>
+        /// <param name="console">console</param>
         public WorkArea(IAnsiVtConsole console)
         {
             _console = console;
@@ -33,8 +37,14 @@ namespace AnsiVtConsole.NetCore.Component.Console
         }
 
         /// <summary>
-        /// WorkArea
+        /// work area of a console with fixed coordinates
         /// </summary>
+        /// <param name="console">console</param>
+        /// <param name="id">workarea id</param>
+        /// <param name="x">from x</param>
+        /// <param name="y">from y</param>
+        /// <param name="width">width</param>
+        /// <param name="height">height</param>
         public WorkArea(
             IAnsiVtConsole console,
             string id,
@@ -49,8 +59,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
         }
 
         /// <summary>
-        /// WorkArea
+        /// work area of a console from an existing one
         /// </summary>
+        /// <param name="console">console</param>
+        /// <param name="workArea">workarea</param>
         public WorkArea(
             IAnsiVtConsole console,
             WorkArea workArea)
@@ -65,6 +77,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         public bool IsEmpty => Rect.IsEmpty;
 
+        /// <summary>
+        /// is inside work area
+        /// </summary>
         public bool InWorkArea => !Rect.IsEmpty;
 
         /// <summary>
@@ -90,9 +105,26 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return true;
         }
 
-        public (int x, int y, int w, int h) GetCoords(int x, int y, int w, int h, bool fitToVisibleArea = true)
+        /// <summary>
+        /// fix a rectangle coordianates to be valid and eventually limited inside a workarea
+        /// <para>
+        /// notes:<br></br>
+        /// - (1) dos console (eg. vs debug consolehep) set WindowTop as y scroll position. WT console doesn't (still 0)<br></br>
+        /// - scroll -> native dos console set WindowTop and WindowLeft as base scroll coordinates<br></br>
+        /// - if WorkArea defined, we must use absolute coordinates and not related<br></br>
+        /// - CursorLeft and CursorTop are always good<br></br>
+        /// </para>
+        /// </summary>
+        /// <param name="x">from x</param>
+        /// <param name="y">from y</param>
+        /// <param name="w">width</param>
+        /// <param name="h">height</param>
+        /// <param name="fitToVisibleArea">if true fit the rectangle inside workarea</param>
+        /// <returns>adjusted coordinates</returns>
+        public (int x, int y, int w, int h)
+            GetCoords(int x, int y, int w, int h, bool fitToVisibleArea = true)
         {
-            // (1) dos console (eg. vs debug consolehep) set WindowTop as y scroll position. WSL console doesn't (still 0)
+            // (1) dos console (eg. vs debug consolehep) set WindowTop as y scroll position. WT console doesn't (still 0)
             // scroll -> native dos console set WindowTop and WindowLeft as base scroll coordinates
             // if WorkArea defined, we must use absolute coordinates and not related
             // CursorLeft and CursorTop are always good
@@ -133,6 +165,11 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
+        /// <summary>
+        /// compute actual work area if possible
+        /// </summary>
+        /// <param name="fitToVisibleArea">if set, limit to visible area only</param>
+        /// <returns>work area</returns>
         public ActualWorkArea ActualWorkArea(bool fitToVisibleArea = true)
         {
             if (!IsConsoleGeometryEnabled)
@@ -145,10 +182,14 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return new ActualWorkArea(Id, x, y, w, h);
         }
 
+        /// <summary>
+        /// set cursor at top of work area
+        /// </summary>
         public void SetCursorAtWorkAreaTop()
         {
             if (!IsConsoleGeometryEnabled || Rect.IsEmpty)
                 return;     // TODO: set cursor even if workarea empty?
+
             lock (_console.Out.Lock!)
             {
                 _console.Out.SetCursorPos(Rect.X, Rect.Y);

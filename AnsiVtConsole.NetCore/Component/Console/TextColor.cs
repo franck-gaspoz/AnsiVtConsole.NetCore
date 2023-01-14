@@ -67,7 +67,7 @@ public sealed class TextColor
     /// <summary>
     /// Invert
     /// </summary>
-    public TextColor Invert() => new TextColor(_background, _foreground);
+    public TextColor Invert() => new(_background, _foreground);
 
     /// <summary>
     /// to string

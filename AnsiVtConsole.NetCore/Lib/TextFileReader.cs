@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿#pragma warning disable CS1591
+
+using System.Runtime.InteropServices;
 
 namespace AnsiVtConsole.NetCore.Lib
 {

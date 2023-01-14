@@ -5,6 +5,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
     /// </summary>
     public static class Unicode
     {
+#pragma warning disable CS1591
+
         public const char DoubleUnderline = '‗';
         public const char Cross = '┼';  // 8224
         public const char OutlinedCross = '╬';
@@ -75,5 +77,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
         public const char CardCarro = '♦';
         public const char SmileyTransp = '☺';
         public const char Smiley = '☻';
+
+#pragma warning restore CS1591
+
     }
 }

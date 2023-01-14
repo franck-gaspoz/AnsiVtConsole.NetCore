@@ -10,13 +10,34 @@ namespace AnsiVtConsole.NetCore.Component.Console
     {
         #region char codes and prefixs
 
+        /// <summary>
+        /// ESC
+        /// </summary>
         public static readonly string ESC = ((char)27) + "";
 
+        /// <summary>
+        /// CRLF
+        /// </summary>
         public static readonly string CRLF = Environment.NewLine; //(char)13 + ((char)10 + ""); // @TODO: validate on linux
 
+        /// <summary>
+        /// CSI
+        /// </summary>
         public static readonly string CSI = $"{ESC}[";
 
+        /// <summary>
+        /// build a SGR sequence
+        /// </summary>
+        /// <param name="n">n</param>
+        /// <param name="seq">seq</param>
+        /// <returns>text</returns>
         public static string SGR(int n, string? seq = null) => $"{ESC}[{n}{(string.IsNullOrWhiteSpace(seq) ? "" : $";{seq}")}m";
+
+        /// <summary>
+        /// build a SGR sequence
+        /// </summary>
+        /// <param name="seq">seq</param>
+        /// <returns>text</returns>
         public static string SGR(string? seq = null) => $"{ESC}[{seq}m";
 
         #endregion
@@ -141,6 +162,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2211:Les champs non constants ne doivent pas être visibles", Justification = "<En attente>")]
         public static string DSR = $"{CSI}6n";
 
+        /// <summary>
+        /// ED parameter
+        /// </summary>
         public enum EDParameter
         {
 
@@ -175,6 +199,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <returns>ansi seq</returns>
         public static string ED(EDParameter n) => $"{CSI}{(int)n}J";
 
+        /// <summary>
+        /// EL Parameter
+        /// </summary>
         public enum ELParameter
         {
 
@@ -306,13 +333,44 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         public enum SGR_4BitsColors
         {
+            /// <summary>
+            /// black
+            /// </summary>
             Black = 0,
+
+            /// <summary>
+            /// red
+            /// </summary>
             Red = 1,
+
+            /// <summary>
+            /// green
+            /// </summary>
             Green = 2,
+
+            /// <summary>
+            /// yellow
+            /// </summary>
             Yellow = 3,
+
+            /// <summary>
+            /// blue
+            /// </summary>
             Blue = 4,
+
+            /// <summary>
+            /// magenta
+            /// </summary>
             Magenta = 5,
+
+            /// <summary>
+            /// cyan
+            /// </summary>
             Cyan = 6,
+
+            /// <summary>
+            /// white
+            /// </summary>
             White = 7
         }
 
@@ -573,12 +631,27 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return r;
         }
 
+        /// <summary>
+        /// get a set foreground ansi seq from a 4 bit color value
+        /// </summary>
+        /// <param name="foregroundNum">color</param>
+        /// <returns>text</returns>
         public static string Set4BitsColorsForeground(int foregroundNum)
             => foregroundNum > -1 ? $"{CSI}{(((foregroundNum & 0b1000) != 0) ? "3" : "9")}{foregroundNum & 0b111}m" : "";
 
+        /// <summary>
+        /// get a set background ansi seq from a 4 bit color value
+        /// </summary>
+        /// <param name="backgroundNum">color</param>
+        /// <returns>text</returns>
         public static string Set4BitsColorsBackground(int backgroundNum)
             => backgroundNum > -1 ? $"{CSI}{(((backgroundNum & 0b1000) != 0) ? "4" : "10")}{backgroundNum & 0b111}m" : "";
 
+        /// <summary>
+        /// build a 4 bit color value from a console color
+        /// </summary>
+        /// <param name="c">console color</param>
+        /// <returns>color value, is dark</returns>
         public static (int colorNum, bool isDark) To4BitColorIndex(ConsoleColor c)
         {
             if (Enum.TryParse<Color4BitMap>((c + "").ToLower(), out var colbit))
@@ -593,6 +666,11 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
+        /// <summary>
+        /// build a 4 bit color value from a console color
+        /// </summary>
+        /// <param name="c">console color</param>
+        /// <returns>color value</returns>
         public static int To4BitColorNum(ConsoleColor? c)
         {
             if (c == null)
@@ -624,16 +702,26 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <returns>string without ansi sequences</returns>
         public static string GetText(string s) => ANSIParser.Parse(s).GetText();
 
-        public static string AvoidANSISequencesAndNonPrintableCharacters(string s)
+        /// <summary>
+        /// avoid ANSI sequences and non printable characters to be visible in a text
+        /// </summary>
+        /// <param name="text">text</param>
+        /// <returns>text</returns>
+        public static string AvoidANSISequencesAndNonPrintableCharacters(string text)
         {
-            s = s.Replace("" + (char)27, "\\x1b");
+            text = text.Replace("" + (char)27, "\\x1b");
             var r = "";
-            foreach (var c in s)
+            foreach (var c in text)
                 r += (c < 32) ? ToHexStr(c) : "" + c;
             return r;
         }
 
-        static string ToHexStr(int n)
+        /// <summary>
+        /// get a hex value text of a number in unix style 
+        /// </summary>
+        /// <param name="n">value</param>
+        /// <returns>text</returns>
+        public static string ToHexStr(int n)
         {
             var s = string.Format("\\x{0:X}", n);
             return s;

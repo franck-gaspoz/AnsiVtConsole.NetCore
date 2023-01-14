@@ -5,9 +5,9 @@ namespace AnsiVtConsole.NetCore.Lib
 {
     /// <summary>
     /// types names mangling extensions<br/>
-    /// from: https://www.codeproject.com/Tips/621812/User-friendly-names-for-Types<br/>
-    /// author: Dennis E https://www.codeproject.com/Members/User-5049496<br/>
-    /// under Licence CPOL <br/>   
+    /// largely based on the work of: Dennis E https://www.codeproject.com/Members/User-5049496<br/>
+    /// at: https://www.codeproject.com/Tips/621812/User-friendly-names-for-Types<br/>
+    /// provided under Licence CPOL<br/>   
     /// released 16/7/2013<br/>
     /// </summary>
     public static class TypesManglingExt
@@ -32,6 +32,11 @@ namespace AnsiVtConsole.NetCore.Lib
             { typeof(object), "object" }
         };
 
+        /// <summary>
+        /// get the keyword for a type
+        /// </summary>
+        /// <param name="type">type</param>
+        /// <returns>type keyword if any</returns>
         public static string? GetKeyword(this Type? type)
         {
             if (type == null)
@@ -40,8 +45,21 @@ namespace AnsiVtConsole.NetCore.Lib
             return result;
         }
 
-        // TODO: implements parameter short or fullName
-        public static string FriendlyName(this Type? type, bool useKeywords = true, bool showGenericArguments = true, bool showDeclaringType = true, bool compactNullable = true)
+        /// <summary>
+        /// get the friendly name of a type (unmangled name)
+        /// </summary>
+        /// <param name="type">type</param>
+        /// <param name="useKeywords">use keywords</param>
+        /// <param name="showGenericArguments">show generic arguments</param>
+        /// <param name="showDeclaringType">show declaring type</param>
+        /// <param name="compactNullable">compact syntax of nullables</param>
+        /// <returns>unmangled name</returns>
+        public static string FriendlyName(
+            this Type? type,
+            bool useKeywords = true,
+            bool showGenericArguments = true,
+            bool showDeclaringType = true,
+            bool compactNullable = true)
         {
             if (type == null)
                 return string.Empty;
@@ -96,7 +114,7 @@ namespace AnsiVtConsole.NetCore.Lib
                 var name = type.Name;
                 var index = name.IndexOf('`');
                 if (index > 0)
-                    name = name.Substring(0, name.IndexOf('`'));
+                    name = name[..name.IndexOf('`')];
                 if (type.IsGenericTypeDefinition)
                 {
                     if (compactNullable && type == typeof(Nullable<>))

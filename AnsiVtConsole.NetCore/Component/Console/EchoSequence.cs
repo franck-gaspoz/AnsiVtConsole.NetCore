@@ -1,4 +1,6 @@
-﻿using AnsiVtConsole.NetCore.Component.EchoDirective;
+﻿#pragma warning disable CS1591
+
+using AnsiVtConsole.NetCore.Component.EchoDirective;
 
 namespace AnsiVtConsole.NetCore.Component.Console
 {

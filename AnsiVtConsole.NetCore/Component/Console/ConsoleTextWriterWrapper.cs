@@ -59,7 +59,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         int _cursorTopBackup;
         ConsoleColor _backgroundBackup = ConsoleColor.Black;
         ConsoleColor _foregroundBackup = ConsoleColor.White;
-        EchoDirectiveProcessor EchoDirectiveProcessor;
+        EchoDirectiveProcessor _echoDirectiveProcessor;
 
         /// <summary>
         /// the Escape character
@@ -72,7 +72,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         public string LNBRK =>
                 // fix end of line remained filled with last colors
                 EnableAvoidEndOfLineFilledWithBackgroundColor ?
-                        $"{ANSI.RSTXTA}{ANSI.EL(ANSI.ELParameter.p0)}{ANSI.CRLF}{GetRestoreDefaultColors}"
+                        $"{ANSI.RSTXTA}{ANSI.EL(ANSI.ELParameter.p0)}{ANSI.CRLF}{_restoreDefaultColorsAnsiSequence}"
                         : $"{ANSI.CRLF}";
 
         /// <summary>
@@ -84,9 +84,19 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         #region console output settings
 
+        /// <summary>
+        /// crop x coordinate
+        /// </summary>
         public int CropX = -1;
+
+        /// <summary>
+        /// auto fill lines from cursor to the right
+        /// </summary>
         public bool EnableFillLineFromCursor = true;
 
+        /// <summary>
+        /// enable the trick for old console to avoid the end of line to be filled with line background color
+        /// </summary>
         public bool EnableAvoidEndOfLineFilledWithBackgroundColor = true;
 
         #endregion
@@ -102,15 +112,36 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         #region init
 
-#pragma warning disable CS8618 // Un champ non-nullable doit contenir une valeur non-null lors de la fermeture du constructeur. Envisagez de déclarer le champ comme nullable.
+#pragma warning disable CS8618 
+
+        /// <summary>
+        /// text writer for a console
+        /// </summary>
+        /// <param name="console">console</param>
         public ConsoleTextWriterWrapper(IAnsiVtConsole console) : base() => Init(console);
 
+        /// <summary>
+        /// text writer for a console build over a text wrapper
+        /// </summary>
+        /// <param name="console">console</param>
+        /// <param name="textWriter">text wrapper</param>
         public ConsoleTextWriterWrapper(IAnsiVtConsole console, TextWriter textWriter) : base(textWriter) => Init(console);
 
+        /// <summary>
+        /// text writer for a console
+        /// </summary>
+        /// <param name="console">console</param>
+        /// <param name="cSharpScriptEngine">a csharp script engine used for C# script handling in markup</param>
         public ConsoleTextWriterWrapper(IAnsiVtConsole console, CSharpScriptEngine cSharpScriptEngine) : base() => Init(console, cSharpScriptEngine);
 
+        /// <summary>
+        /// text writer for a console build over a text wrapper
+        /// </summary>
+        /// <param name="console">console</param>
+        /// <param name="textWriter">text writer</param>
+        /// <param name="cSharpScriptEngine">a csharp script engine used for C# script handling in markup</param>
         public ConsoleTextWriterWrapper(IAnsiVtConsole console, TextWriter textWriter, CSharpScriptEngine cSharpScriptEngine) : base(textWriter) => Init(console, cSharpScriptEngine);
-#pragma warning restore CS8618 // Un champ non-nullable doit contenir une valeur non-null lors de la fermeture du constructeur. Envisagez de déclarer le champ comme nullable.
+#pragma warning restore CS8618
 
         /// <summary>
         /// console init + internal init
@@ -326,7 +357,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             };
 #pragma warning restore CS8974 // Conversion d’un groupe de méthodes en type non-délégué
 
-            EchoDirectiveProcessor = new EchoDirectiveProcessor(
+            _echoDirectiveProcessor = new EchoDirectiveProcessor(
                 this,
                 new CommandMap(_drtvs)
                 );
@@ -336,8 +367,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         #region commands impl. for echo directives map (avoiding lambdas in map)
 
-        public delegate object Command1pEDParameterDelegate(ANSI.EDParameter n);
-        public delegate object Command1pELParameterDelegate(ANSI.ELParameter n);
+        delegate object Command1pEDParameterDelegate(ANSI.EDParameter n);
+
+        delegate object Command1pELParameterDelegate(ANSI.ELParameter n);
 
         object? ANSIToString(object p) => p as string;
 
@@ -621,6 +653,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
             _cachedBufferSize = Size.Empty;
         }
 
+        /// <summary>
+        /// enable output to a buffer
+        /// </summary>
         public override void EnableBuffer()
         {
             lock (Lock!)
@@ -633,6 +668,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
+        /// <summary>
+        /// close the output buffer
+        /// </summary>
         public override void CloseBuffer()
         {
             lock (Lock!)
@@ -1153,7 +1191,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <summary>
         /// returns restore default colors directive
         /// </summary>
-        string GetRestoreDefaultColors
+        string _restoreDefaultColorsAnsiSequence
         {
             get
             {
@@ -1504,30 +1542,43 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
+        /// <summary>
+        /// get raw text - substitue non printables characters by their representation
+        /// </summary>
+        /// <param name="text">text</param>
+        /// <param name="escapableOnly">just handle known escapable characters</param>
+        /// <param name="useHexa">unix hexa notation</param>
+        /// <returns></returns>
         public string GetRawText(
-            string txt,
+            string text,
             bool escapableOnly = true,
             bool useHexa = true)
         {
-            var s = GetPrint(txt, false);
+            var s = GetPrint(text, false);
             s = ASCII.GetNonPrintablesCodesAsLabel(s, false, escapableOnly);
             if (useHexa)
                 s = ANSI.AvoidANSISequencesAndNonPrintableCharacters(s);
             return s;
         }
 
-        public string GetPrint(string s, bool lineBreak = false)
+        /// <summary>
+        /// get the output of a write operation
+        /// </summary>
+        /// <param name="text">text</param>
+        /// <param name="lineBreak">line break</param>
+        /// <returns>text</returns>
+        public string GetPrint(string text, bool lineBreak = false)
         {
             lock (Lock!)
             {
-                if (string.IsNullOrWhiteSpace(s))
-                    return s;
-                var ms = new MemoryStream(s.Length * 4);
+                if (string.IsNullOrWhiteSpace(text))
+                    return text;
+                var ms = new MemoryStream(text.Length * 4);
                 var sw = new StreamWriter(ms);
                 Console.RedirectOut(sw);
                 var e = Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea;
                 Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea = false;
-                Write(s, lineBreak);
+                Write(text, lineBreak);
                 Console.WorkAreaSettings.EnableConstraintConsolePrintInsideWorkArea = e;
                 sw.Flush();
                 ms.Position = 0;
@@ -1539,8 +1590,13 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
+        /// <summary>
+        /// write a text to the console
+        /// </summary>
+        /// <param name="text">text</param>
+        /// <param name="lineBreak">line break</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ConsolePrint(string s, bool lineBreak = false)
+        public void ConsolePrint(string text, bool lineBreak = false)
         {
             if (IsMute)
                 return;
@@ -1549,7 +1605,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             {
                 if (CropX == -1)
                 {
-                    ConsoleSubPrint(s, lineBreak);
+                    ConsoleSubPrint(text, lineBreak);
                 }
                 else
                 {
@@ -1558,22 +1614,22 @@ namespace AnsiVtConsole.NetCore.Component.Console
                     if (mx > x)
                     {
                         var n = mx - x + 1;
-                        if (s.Length <= n)
-                            ConsoleSubPrint(s, lineBreak);
+                        if (text.Length <= n)
+                            ConsoleSubPrint(text, lineBreak);
                         else
-                            ConsoleSubPrint(s[..n], lineBreak);
+                            ConsoleSubPrint(text[..n], lineBreak);
                     }
                 }
             }
         }
 
         /// <summary>
-        /// debug echo to file
+        /// debug output traces to a file
         /// </summary>
-        /// <param name="s"></param>
-        /// <param name="lineBreak"></param>
-        /// <param name="callerMemberName"></param>
-        /// <param name="callerLineNumber"></param>
+        /// <param name="s">text</param>
+        /// <param name="lineBreak">line break</param>
+        /// <param name="callerMemberName">caller member name</param>
+        /// <param name="callerLineNumber">caller line number</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal override void EchoDebug(
             string s,
@@ -1600,8 +1656,13 @@ namespace AnsiVtConsole.NetCore.Component.Console
         }
 
         /// <summary>
-        /// system.diagnostics.debug
+        /// debug output traces to a System.Diagnostics.Debug
         /// </summary>
+        /// <param name="s">text</param>
+        /// <param name="lineBreak">line break</param>
+        /// <param name="callerFilePath">caller file path</param>
+        /// <param name="callerMemberName">caller member name</param>
+        /// <param name="callerLineNumber">caller line number</param>
         public void Debug(
             string s,
             bool lineBreak = false,
@@ -1616,6 +1677,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 System.Diagnostics.Debug.WriteLine(string.Empty);
         }
 
+        /// <inheritdoc/>
         public override void WriteStream(string s)
         {
             if (RedirectToErr)
@@ -1632,18 +1694,47 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
+        /// <summary>
+        /// write a line
+        /// </summary>
+        /// <param name="text">text</param>
+        /// <param name="ignorePrintDirectives">ignore markup</param>
         public void WriteLine(string text = "", bool ignorePrintDirectives = false) => WriteInternal(text, true, !ignorePrintDirectives);
 
+        /// <summary>
+        /// write a line
+        /// </summary>
+        /// <param name="obj">object</param>
+        /// <param name="ignorePrintDirectives">ignore markup</param>
         public void WriteLine(object obj, bool ignorePrintDirectives = false) => WriteInternal(obj, true, !ignorePrintDirectives);
 
+        /// <summary>
+        /// write
+        /// </summary>
+        /// <param name="text">text</param>
+        /// <param name="ignorePrintDirectives">ignore markup</param>
         public void Write(
             string text = "",
             bool ignorePrintDirectives = false) => WriteInternal(text, false, !ignorePrintDirectives);
 
+        /// <summary>
+        /// write
+        /// </summary>
+        /// <param name="character">character</param>
+        /// <param name="ignorePrintDirectives">ignore markup</param>
         public void WriteLine(char character, bool ignorePrintDirectives = false) => WriteInternal(character + "", true, !ignorePrintDirectives);
 
+        /// <summary>
+        /// write
+        /// </summary>
+        /// <param name="character">character</param>
+        /// <param name="ignorePrintDirectives">ignore markup</param>
         public void Write(char character, bool ignorePrintDirectives = false) => WriteInternal(character + "", false, !ignorePrintDirectives);
 
+        /// <summary>
+        /// write
+        /// </summary>
+        /// <param name="obj">object</param>
         public void Write(object obj) => WriteInternal(obj, false);
 
         /// <summary>
@@ -1689,7 +1780,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                     if (parseCommands)
                     {
                         // call the EchoDirective component
-                        EchoDirectiveProcessor.ParseTextAndApplyCommands(
+                        _echoDirectiveProcessor.ParseTextAndApplyCommands(
                             txt,
                             false,
                             "",
@@ -1715,16 +1806,34 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
+        /// <summary>
+        /// write a line in a warning style
+        /// </summary>
+        /// <param name="s">text</param>
         public void Warningln(string s) => Warning(s, true);
 
+        /// <summary>
+        /// write a text in a warning style
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="lineBreak"></param>
         public void Warning(string s, bool lineBreak = true)
         {
             if (IsNotMute)
                 Console.Out.Write($"{Console.Colors.Warning}{s}{Console.Colors.Default}", lineBreak);
         }
 
+        /// <summary>
+        /// write a text in an error style
+        /// </summary>
+        /// <param name="s">text</param>
         public void Errorln(string s) => Error(s, true);
 
+        /// <summary>
+        /// write a text in an error style
+        /// </summary>
+        /// <param name="s">text</param>
+        /// <param name="lineBreak">line break</param>
         public void Error(string s, bool lineBreak = true)
         {
             if (IsNotMute)
@@ -1843,6 +1952,17 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
+        /// <summary>
+        /// compute the index inside a work area of a string
+        /// </summary>
+        /// <param name="s">string</param>
+        /// <param name="origin">origin</param>
+        /// <param name="cursorPos">cursor position</param>
+        /// <param name="forceEnableConstraintInWorkArea">force or not the constraint</param>
+        /// <param name="fitToVisibleArea">fit to visible area</param>
+        /// <param name="doNotEvaluatePrintDirectives">preserve markup</param>
+        /// <param name="ignorePrintDirectives">ignore markup</param>
+        /// <returns></returns>
         public int GetIndexInWorkAreaConstraintedString(
             string s,
             Point origin,
@@ -1862,6 +1982,18 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 doNotEvaluatePrintDirectives,
                 ignorePrintDirectives);
 
+        /// <summary>
+        /// compute the index inside a work area of a string from a position
+        /// </summary>
+        /// <param name="s">string</param>
+        /// <param name="origin">porigin</param>
+        /// <param name="cursorX">cursor x</param>
+        /// <param name="cursorY">cursor y</param>
+        /// <param name="forceEnableConstraintInWorkArea">force or not the constraint</param>
+        /// <param name="fitToVisibleArea">fit to visible area</param>
+        /// <param name="doNotEvaluatePrintDirectives">preserve markup</param>
+        /// <param name="ignorePrintDirectives">ignore markup</param>
+        /// <returns></returns>
         public int GetIndexInWorkAreaConstraintedString(
             string s,
             Point origin,
@@ -2092,7 +2224,18 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return new LineSplitList(r, printSequences, cursorIndex, cursorLineIndex);
         }
 
-        public void SetCursorPosConstraintedInWorkArea(Point pos, bool enableOutput = true, bool forceEnableConstraintInWorkArea = false, bool fitToVisibleArea = true)
+        /// <summary>
+        /// set the cursor position constrainted to the work area
+        /// </summary>
+        /// <param name="pos">new cursor position</param>
+        /// <param name="enableOutput">enable output</param>
+        /// <param name="forceEnableConstraintInWorkArea">force constraint</param>
+        /// <param name="fitToVisibleArea">fir to visible area</param>
+        public void SetCursorPosConstraintedInWorkArea(
+            Point pos,
+            bool enableOutput = true,
+            bool forceEnableConstraintInWorkArea = false,
+            bool fitToVisibleArea = true)
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
@@ -2101,17 +2244,30 @@ namespace AnsiVtConsole.NetCore.Component.Console
             SetCursorPosConstraintedInWorkArea(ref x, ref y, enableOutput, forceEnableConstraintInWorkArea, fitToVisibleArea);
         }
 
-        public void SetCursorPosConstraintedInWorkArea(int cx, int cy, bool enableOutput = true, bool forceEnableConstraintInWorkArea = false, bool fitToVisibleArea = true)
+        /// <summary>
+        /// set the cursor position constrainted to the work area
+        /// </summary>
+        /// <param name="cx">cursor x</param>
+        /// <param name="cy">cursor y</param>
+        /// <param name="enableOutput">enable output</param>
+        /// <param name="forceEnableConstraintInWorkArea">force constraint</param>
+        /// <param name="fitToVisibleArea">fir to visible area</param>
+        public void SetCursorPosConstraintedInWorkArea(
+            int cx,
+            int cy,
+            bool enableOutput = true,
+            bool forceEnableConstraintInWorkArea = false,
+            bool fitToVisibleArea = true)
             => SetCursorPosConstraintedInWorkArea(ref cx, ref cy, enableOutput, forceEnableConstraintInWorkArea, fitToVisibleArea);
 
         /// <summary>
-        /// TODO: check for buffered mode
+        /// set the cursor position constrainted to the work area
         /// </summary>
-        /// <param name="cx"></param>
-        /// <param name="cy"></param>
-        /// <param name="enableOutput"></param>
-        /// <param name="forceEnableConstraintInWorkArea"></param>
-        /// <param name="fitToVisibleArea"></param>
+        /// <param name="cx">cursor x</param>
+        /// <param name="cy">cursor y</param>
+        /// <param name="enableOutput">enable output</param>
+        /// <param name="forceEnableConstraintInWorkArea">force constraint</param>
+        /// <param name="fitToVisibleArea">fir to visible area</param>
         public void SetCursorPosConstraintedInWorkArea(ref int cx, ref int cy, bool enableOutput = true, bool forceEnableConstraintInWorkArea = false, bool fitToVisibleArea = true)
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)

@@ -1,3 +1,5 @@
+#pragma warning disable CS1591
+
 using AnsiVtConsole.NetCore.Component.Console;
 
 namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar

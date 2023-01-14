@@ -8,7 +8,7 @@
         {
             if (string.IsNullOrWhiteSpace(s))
                 return false;
-            return s[0] == s[s.Length - 1] && (s[0] == '\'' || s[0] == '"');
+            return s[0] == s[^1] && (s[0] == '\'' || s[0] == '"');
         }
 
         public static string AssureIsQuoted(string s) => IsQuotedString(s) ? s : DoubleQuoted(s);
@@ -112,11 +112,11 @@
                     input[1..],
                     ignoreCase);
             }
-            else if (pattern[pattern.Length - 1] == '?')
+            else if (pattern[^1] == '?')
             {
                 return MatchWildcard(
-                    pattern.Substring(0, pattern.Length - 1),
-                    input.Substring(0, input.Length - 1),
+                    pattern[0..^1],
+                    input[0..^1],
                     ignoreCase);
             }
             else if (pattern[0] == '*')
@@ -130,15 +130,15 @@
                     return MatchWildcard(pattern, input[1..], ignoreCase);
                 }
             }
-            else if (pattern[pattern.Length - 1] == '*')
+            else if (pattern[^1] == '*')
             {
-                if (MatchWildcard(pattern.Substring(0, pattern.Length - 1), input, ignoreCase))
+                if (MatchWildcard(pattern[0..^1], input, ignoreCase))
                 {
                     return true;
                 }
                 else
                 {
-                    return MatchWildcard(pattern, input.Substring(0, input.Length - 1), ignoreCase);
+                    return MatchWildcard(pattern, input[0..^1], ignoreCase);
                 }
             }
             else if (pattern[0] == input[0])

@@ -1,3 +1,5 @@
+#pragma warning disable CS1591
+
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -44,7 +46,7 @@ namespace AnsiVtConsole.NetCore.Lib
             }
 
             if (j < s.Length)
-                r.Add(new string(s.Substring(j)));
+                r.Add(new string(s[j..]));
             return r;
         }
 
@@ -69,7 +71,7 @@ namespace AnsiVtConsole.NetCore.Lib
             }
 
             if (j < s.Length)
-                r.Add(new string(s.Substring(j)));
+                r.Add(new string(s[j..]));
             return r.Select(x => new string(x.Reverse().ToArray())).ToList();
         }
 

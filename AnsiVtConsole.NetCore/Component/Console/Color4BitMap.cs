@@ -1,4 +1,6 @@
-﻿namespace AnsiVtConsole.NetCore.Component.Console
+﻿#pragma warning disable CS1591
+
+namespace AnsiVtConsole.NetCore.Component.Console
 {
     /// <summary>
     /// 4 bits colors map - see https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit

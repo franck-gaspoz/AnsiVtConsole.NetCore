@@ -1,4 +1,6 @@
-﻿namespace AnsiVtConsole.NetCore.Component.UI
+﻿#pragma warning disable CS1591
+
+namespace AnsiVtConsole.NetCore.Component.UI
 {
     public sealed class WorkAreaScrollEventArgs
         : EventArgs

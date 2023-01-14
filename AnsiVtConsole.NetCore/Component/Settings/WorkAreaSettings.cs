@@ -5,8 +5,9 @@ namespace AnsiVtConsole.NetCore.Component.Settings;
 /// <summary>
 /// work area settings
 /// </summary>
-public class WorkAreaSettings
+public sealed class WorkAreaSettings
 {
+#pragma warning disable CS1591
     public EventHandler? ViewSizeChanged { get; set; }
 
     public EventHandler<WorkAreaScrollEventArgs>? WorkAreaScrolled { get; set; }
@@ -14,4 +15,6 @@ public class WorkAreaSettings
     public bool EnableConstraintConsolePrintInsideWorkArea { get; set; } = false;
 
     public bool RedrawUIElementsEnabled = true;
+
+#pragma warning restore CS1591
 }

@@ -34,7 +34,7 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
         #region attributes
 
         readonly Dictionary<string, string> _lexs = new();
-        readonly List<Rule> _rules = new List<Rule>();
+        readonly List<Rule> _rules = new();
         readonly Dictionary<string, Rule> _rulesIndex = new();
         TreeNode? _gramTree;
 

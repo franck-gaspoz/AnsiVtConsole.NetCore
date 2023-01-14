@@ -1,4 +1,6 @@
-﻿namespace AnsiVtConsole.NetCore.Component.EchoDirective
+﻿#pragma warning disable CS1591
+
+namespace AnsiVtConsole.NetCore.Component.EchoDirective
 {
     /// <summary>
     /// <para>

@@ -17,13 +17,15 @@ namespace AnsiVtConsole.NetCore.Component.Script
         /// </summary>
         public ScriptOptions DefaultScriptOptions;
 
-#pragma warning disable CS8618 // Un champ non-nullable doit contenir une valeur non-null lors de la fermeture du constructeur. Envisagez de déclarer le champ comme nullable.
+#pragma warning disable CS8618
+
         /// <summary>
         /// CSharpScriptEngine
         /// </summary>
         /// <param name="console"></param>
         public CSharpScriptEngine(IAnsiVtConsole console) => Init(console);
-#pragma warning restore CS8618 // Un champ non-nullable doit contenir une valeur non-null lors de la fermeture du constructeur. Envisagez de déclarer le champ comme nullable.
+
+#pragma warning restore CS8618 
 
         /// <summary>
         /// CSharpScriptEngine
