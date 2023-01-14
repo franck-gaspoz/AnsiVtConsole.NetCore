@@ -1,4 +1,4 @@
-﻿AnsiVtConsole.NetCore Copyright (c) December 2022 franck gaspoz (franck.gaspoz@gmail.com)
+﻿AnsiVtConsole.NetCore Copyright (c) December 2023 franck gaspoz (franck.gaspoz@gmail.com)
 Licence Free MIT
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,7 +21,7 @@ SOFTWARE.
 
 ------------------------------------------------------------------------------------------------------
 
-AnsiVtConsole.NetCore Copyright (c) December 2022 franck gaspoz (franck.gaspoz@gmail.com)
+AnsiVtConsole.NetCore Copyright (c) December 2023 franck gaspoz (franck.gaspoz@gmail.com)
 Licence Libre MIT
 
 L’autorisation est accordée, gracieusement, à toute personne acquérant une copie
