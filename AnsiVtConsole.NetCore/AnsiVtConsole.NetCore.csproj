@@ -26,10 +26,11 @@
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	  
 	<PackageReleaseNotes>
-1.0.18 - 01-13-2023
-- widget ?
+1.0.18 - 01-1-2023
 - add symbols and sources in package
 - new editorconfig and code clean up
+- command out for a shell available in AnsiVtConsole.NetCore.CommandLine.Out that compiles to out.exe
+- doc update
 	</PackageReleaseNotes>
 	<PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</RepositoryUrl>

@@ -211,6 +211,44 @@ console.Out.WriteLine("(f=cyan,EdgeBottomLeft,BarHorizontal,EdgeBottomRight)");
 ```
 ![example6](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example6.png "example6")
 
+# Command line interface tool for your shells
+
+The project `AnsiVtConsole.NetCore.CommandLine` build a **command line tool** that calls the **AnsiVtConsole `WriteLine`** method.
+With that you can add to you shell scripts the outputs provided by AnsiVtConsole:
+
+```dos
+out.exe "(br,f=yellow,b=red)yellow text on red background(br)(f=cyan)current time is: (exec=System.DateTime.Now,br)"
+```
+
+outputs:
+
+![output](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/output.png "output")
+
+```dos
+out.exe "(br,f=yellow,b=red)yellow text on red background(br)(f=cyan)current time is: (exec=System.DateTime.Now,br)" --raw
+```
+
+outputs:
+
+`\e[4m\e[0m\e[0K\r\n\e[4m\e[0m\e[37m\e[93m\e[101myellow text on red background\e[4m\e[0m\e[0K\r\n\e[4m\e[0m\e[37m\e[96mcurrent time is: 13/06/2020 06:17:15\e[4m\e[0m\e[0K\r\n\e[4m\e[0m\e[37m`
+
+this tool accepts these arguments:
+
+```dos
+out.exe <text> [--raw [--esc-only] [--hexa] ] 
+```
+
+- if `--raw`, parse ANSI and non printable characters to show them by their names or representations
+- if `--raw` these options are avalaibles :
+    - `--esc-only` : disable only knowns non printable characters (from ASCII)
+    - `--hexa` : use the hexa unix form for non printable characters
+
+> **Note**
+>
+> the command line tool is built upon the library **`CommandLine.NetCore`**. For more information for this, please refers to:
+> - [CommandLine.NetCore nuget](https://www.nuget.org/packages/CommandLine.NetCore/#readme-body-tab)
+> - [CommandLine.NetCore GitHub repository](https://github.com/franck-gaspoz/CommandLine.NetCore)
+
 # Examples
 
 ### Colorization
@@ -226,10 +264,11 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 # Version history
 
-`1.0.18` - 01-13-2023
-- widget ?
+`1.0.18` - 01-1-2023
 - add symbols and sources in package
 - new editorconfig and code clean up
+- command `out` for a shell available in `AnsiVtConsole.NetCore.CommandLine.Out` that compiles to `out.exe`
+- doc update
 
 `1.0.17` - 01-10-2023
 - add setting that make it possible to disable ansi/vt in console ouputs: `AnsiVtConsole.NetCore.Component.Settings` : `IsMarkupDisabled`,`IsRawOutputEnabled`,`ReplaceNonPrintableCharactersByTheirName`,`RemoveANSISequences`

@@ -8,7 +8,7 @@ namespace AnsiVtConsole.NetCore.CommandLine;
 public class Program
 {
     /// <summary>
-    /// 'echo' command line
+    /// command line
     /// </summary>
     /// <param name="args">arguments</param>
     /// <returns>exit code</returns>

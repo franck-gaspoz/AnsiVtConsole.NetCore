@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "out text": {
+      "commandName": "Project",
+      "commandLineArgs": "out text"
+    }
+  }
+}

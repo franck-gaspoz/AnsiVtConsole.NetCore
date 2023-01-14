@@ -31,8 +31,8 @@
   </PropertyGroup>
 
     <Target Name="Rename" AfterTargets="AfterBuild">
-	    <Move SourceFiles="$(OUTDIR)\AnsiVtConsole.NetCore.CommandLine.exe" DestinationFiles="$(OUTDIR)\echo.exe" />
-	    <Message Text="Renamed executable file." Importance="high" />
+	    <Copy SourceFiles="$(OUTDIR)\AnsiVtConsole.NetCore.CommandLine.exe" DestinationFiles="$(OUTDIR)\echo.exe" />
+	    <Message Text="Add executable file: out.exe" Importance="high" />
     </Target>
 
     <ItemGroup>
@@ -48,11 +48,15 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Config\appSettings.json" />
       <None Remove="LICENSE.md" />
       <None Remove="README.md" />
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="Config\appSettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <Content Include="LICENSE.md">
         <PackagePath>contentFiles/any/any/;content/</PackagePath>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
