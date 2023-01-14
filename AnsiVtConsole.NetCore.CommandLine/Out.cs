@@ -20,7 +20,7 @@ class Out : Command
         // echo <text> --raw [--esc-only] [--hexa] [--err]
 
         .For(Param(), Opt("raw"), Opt("esc-only", true), Opt("hexa", true))
-            .Do(() => OutWithRaw)
+            .Do(() => OutRaw)
 
         .Options(Opt("err"))
 
@@ -30,7 +30,7 @@ class Out : Command
     void OutAnsi(Param<string> textParam, Opt errOpt)
         => DoOut(textParam.Value!, errOpt.IsSet, false, false, false);
 
-    void OutWithRaw(Param<string> textParam, Opt errOpt, Opt escOpt, Opt hexaOpt)
+    void OutRaw(Param<string> textParam, Opt errOpt, Opt escOpt, Opt hexaOpt)
         => DoOut(textParam.Value!, errOpt.IsSet, true, escOpt.IsSet, hexaOpt.IsSet);
 
     void DoOut(string text, bool err, bool raw, bool esc, bool hexa)
