@@ -29,6 +29,7 @@
 1.0.18 - 01-13-2023
 - widget ?
 - add symbols and sources in package
+- new editorconfig and code clean up
 	</PackageReleaseNotes>
 	<PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</RepositoryUrl>

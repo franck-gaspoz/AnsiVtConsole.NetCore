@@ -226,7 +226,8 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 `1.0.18` - 01-13-2023
 - widget ?
 - add symbols and sources in package
-- 
+- new editorconfig and code clean up
+
 `1.0.17` - 01-10-2023
 - add setting that make it possible to disable ansi/vt in console ouputs: `AnsiVtConsole.NetCore.Component.Settings` : `IsMarkupDisabled`,`IsRawOutputEnabled`,`ReplaceNonPrintableCharactersByTheirName`,`RemoveANSISequences`
 - add methods to get output text in various formats (without ansi,with unparsed markup,in shell escaped characters) : `GetText`,`GetRawText`,`ANSIParser.GetText` 
