@@ -6,11 +6,11 @@
 /// </summary>
 public sealed class Logger
 {
-    private readonly ConsoleTextWriterWrapper _out;
-    private readonly IAnsiVtConsole _console;
-    private readonly Error _err;
-    private readonly Warn _warn;
-    private readonly string[] _crlf = { Environment.NewLine };
+    readonly ConsoleTextWriterWrapper _out;
+    readonly IAnsiVtConsole _console;
+    readonly Error _err;
+    readonly Warn _warn;
+    readonly string[] _crlf = { Environment.NewLine };
 
     internal Logger(
         IAnsiVtConsole console,

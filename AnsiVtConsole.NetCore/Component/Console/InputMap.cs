@@ -1,6 +1,6 @@
 ﻿namespace AnsiVtConsole.NetCore.Component.Console
 {
-    internal sealed class InputMap
+    sealed class InputMap
     {
         public const int ExactMatch = 0;
         public const int NoMatch = -1;

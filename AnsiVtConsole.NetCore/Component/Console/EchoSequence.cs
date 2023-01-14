@@ -11,7 +11,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         public readonly string? Text;
         public int Length => LastIndex - FirstIndex + 1;
 
-        private readonly IAnsiVtConsole _console;
+        readonly IAnsiVtConsole _console;
 
         public EchoSequence(
             IAnsiVtConsole console,

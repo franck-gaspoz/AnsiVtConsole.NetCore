@@ -7,7 +7,7 @@ namespace AnsiVtConsole.NetCore.Lib.Process
     /// <summary>
     /// process wrapper
     /// </summary>
-    internal sealed class ProcessWrapper
+    sealed class ProcessWrapper
     {
         public sys.Process? Process = null;
 
@@ -21,14 +21,14 @@ namespace AnsiVtConsole.NetCore.Lib.Process
 
         public Action<string>? StdErrCallBack = null;
 
-        private readonly StringBuilder _out = new();
-        private readonly StringBuilder _err = new();
+        readonly StringBuilder _out = new();
+        readonly StringBuilder _err = new();
 
         public int EndOfStreams { get; private set; } = 0;
         public Thread? StdOutCallBackThread;
         public Thread? StdErrCallBackThread;
 
-        private ProcessWrapper() { }
+        ProcessWrapper() { }
 
         public static int RunCommand(
             string exePath,
@@ -310,7 +310,7 @@ namespace AnsiVtConsole.NetCore.Lib.Process
         /// <summary>
         /// init a PSI from default values
         /// </summary>
-        private static void InitPSI(sys.ProcessStartInfo psi)
+        static void InitPSI(sys.ProcessStartInfo psi)
         {
             psi.UseShellExecute = false;
             psi.RedirectStandardOutput = true;

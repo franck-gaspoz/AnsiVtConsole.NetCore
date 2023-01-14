@@ -7,9 +7,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
     {
         #region attributes
 
-        private static int _instanceCounter = 1000;
+        static int _instanceCounter = 1000;
 
-        private static readonly object _instanceLock = new object();
+        static readonly object _instanceLock = new object();
 
         /// <summary>
         /// id
@@ -61,7 +61,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <summary>
         /// text writer
         /// </summary>
-        private TextWriter? _textWriter;
+        TextWriter? _textWriter;
 
         /// <summary>
         /// redirected text writer
@@ -184,7 +184,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             _textWriter = textWriter;
         }
 
-        private void Init()
+        void Init()
         {
             lock (_instanceLock)
             {

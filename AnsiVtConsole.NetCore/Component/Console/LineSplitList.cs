@@ -1,6 +1,6 @@
 ﻿namespace AnsiVtConsole.NetCore.Component.Console
 {
-    internal sealed class LineSplitList
+    sealed class LineSplitList
     {
         public readonly List<StringSegment> Splits;
 

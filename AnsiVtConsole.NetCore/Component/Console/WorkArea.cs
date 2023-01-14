@@ -9,7 +9,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
     /// </summary>
     public sealed class WorkArea
     {
-        private readonly IAnsiVtConsole _console;
+        readonly IAnsiVtConsole _console;
 
         /// <summary>
         /// id

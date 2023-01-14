@@ -10,7 +10,7 @@ namespace AnsiVtConsole.NetCore.Component.Script
     /// </summary>
     public sealed class CSharpScriptEngine
     {
-        private readonly Dictionary<string, Script<object>> _csscripts = new();
+        readonly Dictionary<string, Script<object>> _csscripts = new();
 
         /// <summary>
         /// default script options
@@ -36,7 +36,7 @@ namespace AnsiVtConsole.NetCore.Component.Script
             Init(console);
         }
 
-        private void Init(IAnsiVtConsole console)
+        void Init(IAnsiVtConsole console)
         {
             DefaultScriptOptions ??= ScriptOptions.Default;
             DefaultScriptOptions = DefaultScriptOptions

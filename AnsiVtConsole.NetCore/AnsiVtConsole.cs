@@ -53,12 +53,12 @@ namespace AnsiVtConsole.NetCore
         /// <summary>
         /// ansi vr error output stream
         /// </summary>
-        private readonly Error _error;
+        readonly Error _error;
 
         /// <summary>
         /// ansi vr warning output stream
         /// </summary>
-        private readonly Warn _warn;
+        readonly Warn _warn;
 
         /// <summary>
         /// system standard err stream wrapper
@@ -86,21 +86,21 @@ namespace AnsiVtConsole.NetCore
 
         #region private attributes
 
-        private static int _instanceCounter = 1000;
+        static int _instanceCounter = 1000;
 
-        private static readonly object _instanceLock = new object();
+        static readonly object _instanceLock = new object();
 
-        private TextWriter? _errorWriter;
+        TextWriter? _errorWriter;
 
-        private StreamWriter? _errorStreamWriter;
+        StreamWriter? _errorStreamWriter;
 
-        private FileStream? _errorFileStream;
+        FileStream? _errorFileStream;
 
-        private TextWriter? _outputWriter;
+        TextWriter? _outputWriter;
 
-        private StreamWriter? _outputStreamWriter;
+        StreamWriter? _outputStreamWriter;
 
-        private FileStream? _outputFileStream;
+        FileStream? _outputFileStream;
 
         #endregion
 

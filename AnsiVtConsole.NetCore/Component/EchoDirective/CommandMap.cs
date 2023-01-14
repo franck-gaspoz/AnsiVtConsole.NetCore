@@ -3,7 +3,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
     /// <summary>
     /// these map attribute a echo command delegate to an echo directive syntax
     /// </summary>
-    internal sealed class CommandMap
+    sealed class CommandMap
     {
         public Dictionary<
             string,

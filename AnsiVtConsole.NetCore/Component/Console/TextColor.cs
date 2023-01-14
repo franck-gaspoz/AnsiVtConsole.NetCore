@@ -19,7 +19,7 @@ public sealed class TextColor
     /// </summary>
     public static ConsoleColor DefaultBackground { get; set; }
 
-    private ConsoleColor? _foreground;
+    ConsoleColor? _foreground;
 
     /// <summary>
     /// foreground
@@ -30,7 +30,7 @@ public sealed class TextColor
         set => _foreground = value;
     }
 
-    private ConsoleColor? _background;
+    ConsoleColor? _background;
 
     /// <summary>
     /// background
@@ -41,8 +41,8 @@ public sealed class TextColor
         set => _background = value;
     }
 
-    private readonly string? _toStrPost = null;
-    private readonly string? _toStrPre = null;
+    readonly string? _toStrPost = null;
+    readonly string? _toStrPre = null;
 
     /// <summary>
     /// text color

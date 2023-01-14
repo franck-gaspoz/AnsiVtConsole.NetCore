@@ -6,7 +6,7 @@ namespace AnsiVtConsole.NetCore.Lib
     /// <summary>
     /// types extension methods
     /// </summary>
-    internal static partial class TypesExt
+    static partial class TypesExt
     {
         #region type Type extensions
 

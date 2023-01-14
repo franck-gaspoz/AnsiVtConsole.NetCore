@@ -5,7 +5,7 @@ namespace AnsiVtConsole.NetCore.Component.Console;
 
 public class Inp
 {
-    private readonly ConsoleTextWriterWrapper _out;
+    readonly ConsoleTextWriterWrapper _out;
 
     public Inp(ConsoleTextWriterWrapper @out) => _out = @out;
 

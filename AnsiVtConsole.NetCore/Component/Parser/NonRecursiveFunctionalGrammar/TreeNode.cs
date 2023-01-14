@@ -2,8 +2,8 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
 {
     public sealed class TreeNode
     {
-        private static int _counter = 0;
-        private static readonly object _counterLock = new();
+        static int _counter = 0;
+        static readonly object _counterLock = new();
         public int ID;
         public string Label;
         public readonly Dictionary<string, TreeNode> SubNodes = new();
@@ -22,7 +22,7 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
             Label = label;
         }
 
-        private void Init()
+        void Init()
         {
             lock (_counterLock)
             {

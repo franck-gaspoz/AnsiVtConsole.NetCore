@@ -8,7 +8,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
     /// echo directives processor
     /// <para>&#9989; drives directly the writer (simple approach to execute print directives)</para>
     /// </summary>
-    internal sealed class EchoDirectiveProcessor
+    sealed class EchoDirectiveProcessor
     {
         public delegate object? Command1pIntDelegate(int n = 1);
         public delegate object? Command2pIntDelegate(int x = 1, int y = 1);
@@ -17,7 +17,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
         public delegate void SimpleCommandDelegate();
         public readonly ConsoleTextWriterWrapper Writer;
         public readonly CommandMap CommandMap;
-        private readonly IAnsiVtConsole _console;
+        readonly IAnsiVtConsole _console;
 
         public EchoDirectiveProcessor(
             ConsoleTextWriterWrapper writer,
@@ -29,7 +29,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
             CommandMap = commandMap;
         }
 
-        private readonly StringBuilder _tmpsb = new(100000);
+        readonly StringBuilder _tmpsb = new(100000);
 
         public void ParseTextAndApplyCommands(
             string s,

@@ -1,9 +1,9 @@
 ﻿namespace AnsiVtConsole.NetCore.Component.Console;
 
-internal class Warn
+class Warn
 {
-    private readonly ConsoleTextWriterWrapper _out;
-    private readonly Error _err;
+    readonly ConsoleTextWriterWrapper _out;
+    readonly Error _err;
 
     public Warn(
         ConsoleTextWriterWrapper outStream,
@@ -29,7 +29,7 @@ internal class Warn
             _err.Log(s);
     }
 
-    private void LogInternal(string text, bool lineBreak = false)
+    void LogInternal(string text, bool lineBreak = false)
     {
         lock (_out.Lock!)
         {

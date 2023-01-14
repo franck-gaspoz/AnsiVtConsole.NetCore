@@ -2,8 +2,8 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
 {
     public sealed class Rule : List<string>
     {
-        private static int _counter = 0;
-        private static readonly object _counterLock = new();
+        static int _counter = 0;
+        static readonly object _counterLock = new();
         public int ID;
 
         public TreePath TreePath;
@@ -18,7 +18,7 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
         public Rule(IEnumerable<string> range) : base(range) => Init();
 #pragma warning restore CS8618 // Un champ non-nullable doit contenir une valeur non-null lors de la fermeture du constructeur. Envisagez de déclarer le champ comme nullable.
 
-        private void Init()
+        void Init()
         {
             TreePath = new TreePath(this, -1);
             lock (_counterLock)

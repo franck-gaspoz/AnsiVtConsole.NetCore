@@ -3,11 +3,11 @@
     /// <summary>
     /// process counter usable with ProcessWrapper
     /// </summary>
-    internal sealed class ProcessCounter
+    sealed class ProcessCounter
     {
-        private int _counter;
+        int _counter;
 
-        private readonly object _counterLock = new();
+        readonly object _counterLock = new();
 
         public static bool Log { get; set; } = true;
 
@@ -55,7 +55,7 @@
             t.Join();
         }
 
-        private void WaitForLessThanNInternal(int n)
+        void WaitForLessThanNInternal(int n)
         {
             var end = false;
             while (!end)

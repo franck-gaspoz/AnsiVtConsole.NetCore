@@ -2,7 +2,7 @@
 
 namespace AnsiVtConsole.NetCore.Component.Console
 {
-    internal sealed class StringSegment
+    sealed class StringSegment
     {
         public string Text { get; private set; }
         public int X { get; private set; }

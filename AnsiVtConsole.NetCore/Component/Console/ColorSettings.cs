@@ -5,7 +5,7 @@
 /// </summary>
 public sealed class ColorSettings
 {
-    private readonly IAnsiVtConsole _console;
+    readonly IAnsiVtConsole _console;
 
     /// <summary>
     /// new instance attached to a console

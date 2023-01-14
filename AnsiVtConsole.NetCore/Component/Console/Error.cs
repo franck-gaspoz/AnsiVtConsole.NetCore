@@ -1,8 +1,8 @@
 ﻿namespace AnsiVtConsole.NetCore.Component.Console;
 
-internal sealed class Error
+sealed class Error
 {
-    private readonly ConsoleTextWriterWrapper _out;
+    readonly ConsoleTextWriterWrapper _out;
 
     public Error(ConsoleTextWriterWrapper outStream)
         => _out = outStream;
@@ -23,7 +23,7 @@ internal sealed class Error
             Log(s);
     }
 
-    private void LogInternal(string text, bool lineBreak = false)
+    void LogInternal(string text, bool lineBreak = false)
     {
         lock (_out.Lock!)
         {

@@ -55,11 +55,11 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         public ColorSettings ColorSettings { get; private set; }
 
-        private int _cursorLeftBackup;
-        private int _cursorTopBackup;
-        private ConsoleColor _backgroundBackup = ConsoleColor.Black;
-        private ConsoleColor _foregroundBackup = ConsoleColor.White;
-        private EchoDirectiveProcessor EchoDirectiveProcessor;
+        int _cursorLeftBackup;
+        int _cursorTopBackup;
+        ConsoleColor _backgroundBackup = ConsoleColor.Black;
+        ConsoleColor _foregroundBackup = ConsoleColor.White;
+        EchoDirectiveProcessor EchoDirectiveProcessor;
 
         /// <summary>
         /// the Escape character
@@ -93,10 +93,10 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         #region console information cache
 
-        private Point _cachedCursorPosition = Point.Empty;
-        private Size _cachedBufferSize = Size.Empty;
-        private ConsoleColor? _cachedForegroundColor;
-        private ConsoleColor? _cachedBackgroundColor;
+        Point _cachedCursorPosition = Point.Empty;
+        Size _cachedBufferSize = Size.Empty;
+        ConsoleColor? _cachedForegroundColor;
+        ConsoleColor? _cachedBackgroundColor;
 
         #endregion
 
@@ -115,7 +115,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <summary>
         /// console init + internal init
         /// </summary>
-        private void Init(IAnsiVtConsole console, CSharpScriptEngine? cSharpScriptEngine = null)
+        void Init(IAnsiVtConsole console, CSharpScriptEngine? cSharpScriptEngine = null)
         {
             Console = console;
             console.WorkArea.CheckConsoleHasGeometry();
@@ -131,7 +131,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             InitEchoDirectives();
         }
 
-        private void InitEchoDirectives()
+        void InitEchoDirectives()
         {
 #pragma warning disable CS8974 // Conversion d’un groupe de méthodes en type non-délégué
             // echo_directive => SimpleCommandDelegate, CommandDelegate, parameter
@@ -339,11 +339,11 @@ namespace AnsiVtConsole.NetCore.Component.Console
         public delegate object Command1pEDParameterDelegate(ANSI.EDParameter n);
         public delegate object Command1pELParameterDelegate(ANSI.ELParameter n);
 
-        private object? ANSIToString(object p) => p as string;
+        object? ANSIToString(object p) => p as string;
 
-        private object UnicodeToString(object p) => ((char)p) + "";
+        object UnicodeToString(object p) => ((char)p) + "";
 
-        private object? ANSITo2Int(object parameters)
+        object? ANSITo2Int(object parameters)
         {
             if (parameters is EchoDirectiveProcessor.Command2pIntDelegate com)
                 return com.Invoke();
@@ -365,7 +365,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return null;
         }
 
-        private object? ANSIToInt(object parameters)
+        object? ANSIToInt(object parameters)
         {
             if (parameters is EchoDirectiveProcessor.Command1pIntDelegate com)
                 return com.Invoke();
@@ -384,7 +384,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return null;
         }
 
-        private object? ANSIToEDParameter(object parameters)
+        object? ANSIToEDParameter(object parameters)
         {
             if (parameters is ValueTuple<object, string> p)
             {
@@ -401,7 +401,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return null;
         }
 
-        private object? ANSIToELParameter(object parameters)
+        object? ANSIToELParameter(object parameters)
         {
             if (parameters is ValueTuple<object, string> p)
             {
@@ -422,7 +422,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// exit the console client
         /// </summary>
         /// <param name="x">not used</param>
-        private object Exit(object x)
+        object Exit(object x)
         {
             Environment.Exit(0);
             return null;
@@ -432,7 +432,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// set foreground color from parsed from a console color (3bit,console color name) text descriptioh
         /// </summary>
         /// <param name="x">color</param>
-        private object? SetForegroundColor(object x)
+        object? SetForegroundColor(object x)
         {
             SetForeground(TextColor.ParseColor(Console, x));
             return null;
@@ -442,7 +442,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// set foreground color from parsed from a 8bits text descriptioh
         /// </summary>
         /// <param name="x">color</param>
-        private object? SetForegroundParse8BitColor(object x)
+        object? SetForegroundParse8BitColor(object x)
         {
             SetForeground(TextColor.Parse8BitColor(Console, x));
             return null;
@@ -452,7 +452,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// set foreground color from parsed from a 24bits text descriptioh
         /// </summary>
         /// <param name="x">color</param>
-        private object? SetForegroundParse24BitColor(object x)
+        object? SetForegroundParse24BitColor(object x)
         {
             SetForeground(TextColor.Parse24BitColor(Console, x));
             return null;
@@ -462,7 +462,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// set background color from parsed from a console color (3bit,console color name) text descriptioh
         /// </summary>
         /// <param name="x">color</param>
-        private object? SetBackgroundColor(object x)
+        object? SetBackgroundColor(object x)
         {
             var c = TextColor.ParseColor(Console, x);
             if (c.HasValue)
@@ -474,7 +474,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// set background color from parsed from a 8bits text descriptioh
         /// </summary>
         /// <param name="x">color</param>
-        private object? SetBackgroundParse8BitColor(object x)
+        object? SetBackgroundParse8BitColor(object x)
         {
             SetBackground(TextColor.Parse8BitColor(Console, x));
             return null;
@@ -484,7 +484,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// set background color from parsed from a 24bits text descriptioh
         /// </summary>
         /// <param name="x">color</param>
-        private object? SetBackgroundParse24BitColor(object x)
+        object? SetBackgroundParse24BitColor(object x)
         {
             SetBackground(TextColor.Parse24BitColor(Console, x));
             return null;
@@ -494,7 +494,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// set default foreground color
         /// </summary>
         /// <param name="x">color</param>
-        private object? SetDefaultForeground(object x)
+        object? SetDefaultForeground(object x)
         {
             var c = TextColor.ParseColor(Console, x);
             if (c.HasValue)
@@ -506,7 +506,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// Set default background color
         /// </summary>
         /// <param name="x">color</param>
-        private object? SetDefaultBackground(object x)
+        object? SetDefaultBackground(object x)
         {
             var c = TextColor.ParseColor(Console, x);
             if (c.HasValue)
@@ -518,7 +518,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// set cursor x
         /// </summary>
         /// <param name="x">x</param>
-        private object? SetCursorX(object x)
+        object? SetCursorX(object x)
         {
             CursorLeft = Console.Cursor.GetCursorX(x);
             return null;
@@ -528,7 +528,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// set cursor y
         /// </summary>
         /// <param name="x">y</param>
-        private object? SetCursorY(object x)
+        object? SetCursorY(object x)
         {
             CursorTop = Console.Cursor.GetCursorY(x);
             return null;
@@ -538,34 +538,34 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// executes a csharp scrit
         /// </summary>
         /// <param name="x">script test</param>
-        private object? ExecCSharp(object x)
+        object? ExecCSharp(object x)
             => CSharpScriptEngine!.ExecCSharp((string)x, this);
 
         /// <summary>
         /// moves cursor 1 line top
         /// </summary>
-        private void MoveCursorTop() => MoveCursorTop(1);
+        void MoveCursorTop() => MoveCursorTop(1);
 
         /// <summary>
         /// moves cursor 1 line down
         /// </summary>
-        private void MoveCursorDown() => MoveCursorDown(1);
+        void MoveCursorDown() => MoveCursorDown(1);
 
         /// <summary>
         /// moves cursor 1 column left
         /// </summary>
-        private void MoveCursorLeft() => MoveCursorLeft(1);
+        void MoveCursorLeft() => MoveCursorLeft(1);
 
         /// <summary>
         /// moves cursor 1 column right
         /// </summary>
-        private void MoveCursorRight() => MoveCursorRight(1);
+        void MoveCursorRight() => MoveCursorRight(1);
 
         /// <summary>
         /// moves cursor top
         /// </summary>
         /// <param name="x">lines count</param>
-        private object? MoveCursorTop(object x)
+        object? MoveCursorTop(object x)
         {
             MoveCursorTop(Convert.ToInt32(x));
             return null;
@@ -575,7 +575,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// moves cursor down
         /// </summary>
         /// <param name="x">lines count</param>
-        private object? MoveCursorDown(object x)
+        object? MoveCursorDown(object x)
         {
             MoveCursorDown(Convert.ToInt32(x));
             return null;
@@ -585,7 +585,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// moves cursor left
         /// </summary>
         /// <param name="x">columns count</param>
-        private object? MoveCursorLeft(object x)
+        object? MoveCursorLeft(object x)
         {
             MoveCursorLeft(Convert.ToInt32(x));
             return null;
@@ -595,7 +595,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// moves cursor right
         /// </summary>
         /// <param name="x">columns count</param>
-        private object? MoveCursorRight(object x)
+        object? MoveCursorRight(object x)
         {
             MoveCursorRight(Convert.ToInt32(x));
             return null;
@@ -605,7 +605,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         #region buffering operations
 
-        private void BackupCursorInformation()
+        void BackupCursorInformation()
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
@@ -613,7 +613,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             _cachedBufferSize = new Size(sc.BufferWidth, sc.BufferHeight);
         }
 
-        private void ClearCursorInformation()
+        void ClearCursorInformation()
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
@@ -1153,7 +1153,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <summary>
         /// returns restore default colors directive
         /// </summary>
-        private string GetRestoreDefaultColors
+        string GetRestoreDefaultColors
         {
             get
             {
@@ -1656,7 +1656,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <param name="printSequences">to store echo sequence objects when collected</param>
         /// <param name="avoidANSISequencesAndNonPrintableCharacters">if true and parseCommands=false, replace ansiseq and non printable chars by readable data</param>
         /// <param name="getNonPrintablesASCIICodesAsLabel">if true and parseCommands=false, replace ascii non printables chars by labels</param>
-        private void WriteInternal(
+        void WriteInternal(
             object o,
             bool lineBreak = false,
             bool parseCommands = true,
@@ -1742,7 +1742,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void ConsoleSubPrint(string s, bool lineBreak = false)
+        void ConsoleSubPrint(string s, bool lineBreak = false)
         {
             if (IsMute)
                 return;
@@ -1811,7 +1811,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
-        private void FillLineFromCursor(char c = ' ', bool resetCursorLeft = true, bool useDefaultColors = true)
+        void FillLineFromCursor(char c = ' ', bool resetCursorLeft = true, bool useDefaultColors = true)
         {
             if (IsMuteOrIsNotConsoleGeometryEnabled)
                 return;
@@ -1887,7 +1887,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return r.CursorIndex;
         }
 
-        private LineSplitList GetIndexLineSplitsInWorkAreaConstraintedString(
+        LineSplitList GetIndexLineSplitsInWorkAreaConstraintedString(
             string s,
             Point origin,
             int cursorX,
@@ -1929,7 +1929,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <param name="cursorX"></param>
         /// <param name="cursorY"></param>
         /// <returns></returns>
-        private LineSplitList GetWorkAreaStringSplits(
+        LineSplitList GetWorkAreaStringSplits(
             string s,
             Point origin,
             bool forceEnableConstraintInWorkArea = false,

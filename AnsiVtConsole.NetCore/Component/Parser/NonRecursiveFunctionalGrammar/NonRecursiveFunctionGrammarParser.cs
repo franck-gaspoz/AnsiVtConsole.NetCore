@@ -1,6 +1,6 @@
 namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
 {
-    internal sealed class NonRecursiveFunctionGrammarParser
+    sealed class NonRecursiveFunctionGrammarParser
     {
         #region predefined grammar functions
 
@@ -33,10 +33,10 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
 
         #region attributes
 
-        private readonly Dictionary<string, string> _lexs = new();
-        private readonly List<Rule> _rules = new List<Rule>();
-        private readonly Dictionary<string, Rule> _rulesIndex = new();
-        private TreeNode? _gramTree;
+        readonly Dictionary<string, string> _lexs = new();
+        readonly List<Rule> _rules = new List<Rule>();
+        readonly Dictionary<string, Rule> _rulesIndex = new();
+        TreeNode? _gramTree;
 
         #endregion
 
@@ -84,7 +84,7 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
 
         #region grammar tree
 
-        private void BuildGramTree()
+        void BuildGramTree()
         {
             _gramTree = new TreeNode();
             foreach (var rule in _rules)
@@ -105,7 +105,7 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
             }
         }
 
-        private void AddRuleToGramTree(TreeNode node, IEnumerable<string> ruleTerms, Rule rule)
+        void AddRuleToGramTree(TreeNode node, IEnumerable<string> ruleTerms, Rule rule)
         {
             var rt = ruleTerms.FirstOrDefault();
             if (rt == null)
@@ -119,13 +119,13 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
             AddRuleToGramTree(rtNode, ruleTerms.Skip(1), rule);
         }
 
-        private void AddRule(string rule)
+        void AddRule(string rule)
         {
             var rules = ReadRule(rule);
             _rules.AddRange(rules);
         }
 
-        private List<Rule> ReadRule(string rule)
+        List<Rule> ReadRule(string rule)
         {
             var t = rule.Split(' ');
             var seqs = new List<Rule>() { new Rule() };
@@ -212,7 +212,7 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
             return paths;
         }
 
-        private void Parse(
+        void Parse(
             ref char[] chars,
             int i,
             TreeNode rootNode,

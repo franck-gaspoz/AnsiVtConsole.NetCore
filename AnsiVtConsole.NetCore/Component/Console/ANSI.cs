@@ -633,7 +633,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             return r;
         }
 
-        private static string ToHexStr(int n)
+        static string ToHexStr(int n)
         {
             var s = string.Format("\\x{0:X}", n);
             return s;

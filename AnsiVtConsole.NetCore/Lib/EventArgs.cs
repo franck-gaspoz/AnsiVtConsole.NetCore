@@ -4,7 +4,7 @@
     /// generic event args + IsCanceled information
     /// </summary>
     /// <typeparam name="T">event arg type</typeparam>
-    internal sealed class EventArgs<T> : EventArgs
+    sealed class EventArgs<T> : EventArgs
     {
         public T? Value { get; set; }
 

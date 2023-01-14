@@ -7,7 +7,7 @@ namespace AnsiVtConsole.NetCore.Component.Parser.ANSI
         #region attributes
 
         public const string GrammarFileName = "ansi-seq-patterns.txt";
-        private static readonly NonRecursiveFunctionGrammarParser _parser;
+        static readonly NonRecursiveFunctionGrammarParser _parser;
 
         #endregion
 

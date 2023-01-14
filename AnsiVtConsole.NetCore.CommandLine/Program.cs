@@ -1,4 +1,4 @@
-﻿using cons = AnsiVtConsole.NetCore;
+﻿using CommandLine.NetCore.Services.CmdLine;
 
 namespace AnsiVtConsole.NetCore.CommandLine;
 
@@ -8,17 +8,12 @@ namespace AnsiVtConsole.NetCore.CommandLine;
 public class Program
 {
     /// <summary>
-    /// command line
+    /// 'echo' command line
     /// </summary>
     /// <param name="args">arguments</param>
     /// <returns>exit code</returns>
     public static int Main(string[] args)
-    {
-        var console = new cons.AnsiVtConsole();
-
-        var text = args.Length > 0 ? args[0] : string.Empty;
-        console.Out.WriteLine(text);
-
-        return 0;
-    }
+        => new CommandLineInterfaceBuilder()
+                .Build(args)
+                .Run();
 }

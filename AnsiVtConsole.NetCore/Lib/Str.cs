@@ -1,6 +1,6 @@
 ﻿namespace AnsiVtConsole.NetCore.Lib
 {
-    internal static class Str
+    static class Str
     {
         #region data to text operations
 

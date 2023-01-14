@@ -60,8 +60,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         #region util
 
-        private static Dictionary<char, string>? _codesToNames = null;
-        private static readonly Dictionary<char, string>? _codesToTexts = new()
+        static Dictionary<char, string>? _codesToNames = null;
+        static readonly Dictionary<char, string>? _codesToTexts = new()
         {
             { NUL, NUL_TXT },
             { BEL, BEL_TXT },
@@ -74,7 +74,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             { ESC, ESC_TXT },
         };
 
-        private static void RequireCodesToNames()
+        static void RequireCodesToNames()
         {
             if (_codesToNames != null)
                 return;
@@ -90,7 +90,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
             }
         }
 
-        private static string GetPreferredRepresentation(
+        static string GetPreferredRepresentation(
             char c,
             string labelFormat = "<{0}>",
             string textFormat = "{0}",

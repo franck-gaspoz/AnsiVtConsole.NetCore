@@ -28,11 +28,11 @@ The library provides functionalities needed to build console applications runnin
 download the nuget from command line or add it from Visual Studio
 
 ``` dos
-@rem version 1.0.17 or any new one
-dotnet add package AnsiVtConsole.NetCore --version 1.0.17
+@rem version 1.0.18 or any new one
+dotnet add package AnsiVtConsole.NetCore --version 1.0.18
 ```
 
-> **Notice**
+> **Note**
 >
 > When installing the package, the following files are copied into your project:
 > - LICENSE.md
@@ -43,6 +43,7 @@ dotnet add package AnsiVtConsole.NetCore --version 1.0.17
 > - assets/example3.png
 > - assets/example4.png
 > - assets/example5.png
+> - assets/example6.png
 > - assets/output.png
 > - assets/ascii-icon.png
 >
@@ -222,6 +223,10 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 # Version history
 
+`1.0.18` - 01-13-2023
+- widget ?
+- add symbols and sources in package
+- 
 `1.0.17` - 01-10-2023
 - add setting that make it possible to disable ansi/vt in console ouputs: `AnsiVtConsole.NetCore.Component.Settings` : `IsMarkupDisabled`,`IsRawOutputEnabled`,`ReplaceNonPrintableCharactersByTheirName`,`RemoveANSISequences`
 - add methods to get output text in various formats (without ansi,with unparsed markup,in shell escaped characters) : `GetText`,`GetRawText`,`ANSIParser.GetText` 

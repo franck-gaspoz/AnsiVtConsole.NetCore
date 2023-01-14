@@ -4,8 +4,8 @@ namespace AnsiVtConsole.NetCore.Component.Console;
 
 public class Cursor
 {
-    private readonly ConsoleTextWriterWrapper _out;
-    private readonly IAnsiVtConsole _console;
+    readonly ConsoleTextWriterWrapper _out;
+    readonly IAnsiVtConsole _console;
 
     public Cursor(
         IAnsiVtConsole console,

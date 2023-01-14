@@ -12,7 +12,7 @@ namespace AnsiVtConsole.NetCore.Lib
     /// </summary>
     public static class TypesManglingExt
     {
-        private static readonly Dictionary<Type, string> _keywordTypes = new()
+        static readonly Dictionary<Type, string> _keywordTypes = new()
         {
             { typeof(void), "void" },
             { typeof(bool), "bool" },
@@ -50,7 +50,7 @@ namespace AnsiVtConsole.NetCore.Lib
             return b.ToString();
         }
 
-        private static void BuildFriendlyName(StringBuilder builder, Type? type, bool useKeywords, bool showGenericArguments, bool showDeclaringType, bool compactNullable)
+        static void BuildFriendlyName(StringBuilder builder, Type? type, bool useKeywords, bool showGenericArguments, bool showDeclaringType, bool compactNullable)
         {
             if (type == null)
                 return;
