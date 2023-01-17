@@ -256,6 +256,8 @@ out.exe <text> [--raw [--esc-only] [--hexa] ]
 
 To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examples**:
 
+![title](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/title.png "title")  
+
 ![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example1.png "example1")
 ![example2](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example2.png "example2")
 
