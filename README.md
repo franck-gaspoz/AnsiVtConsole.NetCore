@@ -28,8 +28,8 @@ The library provides functionalities needed to build console applications runnin
 download the nuget from command line or add it from Visual Studio
 
 ``` dos
-@rem version 1.0.18 or any new one
-dotnet add package AnsiVtConsole.NetCore --version 1.0.18
+@rem version 1.0.19 or any new one
+dotnet add package AnsiVtConsole.NetCore --version 1.0.19
 ```
 
 > **Note**
@@ -264,6 +264,10 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 ![example5](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example5.png "example5")
 
 # Version history
+
+`1.0.19` - 17-1-2023
+- add example
+- doc update
 
 `1.0.18` - 01-1-2023
 - add symbols and sources in package

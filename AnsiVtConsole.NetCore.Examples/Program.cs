@@ -12,16 +12,11 @@ using static AnsiVtConsole.NetCore.Component.EchoDirective.Shortcuts;
 
 var console = new AnsiVtConsole.NetCore.AnsiVtConsole();
 
-var title = $"AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}";
-var sep = "".PadLeft(title.Length, '-');
-
 #if Enable_Buffer
 console.Out.EnableBuffer();
 #endif
 
 Title(console);
-
-console.Out.WriteLine($"(bon,f=cyan){title}(br)");
 
 console.Out.WriteLine("(uon,bon)init:(br)");
 
@@ -212,13 +207,78 @@ console.Out.CloseBuffer();
 void Title(IAnsiVtConsole console)
 {
     var str = @"
- ___            _ __   __ _     ___                      _              _  _       _     ___                
-/   \ _ _   ___(_)\ \ / /| |_  / __| ___  _ _   ___ ___ | | ___        | \| | ___ | |_  / __| ___  _ _  ___ 
-| - || ' \ (_-/| | \   / |  _|| (__ / _ \| ' \ (_-// _ \| |/ -_)  _    | .  |/ -_)|  _|| (__ / _ \| '_|/ -_)
-|_|_||_||_|/__/|_|  \_/   \__| \___|\___/|_||_|/__/\___/|_|\___| (_)   |_|\_|\___| \__| \___|\___/|_|  \___|
+   ___            _ __   __ _     ___                      _              _  _       _     ___                  
+  /   \ _ _   ___(_)\ \ / /| |_  / __| ___  _ _   ___ ___ | | ___        | \| | ___ | |_  / __| ___  _ _  ___   
+  | - || ' \ (_-/| | \   / |  _|| (__ / _ \| ' \ (_-// _ \| |/ -_)  _    | .  |/ -_)|  _|| (__ / _ \| '_|/ -_)  
+  |_|_||_||_|/__/|_|  \_/   \__| \___|\___/|_||_|/__/\___/|_|\___| (_)   |_|\_|\___| \__| \___|\___/|_|  \___|  
 ";
 
-    console.Out.WriteLine(str);
+    ColoredText(str);
+    console.Out.WriteLine();
+    ColoredText($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}");
+    console.Out.WriteLine();
+    ColoredText("".PadLeft(113, '_'));
+    console.Out.WriteLine();
+    console.Out.WriteLine();
+
+    void ColoredText(string str)
+    {
+        int ir = 0, ig = 0, ib = 128;
+        int r = ir, g = ig, b = ib;
+        int dr = 4, dg = 9, db = 14;
+        (int r, int g, int b) NextColor(int r, int g, int b)
+        {
+            r += dr;
+            g += dg;
+            b += db;
+            if (r < 0)
+            {
+                r = 0;
+                dr = dr * -1;
+            }
+            if (r > 255)
+            {
+                r = 255;
+                dr = dr *= -1;
+            }
+            if (g < 0)
+            {
+                g = 0;
+                dg = dg * -1;
+            }
+            if (g > 255)
+            {
+                g = 255;
+                dg = dg *= -1;
+            }
+            if (b < 0)
+            {
+                b = 0;
+                db = db * -1;
+            }
+            if (b > 255)
+            {
+                b = 255;
+                db = db *= -1;
+            }
+            return (r, g, b);
+        }
+
+        console.Out.Write(Bkf);
+        foreach (var c in str)
+        {
+            if (c == '\n')
+            {
+                r = ir;
+                g = ig;
+                b = ib;
+            }
+            (r, g, b) = NextColor(r, g, b);
+
+            console.Out.Write(SGR_SetForegroundColor24bits(r, g, b) + c);
+        }
+        console.Out.Write(Rsf);
+    }
 }
 
 void AnsiColorTest(IAnsiVtConsole console)
