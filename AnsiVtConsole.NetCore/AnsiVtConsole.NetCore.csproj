@@ -5,8 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<AssemblyVersion>1.0.18.0</AssemblyVersion>
-	<FileVersion>1.0.18.0</FileVersion>
+	<AssemblyVersion>1.0.19.0</AssemblyVersion>
+	<FileVersion>1.0.19.0</FileVersion>
 	  
     <RootNamespace>AnsiVtConsole.NetCore</RootNamespace>
     <AssemblyName>AnsiVtConsole.NetCore</AssemblyName>    
@@ -19,8 +19,8 @@
     <Product>AnsiVtConsole.NetCore</Product>
     <Description>ANSI VT console library for .Net Core system console</Description>
     <Copyright>(c) Franck Gaspoz 2023 Licence MIT</Copyright>
-    <Version>1.0.18</Version>
-    <InformationalVersion>1.0.18</InformationalVersion>
+    <Version>1.0.19</Version>
+    <InformationalVersion>1.0.19</InformationalVersion>
     <DebugType>embedded</DebugType>
 	<EmbedAllSources>True</EmbedAllSources>
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>

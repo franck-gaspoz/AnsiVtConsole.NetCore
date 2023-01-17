@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Text;
 
+using AnsiVtConsole.NetCore;
 using AnsiVtConsole.NetCore.Component.Console;
 using AnsiVtConsole.NetCore.Component.Parser.ANSI;
 
@@ -9,20 +10,18 @@ using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 using static AnsiVtConsole.NetCore.Component.Console.Unicode;
 using static AnsiVtConsole.NetCore.Component.EchoDirective.Shortcuts;
 
-using cons = AnsiVtConsole.NetCore;
+var console = new AnsiVtConsole.NetCore.AnsiVtConsole();
 
-var console = new cons.AnsiVtConsole();
-
-var title = $"| AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version} |";
+var title = $"AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}";
 var sep = "".PadLeft(title.Length, '-');
 
 #if Enable_Buffer
 console.Out.EnableBuffer();
 #endif
 
-console.Out.WriteLine($"(bon,f=cyan){sep}");
-console.Out.WriteLine($"(bon,f=cyan){title}");
-console.Out.WriteLine($"(bon,f=cyan){sep}(br)");
+Title(console);
+
+console.Out.WriteLine($"(bon,f=cyan){title}(br)");
 
 console.Out.WriteLine("(uon,bon)init:(br)");
 
@@ -210,7 +209,19 @@ console.Out.WriteLine("(rdc)");
 console.Out.CloseBuffer();
 #endif
 
-void AnsiColorTest(cons.IAnsiVtConsole console)
+void Title(IAnsiVtConsole console)
+{
+    var str = @"
+ ___            _ __   __ _     ___                      _              _  _       _     ___                
+/   \ _ _   ___(_)\ \ / /| |_  / __| ___  _ _   ___ ___ | | ___        | \| | ___ | |_  / __| ___  _ _  ___ 
+| - || ' \ (_-/| | \   / |  _|| (__ / _ \| ' \ (_-// _ \| |/ -_)  _    | .  |/ -_)|  _|| (__ / _ \| '_|/ -_)
+|_|_||_||_|/__/|_|  \_/   \__| \___|\___/|_||_|/__/\___/|_|\___| (_)   |_|\_|\___| \__| \___|\___/|_|  \___|
+";
+
+    console.Out.WriteLine(str);
+}
+
+void AnsiColorTest(IAnsiVtConsole console)
 {
     // 3 bits colors (standard)
     var colw = 8;
