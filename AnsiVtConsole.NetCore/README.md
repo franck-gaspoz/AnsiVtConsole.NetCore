@@ -265,6 +265,10 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 # Version history
 
+`1.0.19` - 17-1-2023
+- add example
+- doc update
+
 `1.0.18` - 01-1-2023
 - add symbols and sources in package
 - new editorconfig and code clean up
