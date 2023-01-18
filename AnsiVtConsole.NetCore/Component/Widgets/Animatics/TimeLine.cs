@@ -3,8 +3,7 @@
 /// <summary>
 /// story board
 /// </summary>
-public sealed class TimeLine<T>
-    where T : class
+public sealed class TimeLine
 {
     /// <summary>
     /// animatables
@@ -29,7 +28,7 @@ public sealed class TimeLine<T>
     /// </summary>
     /// <param name="animatable">animatable</param>
     /// <returns>this object</returns>
-    public TimeLine<T> Add(IAnimation animatable)
+    public TimeLine Add(IAnimation animatable)
     {
         _animatables.Add(animatable);
         return this;
@@ -39,15 +38,15 @@ public sealed class TimeLine<T>
     /// enable loop
     /// </summary>
     /// <returns>this object</returns>
-    public TimeLine<T> Loop()
-        => (this as TimeLine<T>)!;
+    public TimeLine Loop()
+        => this!;
 
     /// <summary>
     /// enable auto reverse
     /// </summary>
     /// <returns>this object</returns>
-    public TimeLine<T> AutoReverse()
-        => (this as TimeLine<T>)!;
+    public TimeLine AutoReverse()
+        => this!;
 
     /// <summary>
     /// time line
