@@ -27,6 +27,7 @@
 	  
 	<PackageReleaseNotes>
 1.0.19 - 17-1-2023
+- add widgets feature + RaimbowText widget
 - add example
 - doc update
 	</PackageReleaseNotes>
