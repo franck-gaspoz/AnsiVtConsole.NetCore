@@ -1,5 +1,7 @@
 ﻿using System.Text;
 
+using AnsiVtConsole.NetCore.Component.Widgets.Models;
+
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 
 namespace AnsiVtConsole.NetCore.Component.Widgets.Text.Raimbow;
@@ -7,52 +9,22 @@ namespace AnsiVtConsole.NetCore.Component.Widgets.Text.Raimbow;
 /// <summary>
 /// raimbow text
 /// </summary>
-public class RaimbowText : WidgetAbstact<RaimbowText>
+public sealed class RaimbowText : WidgetAbstact<RaimbowText>
 {
     /// <summary>
-    /// origin R of the gradient
+    /// origin RGB of the gradient
     /// </summary>
-    public int OriginR { get; private set; }
+    public Rgb OriginRGB { get; private set; } = new();
 
     /// <summary>
-    /// origin G of the gradient
+    /// current RGB of the gradient
     /// </summary>
-    public int OriginG { get; private set; }
+    public Rgb Rgb { get; private set; } = new();
 
     /// <summary>
-    /// origin B of the gradient
+    /// delta RGB of the gradient
     /// </summary>
-    public int OriginB { get; private set; }
-
-    /// <summary>
-    /// current R of the gradient
-    /// </summary>
-    public int R { get; private set; }
-
-    /// <summary>
-    /// current G of the gradient
-    /// </summary>
-    public int G { get; private set; }
-
-    /// <summary>
-    /// current B of the gradient
-    /// </summary>
-    public int B { get; private set; }
-
-    /// <summary>
-    /// delta R of the gradient
-    /// </summary>
-    public int DR { get; private set; }
-
-    /// <summary>
-    /// delta G of the gradient
-    /// </summary>
-    public int DG { get; private set; }
-
-    /// <summary>
-    /// delta B of the gradient
-    /// </summary>
-    public int DB { get; private set; }
+    public Rgb DRgb { get; private set; } = new();
 
     /// <summary>
     /// text of the raimbow text
@@ -69,11 +41,11 @@ public class RaimbowText : WidgetAbstact<RaimbowText>
     readonly StringBuilder _sb = new();
 
     /// <summary>
-    /// raimbow text embeding a wiDGet
+    /// raimbow text embeding a widget
     /// </summary>
-    /// <param name="wrappedWiDGet">wrapped wiDGet</param>
-    public RaimbowText(IWidgetAbstact wrappedWiDGet)
-        : base(wrappedWiDGet) { }
+    /// <param name="wrappedWidget">wrapped widget</param>
+    public RaimbowText(IWidgetAbstact wrappedWidget)
+        : base(wrappedWidget) { }
 
     /// <summary>
     /// set origin r,g,b of the gradient
@@ -84,12 +56,23 @@ public class RaimbowText : WidgetAbstact<RaimbowText>
     /// <returns>this object</returns>
     public RaimbowText Origin(int r, int g, int b)
     {
-        (OriginR, OriginG, OriginB) = (r, g, b);
+        OriginRGB = new(r, g, b);
         return this;
     }
 
     /// <summary>
-    /// setup cyclic grandient with dr,dg,db increments
+    /// set origin r,g,b of the gradient
+    /// </summary>
+    /// <param name="rgb">rgb</param>
+    /// <returns>this object</returns>
+    public RaimbowText Origin(Rgb rgb)
+    {
+        OriginRGB = rgb;
+        return this;
+    }
+
+    /// <summary>
+    /// setup cyclic gradient with dr,dg,db increments
     /// </summary>
     /// <param name="dr">delta R</param>
     /// <param name="dg">delta G</param>
@@ -97,7 +80,18 @@ public class RaimbowText : WidgetAbstact<RaimbowText>
     /// <returns>this object</returns>
     public RaimbowText CyclicGradient(int dr, int dg, int db)
     {
-        (DR, DG, DB) = (dr, dg, db);
+        DRgb = new(dr, dg, db);
+        return this;
+    }
+
+    /// <summary>
+    /// setup cyclic gradient with dr,dg,db increments
+    /// </summary>
+    /// <param name="rgb">rgb</param>
+    /// <returns>this object</returns>
+    public RaimbowText CyclicGradient(Rgb rgb)
+    {
+        DRgb = rgb;
         return this;
     }
 
@@ -113,9 +107,9 @@ public class RaimbowText : WidgetAbstact<RaimbowText>
         {
             if (c == '\n')
             {
-                R = OriginR;
-                G = OriginG;
-                B = OriginB;
+                Rgb.R = OriginR;
+                Rgb.G = OriginG;
+                Rgb.B = OriginB;
             }
             (R, G, B) = NextColor(R, G, B);
 
