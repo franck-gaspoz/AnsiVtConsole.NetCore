@@ -216,9 +216,9 @@ void Title(IAnsiVtConsole console)
 
     RaimbowText RaimbowText(string str)
         => new RaimbowText(str)
-        .Origin(0, 0, 128)
-        .CyclicGradient(4, 9, 14)
-        .Add(console);
+            .Origin(0, 0, 128)
+            .CyclicGradient(4, 9, 14)
+            .Add(console);
 
     RaimbowText(str);
     console.Out.WriteLine();
