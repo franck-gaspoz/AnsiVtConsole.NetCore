@@ -5,27 +5,31 @@ namespace AnsiVtConsole.NetCore.Component.Widgets;
 /// <summary>
 /// widget base class
 /// </summary>
-public abstract class WidgetAbstact
+public abstract class WidgetAbstact<T> : IWidgetAbstact
+    where T : class, IWidgetAbstact
 {
+    const string BackupColors = "(bkf,bkb)";
+    const string RestoreColors = "(rsf,rsb)";
+
     /// <summary>
     /// fixed location X if any else -1
     /// </summary>
-    public int X { get; private set; } = -1;
+    public int X { get; protected set; } = -1;
 
     /// <summary>
     /// fixed location Y if any else -1
     /// </summary>
-    public int Y { get; private set; }
+    public int Y { get; protected set; }
 
     /// <summary>
     /// wrapped widget if any
     /// </summary>
-    public WidgetAbstact? WrappedWidget { get; private set; }
+    public IWidgetAbstact? WrappedWidget { get; private set; }
 
     /// <summary>
     /// widget
     /// </summary>
-    public WidgetAbstact(WidgetAbstact? wrappedWidget = null)
+    public WidgetAbstact(IWidgetAbstact? wrappedWidget = null)
         => WrappedWidget = wrappedWidget;
 
     /// <summary>
@@ -50,7 +54,19 @@ public abstract class WidgetAbstact
     /// render the widget
     /// </summary>
     /// <returns>the render of the widget</returns>
-    public abstract string Render();
+    public string Render()
+    {
+        var render = WrappedWidget is null ?
+            RenderWidget()
+            : WrappedWidget.Render();
+        return ManagedRender(render);
+    }
+
+    /// <summary>
+    /// render the widget itself without context or wrapping considerations
+    /// </summary>
+    /// <returns>the render of the widget itself</returns>
+    protected abstract string RenderWidget();
 
     /// <summary>
     /// render for any widget
@@ -59,8 +75,34 @@ public abstract class WidgetAbstact
     /// <returns>rendered widget</returns>
     protected string ManagedRender(string render)
     {
+        render = WidgetAbstact<T>.BackupColors + render;
         if (X != -1 && Y != -1)
             render = CUP(X, Y) + render;
+        render += WidgetAbstact<T>.RestoreColors;
         return render;
+    }
+
+    /// <summary>
+    /// add the widget to a console, so it is rendered
+    /// </summary>
+    /// <param name="console">console</param>
+    /// <returns>this object</returns>
+    public T Add(IAnsiVtConsole console)
+    {
+        console.Out.WriteLine(Render());
+        return (this as T)!;
+    }
+
+    /// <summary>
+    /// set location
+    /// </summary>
+    /// <param name="x">cursor x</param>
+    /// <param name="y">cursor y</param>
+    /// <returns>this object</returns>
+    public T Location(int x, int y)
+    {
+        X = x;
+        Y = y;
+        return (this as T)!;
     }
 }

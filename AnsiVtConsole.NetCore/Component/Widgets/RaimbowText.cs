@@ -1,9 +1,13 @@
-﻿namespace AnsiVtConsole.NetCore.Component.Widgets;
+﻿using System.Text;
+
+using static AnsiVtConsole.NetCore.Component.Console.ANSI;
+
+namespace AnsiVtConsole.NetCore.Component.Widgets;
 
 /// <summary>
 /// raimbow text
 /// </summary>
-public class RaimbowText : WidgetAbstact
+public class RaimbowText : WidgetAbstact<RaimbowText>
 {
     /// <summary>
     /// oring R of the gradient
@@ -62,26 +66,48 @@ public class RaimbowText : WidgetAbstact
     public RaimbowText(string text)
         => Text = text;
 
+    readonly StringBuilder _sb = new();
+
     /// <summary>
     /// raimbow text embeding a wiDGet
     /// </summary>
     /// <param name="wrappedWiDGet">wrapped wiDGet</param>
-    public RaimbowText(WidgetAbstact wrappedWiDGet)
+    public RaimbowText(IWidgetAbstact wrappedWiDGet)
         : base(wrappedWiDGet) { }
 
     /// <summary>
-    /// raimbow text at a fixed location
+    /// set origin r,g,b of the gradient
     /// </summary>
-    /// <param name="text">text</param>
-    /// <param name="x">x</param>
-    /// <param name="y">y</param>
-    public RaimbowText(string text, int x, int y)
-        : base(x, y)
-            => Text = text;
+    /// <param name="r">oring R of the gradient</param>
+    /// <param name="g">oring G of the gradient</param>
+    /// <param name="b">oring B of the gradient</param>
+    /// <returns>this object</returns>
+    public RaimbowText Origin(int r, int g, int b)
+    {
+        (OriginR, OriginG, OriginB) = (r, g, b);
+        return this;
+    }
+
+    /// <summary>
+    /// setup cyclic grandient with dr,dg,db increments
+    /// </summary>
+    /// <param name="dr">delta R</param>
+    /// <param name="dg">delta G</param>
+    /// <param name="db">detla B</param>
+    /// <returns>this object</returns>
+    public RaimbowText CyclicGradient(int dr, int dg, int db)
+    {
+        (DR, DG, DB) = (dr, dg, db);
+        return this;
+    }
 
     /// <inheritdoc/>
-    public override string Render()
+    protected override string RenderWidget()
     {
+        _sb.Clear();
+        if (Text is null)
+            return string.Empty;
+
         var t = Text!.ToCharArray();
         foreach (var c in t)
         {
@@ -92,8 +118,11 @@ public class RaimbowText : WidgetAbstact
                 B = OriginB;
             }
             (R, G, B) = NextColor(R, G, B);
+
+            _sb.Append(SGR_SetForegroundColor24bits(R, G, B));
+            _sb.Append(c);
         }
-        return RenderFor(Text);
+        return _sb.ToString();
     }
 
     (int r, int g, int b) NextColor(int r, int g, int b)

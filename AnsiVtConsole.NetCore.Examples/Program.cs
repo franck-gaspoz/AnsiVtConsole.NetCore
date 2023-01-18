@@ -5,6 +5,7 @@ using System.Text;
 using AnsiVtConsole.NetCore;
 using AnsiVtConsole.NetCore.Component.Console;
 using AnsiVtConsole.NetCore.Component.Parser.ANSI;
+using AnsiVtConsole.NetCore.Component.Widgets;
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 using static AnsiVtConsole.NetCore.Component.Console.Unicode;
@@ -213,72 +214,19 @@ void Title(IAnsiVtConsole console)
   |_|_||_||_|/__/|_|  \_/   \__| \___|\___/|_||_|/__/\___/|_|\___| (_)   |_|\_|\___| \__| \___|\___/|_|  \___|  
 ";
 
-    ColoredText(str);
-    console.Out.WriteLine();
-    ColoredText($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}");
-    console.Out.WriteLine();
-    ColoredText("".PadLeft(113, '_'));
-    console.Out.WriteLine();
-    console.Out.WriteLine();
+    RaimbowText RaimbowText(string str)
+        => new RaimbowText(str)
+        .Origin(0, 0, 128)
+        .CyclicGradient(4, 9, 14)
+        .Add(console);
 
-    void ColoredText(string str)
-    {
-        int ir = 0, ig = 0, ib = 128;
-        int r = ir, g = ig, b = ib;
-        int dr = 4, dg = 9, db = 14;
-        (int r, int g, int b) NextColor(int r, int g, int b)
-        {
-            r += dr;
-            g += dg;
-            b += db;
-            if (r < 0)
-            {
-                r = 0;
-                dr = dr * -1;
-            }
-            if (r > 255)
-            {
-                r = 255;
-                dr = dr *= -1;
-            }
-            if (g < 0)
-            {
-                g = 0;
-                dg = dg * -1;
-            }
-            if (g > 255)
-            {
-                g = 255;
-                dg = dg *= -1;
-            }
-            if (b < 0)
-            {
-                b = 0;
-                db = db * -1;
-            }
-            if (b > 255)
-            {
-                b = 255;
-                db = db *= -1;
-            }
-            return (r, g, b);
-        }
-
-        console.Out.Write(Bkf);
-        foreach (var c in str)
-        {
-            if (c == '\n')
-            {
-                r = ir;
-                g = ig;
-                b = ib;
-            }
-            (r, g, b) = NextColor(r, g, b);
-
-            console.Out.Write(SGR_SetForegroundColor24bits(r, g, b) + c);
-        }
-        console.Out.Write(Rsf);
-    }
+    RaimbowText(str);
+    console.Out.WriteLine();
+    RaimbowText($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}");
+    console.Out.WriteLine();
+    RaimbowText("".PadLeft(113, '_'));
+    console.Out.WriteLine();
+    console.Out.WriteLine();
 }
 
 void AnsiColorTest(IAnsiVtConsole console)
