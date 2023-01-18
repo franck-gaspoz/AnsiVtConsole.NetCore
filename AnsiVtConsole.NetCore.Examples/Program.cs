@@ -8,6 +8,7 @@ using AnsiVtConsole.NetCore.Component.Parser.ANSI;
 using AnsiVtConsole.NetCore.Component.Widgets.Text.Raimbow;
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
+using static AnsiVtConsole.NetCore.Component.Console.ASCII;
 using static AnsiVtConsole.NetCore.Component.Console.Unicode;
 using static AnsiVtConsole.NetCore.Component.EchoDirective.Shortcuts;
 
@@ -220,12 +221,15 @@ void Title(IAnsiVtConsole console)
             .Add(console);
 
     RaimbowText(str);
-    console.Out.WriteLine();
-    RaimbowText($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}");
-    console.Out.WriteLine();
+
+    RaimbowText($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}{LF}");
+
     RaimbowText("".PadLeft(113, '_'));
+
     console.Out.WriteLine();
     console.Out.WriteLine();
+
+    console.Exit();
 }
 
 void AnsiColorTest(IAnsiVtConsole console)

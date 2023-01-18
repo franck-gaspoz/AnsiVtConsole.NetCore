@@ -1,27 +1,46 @@
 ﻿namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 
 /// <summary>
-/// animation abstract
+/// animation of value of type T
 /// </summary>
-public class AnimationAbstract<T>
+/// <typeparam name="T">value type</typeparam>
+public class AnimationAbstract<T> : IAnimation
     where T : class
 {
     /// <summary>
-    /// start of animation
+    /// current value
     /// </summary>
-    /// <returns>this object</returns>
-    public T From() => (this as T)!;
+    public T? Value { get; protected set; }
 
     /// <summary>
-    /// start of animation
+    /// from
     /// </summary>
-    /// <returns>this object</returns>
-    public T To() => (this as T)!;
+    public T? From { get; protected set; }
 
     /// <summary>
-    /// time lapse
+    /// to
     /// </summary>
-    /// <returns>this object</returns>
-    public T TimeLapse() => (this as T)!;
+    public T? To { get; protected set; }
+
+    /// <inheritdoc/>
+    public double Duration { get; protected set; }
+
+    /// <inheritdoc/>
+    TValue? IAnimation.Value<TValue>()
+        where TValue : class
+            => Value as TValue;
+
+    /// <inheritdoc/>
+    TValue? IAnimation.From<TValue>()
+        where TValue : class
+            => From as TValue;
+
+    /// <inheritdoc/>
+    TValue? IAnimation.To<TValue>()
+        where TValue : class
+            => To as TValue;
+
+    /// <inheritdoc/>
+    double IAnimation.Duration => Duration;
 
 }
