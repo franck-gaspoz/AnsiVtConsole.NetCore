@@ -9,7 +9,7 @@ namespace AnsiVtConsole.NetCore.Component.Widgets.Text.Raimbow;
 /// <summary>
 /// raimbow text
 /// </summary>
-public sealed class RaimbowText : WidgetAbstact<RaimbowText>
+public class RaimbowText : TextWidget
 {
     /// <summary>
     /// origin RGB of the gradient
@@ -26,24 +26,12 @@ public sealed class RaimbowText : WidgetAbstact<RaimbowText>
     /// </summary>
     public Rgb DRgb { get; private set; } = new(4, 9, 14);
 
-    /// <summary>
-    /// text of the raimbow text
-    /// </summary>
-    public string? Text { get; private set; }
-
-    /// <summary>
-    /// raimbow text
-    /// </summary>
-    /// <param name="text">text</param>
-    public RaimbowText(string text)
-        => Text = text;
+    /// <inheritdoc/>
+    public RaimbowText(string text) : base(text) { }
 
     readonly StringBuilder _sb = new();
 
-    /// <summary>
-    /// raimbow text embeding a widget
-    /// </summary>
-    /// <param name="wrappedWidget">wrapped widget</param>
+    /// <inheritdoc/>
     public RaimbowText(IWidgetAbstact wrappedWidget)
         : base(wrappedWidget) { }
 
