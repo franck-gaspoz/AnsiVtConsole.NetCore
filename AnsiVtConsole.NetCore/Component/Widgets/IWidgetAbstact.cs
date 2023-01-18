@@ -11,12 +11,12 @@ public interface IWidgetAbstact
     IWidgetAbstact? WrappedWidget { get; }
 
     /// <summary>
-    /// cursor x
+    /// fixed location X if any else -1
     /// </summary>
     int X { get; }
 
     /// <summary>
-    /// cursor y
+    /// fixed location Y if any else -1
     /// </summary>
     int Y { get; }
 
