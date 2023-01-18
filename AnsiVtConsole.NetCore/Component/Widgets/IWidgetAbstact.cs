@@ -21,8 +21,9 @@ public interface IWidgetAbstact
     int Y { get; }
 
     /// <summary>
-    /// render
+    /// render the widget
     /// </summary>
-    /// <returns>the widget render</returns>
-    string Render();
+    /// <param name="console">the console to render to</param>
+    /// <returns>the render of the widget</returns>
+    string Render(IAnsiVtConsole console);
 }

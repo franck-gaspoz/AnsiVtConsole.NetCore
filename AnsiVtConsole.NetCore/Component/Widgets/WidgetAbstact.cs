@@ -8,23 +8,26 @@ namespace AnsiVtConsole.NetCore.Component.Widgets;
 public abstract class WidgetAbstact<T> : IWidgetAbstact
     where T : class, IWidgetAbstact
 {
-    const string BackupColors = "(bkf,bkb)";
-    const string RestoreColors = "(rsf,rsb)";
+    /// <summary>
+    /// backup colors markup
+    /// </summary>
+    protected const string BackupColors = "(bkf,bkb)";
+
+    /// <summary>
+    /// restore colors markup
+    /// </summary>
+    protected const string RestoreColors = "(rsf,rsb)";
 
     static readonly object _lock = new();
 
-    /// <summary>
-    /// fixed location X if any else -1
-    /// </summary>
+    /// <inheritdoc/>
     public int X { get; protected set; } = -1;
 
-    /// <summary>
-    /// fixed location Y if any else -1
-    /// </summary>
+    /// <inheritdoc/>
     public int Y { get; protected set; }
 
     /// <summary>
-    /// wrapped widget if any
+    /// wrapped widget
     /// </summary>
     public IWidgetAbstact? WrappedWidget { get; private set; }
 
@@ -45,24 +48,22 @@ public abstract class WidgetAbstact<T> : IWidgetAbstact
     /// <summary>
     /// render the widget
     /// </summary>
+    /// <param name="console">the console to render to</param>
     /// <param name="render">any render when no wrapped widget</param>
     /// <returns>the render of the widget</returns>
-    protected string RenderFor(string? render = null)
+    protected string RenderFor(IAnsiVtConsole console, string? render = null)
         => ManagedRender(WrappedWidget is not null
-            ? WrappedWidget.Render()
+            ? WrappedWidget.Render(console)
             : render ?? string.Empty);
 
-    /// <summary>
-    /// render the widget
-    /// </summary>
-    /// <returns>the render of the widget</returns>
-    public string Render()
+    /// <inheritdoc/>
+    public string Render(IAnsiVtConsole console)
     {
         lock (_lock)
         {
             var render = WrappedWidget is null ?
                 RenderWidget()
-                : WrappedWidget.Render();
+                : WrappedWidget.Render(console);
             return ManagedRender(render);
         }
     }
@@ -96,7 +97,7 @@ public abstract class WidgetAbstact<T> : IWidgetAbstact
     {
         lock (_lock)
         {
-            console.Out.WriteLine(Render());
+            console.Out.WriteLine(Render(console));
             return (this as T)!;
         }
     }

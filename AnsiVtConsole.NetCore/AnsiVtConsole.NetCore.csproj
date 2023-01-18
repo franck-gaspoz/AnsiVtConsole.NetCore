@@ -42,6 +42,7 @@
 	<PackageLicenseFile>content\LICENSE.md</PackageLicenseFile>
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	<PackageFlatten>false</PackageFlatten>
+	<RunPostBuildEvent>Always</RunPostBuildEvent>
 		
   </PropertyGroup>
 

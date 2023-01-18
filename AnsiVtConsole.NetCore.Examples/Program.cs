@@ -21,8 +21,7 @@ Title(console);
 
 console.Out.WriteLine("(uon,bon)init:(br)");
 
-console.Out.WriteLine("(f=blue)using (f=darkgray)cons = AnsiVtConsole.NetCore;");
-console.Out.WriteLine("(f=blue)var (f=cyan)console (f=darkgray)= (f=blue)new (f=darkgray)cons.(f=green)AnsiVtConsole(f=white)();(br)");
+console.Out.WriteLine("(f=blue)var (f=cyan)console (f=darkgray)= (f=blue)new (f=darkgray)AnsiVtConsole.NetCore.(f=green)AnsiVtConsole(f=white)();(br)");
 
 console.Out.WriteLine("(uon,bon)console.Infos():(br)");
 console.Infos();
