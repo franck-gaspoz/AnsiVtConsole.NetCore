@@ -1,4 +1,6 @@
-﻿namespace AnsiVtConsole.NetCore.Component.Widgets;
+﻿using static AnsiVtConsole.NetCore.Component.Console.ANSI;
+
+namespace AnsiVtConsole.NetCore.Component.Widgets;
 
 /// <summary>
 /// widget base class
@@ -55,5 +57,10 @@ public abstract class WidgetAbstact
     /// </summary>
     /// <param name="render">a widget render to be finalized</param>
     /// <returns>rendered widget</returns>
-    protected string ManagedRender(string render) => render;
+    protected string ManagedRender(string render)
+    {
+        if (X != -1 && Y != -1)
+            render = CUP(X, Y) + render;
+        return render;
+    }
 }

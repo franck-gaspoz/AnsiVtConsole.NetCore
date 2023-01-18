@@ -63,11 +63,11 @@ public class RaimbowText : WidgetAbstact
         => Text = text;
 
     /// <summary>
-    /// raimbow text embeding a widget
+    /// raimbow text embeding a wiDGet
     /// </summary>
-    /// <param name="wrappedWidget">wrapped widget</param>
-    public RaimbowText(WidgetAbstact wrappedWidget)
-        : base(wrappedWidget) { }
+    /// <param name="wrappedWiDGet">wrapped wiDGet</param>
+    public RaimbowText(WidgetAbstact wrappedWiDGet)
+        : base(wrappedWiDGet) { }
 
     /// <summary>
     /// raimbow text at a fixed location
@@ -82,7 +82,55 @@ public class RaimbowText : WidgetAbstact
     /// <inheritdoc/>
     public override string Render()
     {
-        var text = Text;
-        return RenderFor(text);
+        var t = Text!.ToCharArray();
+        foreach (var c in t)
+        {
+            if (c == '\n')
+            {
+                R = OriginR;
+                G = OriginG;
+                B = OriginB;
+            }
+            (R, G, B) = NextColor(R, G, B);
+        }
+        return RenderFor(Text);
+    }
+
+    (int r, int g, int b) NextColor(int r, int g, int b)
+    {
+        r += DR;
+        g += DG;
+        b += DB;
+        if (r < 0)
+        {
+            r = 0;
+            DR = DR * -1;
+        }
+        if (r > 255)
+        {
+            r = 255;
+            DR = DR *= -1;
+        }
+        if (g < 0)
+        {
+            g = 0;
+            DG = DG * -1;
+        }
+        if (g > 255)
+        {
+            g = 255;
+            DG = DG *= -1;
+        }
+        if (b < 0)
+        {
+            b = 0;
+            DB = DB * -1;
+        }
+        if (b > 255)
+        {
+            b = 255;
+            DB = DB *= -1;
+        }
+        return (r, g, b);
     }
 }
