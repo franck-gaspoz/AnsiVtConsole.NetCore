@@ -43,4 +43,19 @@ public class AnimationAbstract<T> : IAnimation
     /// <inheritdoc/>
     double IAnimation.Duration => Duration;
 
+    /// <summary>
+    /// animation
+    /// </summary>
+    /// <param name="from">from</param>
+    /// <param name="to">to</param>
+    /// <param name="duration">duration</param>
+    public AnimationAbstract(
+        T from,
+        T to,
+        double duration)
+    {
+        From = from;
+        To = to;
+        Duration = duration;
+    }
 }

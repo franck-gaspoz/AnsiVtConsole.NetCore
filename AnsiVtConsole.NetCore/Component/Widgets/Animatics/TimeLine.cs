@@ -15,6 +15,16 @@ public sealed class TimeLine<T>
     readonly List<IAnimation> _animatables = new();
 
     /// <summary>
+    /// is loop
+    /// </summary>
+    public bool IsLoop { get; private set; }
+
+    /// <summary>
+    /// is auto reverse
+    /// </summary>
+    public bool IsAutoReverse { get; private set; }
+
+    /// <summary>
     /// add an animatable to the animation
     /// </summary>
     /// <param name="animatable">animatable</param>
@@ -31,4 +41,22 @@ public sealed class TimeLine<T>
     /// <returns>this object</returns>
     public TimeLine<T> Loop()
         => (this as TimeLine<T>)!;
+
+    /// <summary>
+    /// enable auto reverse
+    /// </summary>
+    /// <returns>this object</returns>
+    public TimeLine<T> AutoReverse()
+        => (this as TimeLine<T>)!;
+
+    /// <summary>
+    /// time line
+    /// </summary>
+    /// <param name="isLoop">is loop</param>
+    /// <param name="isAutoReverse">is auto reverse</param>
+    public TimeLine(bool isLoop = false, bool isAutoReverse = false)
+    {
+        IsLoop = isLoop;
+        IsAutoReverse = isAutoReverse;
+    }
 }
