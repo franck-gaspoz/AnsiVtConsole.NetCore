@@ -20,6 +20,8 @@ The library provides functionalities needed to build console applications runnin
 
 - A ANSI Parser that can identify/remove escape sequences in a text
 
+- Can compile a .exe for a one command, showing only the help for a specific command, or several ones, showing a help for all commands as a shell would do
+
 - The console output can be controlled by:
     - tokens in a string (print directives)
     - as string shortcuts (dynamic ansi vt strings)
