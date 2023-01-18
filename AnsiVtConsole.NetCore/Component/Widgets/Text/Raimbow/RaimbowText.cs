@@ -2,7 +2,7 @@
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 
-namespace AnsiVtConsole.NetCore.Component.Widgets;
+namespace AnsiVtConsole.NetCore.Component.Widgets.Text.Raimbow;
 
 /// <summary>
 /// raimbow text
@@ -10,17 +10,17 @@ namespace AnsiVtConsole.NetCore.Component.Widgets;
 public class RaimbowText : WidgetAbstact<RaimbowText>
 {
     /// <summary>
-    /// oring R of the gradient
+    /// origin R of the gradient
     /// </summary>
     public int OriginR { get; private set; }
 
     /// <summary>
-    /// oring G of the gradient
+    /// origin G of the gradient
     /// </summary>
     public int OriginG { get; private set; }
 
     /// <summary>
-    /// oring B of the gradient
+    /// origin B of the gradient
     /// </summary>
     public int OriginB { get; private set; }
 

@@ -271,6 +271,9 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 # Version history
 
+`1.0.20` - 18-1-2023
+- ..
+
 `1.0.19` - 17-1-2023
 - add **widgets** feature + RaimbowText widget
 - add example

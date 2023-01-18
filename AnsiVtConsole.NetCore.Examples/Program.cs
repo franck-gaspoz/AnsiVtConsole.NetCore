@@ -5,7 +5,7 @@ using System.Text;
 using AnsiVtConsole.NetCore;
 using AnsiVtConsole.NetCore.Component.Console;
 using AnsiVtConsole.NetCore.Component.Parser.ANSI;
-using AnsiVtConsole.NetCore.Component.Widgets;
+using AnsiVtConsole.NetCore.Component.Widgets.Text.Raimbow;
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 using static AnsiVtConsole.NetCore.Component.Console.Unicode;
