@@ -8,10 +8,10 @@ public sealed class TimeLine
     /// <summary>
     /// animatables
     /// </summary>
-    public IReadOnlyList<IAnimation> Animatables
-        => _animatables;
+    public IReadOnlyList<IAnimation> Animations
+        => _animations;
 
-    readonly List<IAnimation> _animatables = new();
+    readonly List<IAnimation> _animations = new();
 
     /// <summary>
     /// is loop
@@ -30,7 +30,7 @@ public sealed class TimeLine
     /// <returns>this object</returns>
     public TimeLine Add(IAnimation animatable)
     {
-        _animatables.Add(animatable);
+        _animations.Add(animatable);
         return this;
     }
 
@@ -58,4 +58,12 @@ public sealed class TimeLine
         IsLoop = isLoop;
         IsAutoReverse = isAutoReverse;
     }
+
+    /// <summary>
+    /// get total time line duration
+    /// </summary>
+    /// <returns>max duration of animations</returns>
+    public double Duration
+        => !Animations.Any() ? 0
+            : _animations.Select(x => x.Duration).Max();
 }

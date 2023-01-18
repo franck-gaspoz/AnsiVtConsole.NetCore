@@ -30,7 +30,7 @@ public interface IAnimation
         where TValue : class;
 
     /// <summary>
-    /// duration
+    /// duration (ms)
     /// </summary>
     /// <returns>value</returns>
     double Duration { get; }

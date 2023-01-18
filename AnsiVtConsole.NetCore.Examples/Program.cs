@@ -234,8 +234,8 @@ void Title(IAnsiVtConsole console)
                     new ValueAnimation<int>(0, 255, 10000)
                         .Target(bar, () => bar.OriginRGB.R)
                 )
-            );
-    //.Start
+            )
+        .Start();
 
     console.Out.WriteLine();
     console.Out.WriteLine();
