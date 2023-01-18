@@ -11,6 +11,8 @@ public abstract class WidgetAbstact<T> : IWidgetAbstact
     const string BackupColors = "(bkf,bkb)";
     const string RestoreColors = "(rsf,rsb)";
 
+    static readonly object _lock = new();
+
     /// <summary>
     /// fixed location X if any else -1
     /// </summary>
@@ -56,10 +58,13 @@ public abstract class WidgetAbstact<T> : IWidgetAbstact
     /// <returns>the render of the widget</returns>
     public string Render()
     {
-        var render = WrappedWidget is null ?
-            RenderWidget()
-            : WrappedWidget.Render();
-        return ManagedRender(render);
+        lock (_lock)
+        {
+            var render = WrappedWidget is null ?
+                RenderWidget()
+                : WrappedWidget.Render();
+            return ManagedRender(render);
+        }
     }
 
     /// <summary>
@@ -89,8 +94,11 @@ public abstract class WidgetAbstact<T> : IWidgetAbstact
     /// <returns>this object</returns>
     public T Add(IAnsiVtConsole console)
     {
-        console.Out.WriteLine(Render());
-        return (this as T)!;
+        lock (_lock)
+        {
+            console.Out.WriteLine(Render());
+            return (this as T)!;
+        }
     }
 
     /// <summary>
