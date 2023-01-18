@@ -6,6 +6,51 @@
 public class RaimbowText : WidgetAbstact
 {
     /// <summary>
+    /// oring R of the gradient
+    /// </summary>
+    public int OriginR { get; private set; }
+
+    /// <summary>
+    /// oring G of the gradient
+    /// </summary>
+    public int OriginG { get; private set; }
+
+    /// <summary>
+    /// oring B of the gradient
+    /// </summary>
+    public int OriginB { get; private set; }
+
+    /// <summary>
+    /// current R of the gradient
+    /// </summary>
+    public int R { get; private set; }
+
+    /// <summary>
+    /// current G of the gradient
+    /// </summary>
+    public int G { get; private set; }
+
+    /// <summary>
+    /// current B of the gradient
+    /// </summary>
+    public int B { get; private set; }
+
+    /// <summary>
+    /// delta R of the gradient
+    /// </summary>
+    public int DR { get; private set; }
+
+    /// <summary>
+    /// delta G of the gradient
+    /// </summary>
+    public int DG { get; private set; }
+
+    /// <summary>
+    /// delta B of the gradient
+    /// </summary>
+    public int DB { get; private set; }
+
+    /// <summary>
     /// text of the raimbow text
     /// </summary>
     public string? Text { get; private set; }
@@ -37,8 +82,7 @@ public class RaimbowText : WidgetAbstact
     /// <inheritdoc/>
     public override string Render()
     {
-        if (WrappedWidget is not null)
-            return base.Render();
-        return Text!;
+        var text = Text;
+        return RenderFor(text);
     }
 }

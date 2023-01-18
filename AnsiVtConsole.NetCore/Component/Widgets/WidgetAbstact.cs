@@ -37,9 +37,23 @@ public abstract class WidgetAbstact
     /// <summary>
     /// render the widget
     /// </summary>
+    /// <param name="render">any render when no wrapped widget</param>
     /// <returns>the render of the widget</returns>
-    public virtual string Render()
-        => WrappedWidget is not null
+    protected string RenderFor(string? render = null)
+        => ManagedRender(WrappedWidget is not null
             ? WrappedWidget.Render()
-            : string.Empty;
+            : render ?? string.Empty);
+
+    /// <summary>
+    /// render the widget
+    /// </summary>
+    /// <returns>the render of the widget</returns>
+    public abstract string Render();
+
+    /// <summary>
+    /// render for any widget
+    /// </summary>
+    /// <param name="render">a widget render to be finalized</param>
+    /// <returns>rendered widget</returns>
+    protected string ManagedRender(string render) => render;
 }
