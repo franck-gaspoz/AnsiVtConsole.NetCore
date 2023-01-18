@@ -12,11 +12,7 @@ public sealed class Rgb
     public int R
     {
         get => _r;
-        set
-        {
-            AssertValueIsValid(value);
-            _r = value;
-        }
+        set => _r = value;
     }
 
     int _g;
@@ -26,11 +22,7 @@ public sealed class Rgb
     public int G
     {
         get => _g;
-        set
-        {
-            AssertValueIsValid(value);
-            _g = value;
-        }
+        set => _g = value;
     }
 
     int _b;
@@ -40,11 +32,7 @@ public sealed class Rgb
     public int B
     {
         get => _b;
-        set
-        {
-            AssertValueIsValid(value);
-            _b = value;
-        }
+        set => _b = value;
     }
 
     /// <summary>
@@ -60,9 +48,31 @@ public sealed class Rgb
         _b = b;
     }
 
-    static void AssertValueIsValid(int value)
+    /// <summary>
+    /// set from another Rgb
+    /// </summary>
+    /// <param name="rgb">rgb</param>
+    /// <returns>this object</returns>
+    public Rgb Set(Rgb rgb)
     {
-        if (value < 0 || value > 255)
-            throw new ArgumentException(value.ToString());
+        _r = rgb.R;
+        _g = rgb.G;
+        _b = rgb.B;
+        return this;
+    }
+
+    /// <summary>
+    /// set from rgb
+    /// </summary>
+    /// <param name="r">red</param>
+    /// <param name="g">green</param>
+    /// <param name="b">blue</param>
+    /// <returns>this object</returns>
+    public Rgb Set(int r = 0, int g = 0, int b = 0)
+    {
+        _r = r;
+        _g = g;
+        _b = b;
+        return this;
     }
 }

@@ -14,7 +14,7 @@ public sealed class RaimbowText : WidgetAbstact<RaimbowText>
     /// <summary>
     /// origin RGB of the gradient
     /// </summary>
-    public Rgb OriginRGB { get; private set; } = new();
+    public Rgb OriginRGB { get; private set; } = new(0, 0, 128);
 
     /// <summary>
     /// current RGB of the gradient
@@ -24,7 +24,7 @@ public sealed class RaimbowText : WidgetAbstact<RaimbowText>
     /// <summary>
     /// delta RGB of the gradient
     /// </summary>
-    public Rgb DRgb { get; private set; } = new();
+    public Rgb DRgb { get; private set; } = new(4, 9, 14);
 
     /// <summary>
     /// text of the raimbow text
@@ -107,53 +107,52 @@ public sealed class RaimbowText : WidgetAbstact<RaimbowText>
         {
             if (c == '\n')
             {
-                Rgb.R = OriginR;
-                Rgb.G = OriginG;
-                Rgb.B = OriginB;
+                Rgb.Set(OriginRGB);
             }
-            (R, G, B) = NextColor(R, G, B);
+            Rgb = NextColor(Rgb, DRgb);
 
-            _sb.Append(SGR_SetForegroundColor24bits(R, G, B));
+            _sb.Append(SGR_SetForegroundColor24bits(Rgb.R, Rgb.G, Rgb.B));
             _sb.Append(c);
         }
         return _sb.ToString();
     }
 
-    (int r, int g, int b) NextColor(int r, int g, int b)
+    static Rgb NextColor(Rgb rgb, Rgb drgb)
     {
-        r += DR;
-        g += DG;
-        b += DB;
+        var r = rgb.R + drgb.R;
+        var g = rgb.G + drgb.G;
+        var b = rgb.B + drgb.B;
         if (r < 0)
         {
             r = 0;
-            DR = DR * -1;
+            drgb.R = drgb.R * -1;
         }
         if (r > 255)
         {
             r = 255;
-            DR = DR *= -1;
+            drgb.R = drgb.R *= -1;
         }
         if (g < 0)
         {
             g = 0;
-            DG = DG * -1;
+            drgb.G = drgb.G * -1;
         }
         if (g > 255)
         {
             g = 255;
-            DG = DG *= -1;
+            drgb.G = drgb.G *= -1;
         }
         if (b < 0)
         {
             b = 0;
-            DB = DB * -1;
+            drgb.B = drgb.B * -1;
         }
         if (b > 255)
         {
             b = 255;
-            DB = DB *= -1;
+            drgb.B = drgb.B *= -1;
         }
-        return (r, g, b);
+        rgb.Set(r, g, b);
+        return rgb;
     }
 }
