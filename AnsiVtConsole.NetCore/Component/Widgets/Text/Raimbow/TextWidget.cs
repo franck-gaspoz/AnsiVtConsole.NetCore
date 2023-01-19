@@ -3,7 +3,7 @@
 /// <summary>
 /// text widget
 /// </summary>
-public abstract class TextWidget : WidgetAbstact<RaimbowText>
+public abstract class TextWidget : Widget<RaimbowText>
 {
     /// <summary>
     /// text
@@ -18,6 +18,6 @@ public abstract class TextWidget : WidgetAbstact<RaimbowText>
         => Text = text;
 
     /// <inheritdoc/>
-    public TextWidget(IWidgetAbstact wrappedWidget)
+    public TextWidget(IWidget wrappedWidget)
         : base(wrappedWidget) { }
 }

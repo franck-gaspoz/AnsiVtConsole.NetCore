@@ -11,7 +11,7 @@ public sealed class RaimbowBar : RaimbowText
     public RaimbowBar(string text) : base(text) { }
 
     /// <inheritdoc/>
-    public RaimbowBar(IWidgetAbstact wrappedWidget) : base(wrappedWidget) { }
+    public RaimbowBar(IWidget wrappedWidget) : base(wrappedWidget) { }
 
     /// <inheritdoc/>
     protected override string RenderWidget() => string.Empty;

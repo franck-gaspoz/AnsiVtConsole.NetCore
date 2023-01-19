@@ -3,12 +3,12 @@
 /// <summary>
 /// widget abstract
 /// </summary>
-public interface IWidgetAbstact
+public interface IWidget
 {
     /// <summary>
     /// wrapped widget
     /// </summary>
-    IWidgetAbstact? WrappedWidget { get; }
+    IWidget? WrappedWidget { get; }
 
     /// <summary>
     /// fixed location X if any else -1
@@ -26,4 +26,9 @@ public interface IWidgetAbstact
     /// <param name="console">the console to render to</param>
     /// <returns>the render of the widget</returns>
     string Render(IAnsiVtConsole console);
+
+    /// <summary>
+    /// update the display of the widget previously attached to a console (already rendered)
+    /// </summary>
+    void Update();
 }

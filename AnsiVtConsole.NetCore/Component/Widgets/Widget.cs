@@ -5,8 +5,8 @@ namespace AnsiVtConsole.NetCore.Component.Widgets;
 /// <summary>
 /// widget base class
 /// </summary>
-public abstract class WidgetAbstact<T> : IWidgetAbstact
-    where T : class, IWidgetAbstact
+public abstract class Widget<T> : IWidget
+    where T : class, IWidget
 {
     /// <summary>
     /// backup colors markup
@@ -24,17 +24,22 @@ public abstract class WidgetAbstact<T> : IWidgetAbstact
     public int X { get; protected set; } = -1;
 
     /// <inheritdoc/>
-    public int Y { get; protected set; }
+    public int Y { get; protected set; } = -1;
+
+    /// <summary>
+    /// console the widet is attached to
+    /// </summary>
+    public IAnsiVtConsole Console { get; protected set; }
 
     /// <summary>
     /// wrapped widget
     /// </summary>
-    public IWidgetAbstact? WrappedWidget { get; private set; }
+    public IWidget? WrappedWidget { get; private set; }
 
     /// <summary>
     /// widget
     /// </summary>
-    public WidgetAbstact(IWidgetAbstact? wrappedWidget = null)
+    public Widget(IWidget? wrappedWidget = null)
         => WrappedWidget = wrappedWidget;
 
     /// <summary>
@@ -42,7 +47,7 @@ public abstract class WidgetAbstact<T> : IWidgetAbstact
     /// </summary>
     /// <param name="x">cursor x</param>
     /// <param name="y">cursor y</param>
-    public WidgetAbstact(int x, int y)
+    public Widget(int x, int y)
         => (X, Y) = (x, y);
 
     /// <summary>
@@ -61,10 +66,20 @@ public abstract class WidgetAbstact<T> : IWidgetAbstact
     {
         lock (_lock)
         {
+            Console = console;
             var render = WrappedWidget is null ?
                 RenderWidget()
                 : WrappedWidget.Render(console);
             return ManagedRender(render);
+        }
+    }
+
+    /// <inheritdoc/>
+    public void Update()
+    {
+        lock (_lock)
+        {
+
         }
     }
 
@@ -81,10 +96,10 @@ public abstract class WidgetAbstact<T> : IWidgetAbstact
     /// <returns>rendered widget</returns>
     protected string ManagedRender(string render)
     {
-        render = WidgetAbstact<T>.BackupColors + render;
+        render = Widget<T>.BackupColors + render;
         if (X != -1 && Y != -1)
             render = CUP(X, Y) + render;
-        render += WidgetAbstact<T>.RestoreColors;
+        render += Widget<T>.RestoreColors;
         return render;
     }
 
@@ -97,6 +112,11 @@ public abstract class WidgetAbstact<T> : IWidgetAbstact
     {
         lock (_lock)
         {
+            if (X == -1)
+                X = console.Cursor.GetCursorX();
+            if (Y == -1)
+                Y = console.Cursor.GetCursorY();
+
             console.Out.WriteLine(Render(console));
             return (this as T)!;
         }

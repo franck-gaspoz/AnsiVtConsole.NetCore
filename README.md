@@ -32,8 +32,8 @@ The library provides functionalities needed to build console applications runnin
 download the nuget from command line or add it from Visual Studio
 
 ``` dos
-@rem version 1.0.19 or any new one
-dotnet add package AnsiVtConsole.NetCore --version 1.0.19
+@rem version 1.0.20 or any new one
+dotnet add package AnsiVtConsole.NetCore --version 1.0.20
 ```
 
 > **Note**

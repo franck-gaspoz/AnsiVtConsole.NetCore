@@ -38,6 +38,11 @@ public abstract class ValueAnimation<T> : IAnimation
     /// </summary>
     public Easing Easing { get; protected set; }
 
+    /// <summary>
+    /// widget if concerned
+    /// </summary>
+    public IWidget? Widget { get; protected set; }
+
     /// <inheritdoc/>
     TValue? IAnimation.Value<TValue>()
         where TValue : class
@@ -111,6 +116,19 @@ public abstract class ValueAnimation<T> : IAnimation
     /// <summary>
     /// add target property of an object to animation
     /// </summary>
+    /// <param name="widget">widget</param>
+    /// <param name="propertyName">property name</param>
+    /// <param name="target">target</param>
+    /// <returns>this object</returns>
+    public ValueAnimation<T> Target(IWidget widget, string propertyName, object target)
+    {
+        Widget = widget;
+        return Target(propertyName, target);
+    }
+
+    /// <summary>
+    /// add target property of an object to animation
+    /// </summary>
     /// <param name="target">animation target object</param>
     /// <param name="expression">linq expression that reference the target property of an object: () => obj.a.b.. Expression0&lt;Func&lt;ValueTypeglt;&gt;&gt;</param>
     /// <returns>this object</returns>
@@ -130,8 +148,29 @@ public abstract class ValueAnimation<T> : IAnimation
         return this;
     }
 
+    /// <summary>
+    /// add target property of an object to animation
+    /// </summary>
+    /// <param name="widget">widget</param>
+    /// <param name="target">animation target object</param>
+    /// <param name="expression">linq expression that reference the target property of an object: () => obj.a.b.. Expression0&lt;Func&lt;ValueTypeglt;&gt;&gt;</param>
+    /// <returns>this object</returns>
+    public ValueAnimation<T> Target(IWidget widget, object target, LambdaExpression expression)
+    {
+        Widget = widget;
+        return Target(target, expression);
+    }
+
     /// <inheritdoc/>
     public abstract void SetValueAt(double position);
+
+    /// <summary>
+    /// update when (eg. value has changed)
+    /// </summary>
+    public void Update()
+    {
+
+    }
 
     /// <summary>
     /// set value of target

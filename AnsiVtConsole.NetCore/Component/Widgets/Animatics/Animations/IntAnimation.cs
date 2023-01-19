@@ -5,7 +5,7 @@ namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics.Animations;
 /// <summary>
 /// int animation
 /// </summary>
-public class IntAnimation : ValueAnimation<int>
+public sealed class IntAnimation : ValueAnimation<int>
 {
     /// <inheritdoc/>
     public IntAnimation(
@@ -22,8 +22,11 @@ public class IntAnimation : ValueAnimation<int>
 
     /// <inheritdoc/>
     public override void SetValueAt(double position)
-        => SetValue((int)Math.Min(
+    {
+        SetValue((int)Math.Min(
             To,
             (To - From)
                 * (position / Duration)));
+        Update();
+    }
 }

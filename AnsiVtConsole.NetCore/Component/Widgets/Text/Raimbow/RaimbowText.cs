@@ -32,7 +32,7 @@ public class RaimbowText : TextWidget
     readonly StringBuilder _sb = new();
 
     /// <inheritdoc/>
-    public RaimbowText(IWidgetAbstact wrappedWidget)
+    public RaimbowText(IWidget wrappedWidget)
         : base(wrappedWidget) { }
 
     /// <summary>

@@ -34,16 +34,18 @@ public class Cursor
     /// </summary>
     /// <param name="x">x</param>
     /// <returns>x</returns>
-    public int GetCursorX(object x)
+    public int GetCursorX(object? x = null)
     {
         if (x != null && x is string s && !string.IsNullOrWhiteSpace(s)
             && int.TryParse(s, out var v))
         {
             return v;
         }
-
-        if (_console.Settings.TraceCommandErrors)
-            _console.Logger.LogError($"wrong cursor x: {x}");
+        else
+        {
+            if (_console.Settings.TraceCommandErrors)
+                _console.Logger.LogError($"wrong cursor x: {x}");
+        }
         if (!_console.WorkArea.IsConsoleGeometryEnabled)
             return 0;
 
@@ -58,14 +60,16 @@ public class Cursor
     /// </summary>
     /// <param name="x">y</param>
     /// <returns>y</returns>
-    public int GetCursorY(object x)
+    public int GetCursorY(object? x = null)
     {
         if (x != null && x is string s && !string.IsNullOrWhiteSpace(s)
             && int.TryParse(s, out var v))
             return v;
-
-        if (_console.Settings.TraceCommandErrors)
-            _console.Logger.LogError($"wrong cursor y: {x}");
+        else
+        {
+            if (_console.Settings.TraceCommandErrors)
+                _console.Logger.LogError($"wrong cursor y: {x}");
+        }
         if (!_console.WorkArea.IsConsoleGeometryEnabled)
             return 0;
 

@@ -13,7 +13,7 @@ public abstract class Easing
     /// <param name="fps">fps</param>
     /// <returns>the value</returns>
     public abstract double GetPosition<T>(
-        ValueAnimation<T> animation,
+       ValueAnimation<T> animation,
         double progress,
         double fps);
 }
