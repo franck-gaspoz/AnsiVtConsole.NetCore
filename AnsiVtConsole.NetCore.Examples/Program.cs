@@ -6,6 +6,7 @@ using AnsiVtConsole.NetCore;
 using AnsiVtConsole.NetCore.Component.Console;
 using AnsiVtConsole.NetCore.Component.Parser.ANSI;
 using AnsiVtConsole.NetCore.Component.Widgets.Animatics;
+using AnsiVtConsole.NetCore.Component.Widgets.Animatics.Animations;
 using AnsiVtConsole.NetCore.Component.Widgets.Text.Raimbow;
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
@@ -230,7 +231,7 @@ void Title(IAnsiVtConsole console)
         .Add(
             new TimeLine()
                 .Add(
-                    new ValueAnimation<int>(0, 255, 10000)
+                    new IntAnimation(0, 255, 10000)
                         .Target(bar, () => bar.OriginRGB.R)
                 )
             )

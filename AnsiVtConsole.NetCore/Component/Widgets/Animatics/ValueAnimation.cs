@@ -1,5 +1,9 @@
-﻿using System.Linq.Expressions;
+﻿#define dbg
+
+using System.Linq.Expressions;
 using System.Reflection;
+
+using AnsiVtConsole.NetCore.Component.Widgets.Animatics.Easings;
 
 namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 
@@ -7,7 +11,7 @@ namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 /// animation of value of type T
 /// </summary>
 /// <typeparam name="T">value type</typeparam>
-public class ValueAnimation<T> : IAnimation
+public abstract class ValueAnimation<T> : IAnimation
 {
     readonly Dictionary<PropertyInfo, object> _targets = new();
 
@@ -28,6 +32,11 @@ public class ValueAnimation<T> : IAnimation
 
     /// <inheritdoc/>
     public double Duration { get; protected set; }
+
+    /// <summary>
+    /// easing function
+    /// </summary>
+    public Easing Easing { get; protected set; }
 
     /// <inheritdoc/>
     TValue? IAnimation.Value<TValue>()
@@ -53,14 +62,17 @@ public class ValueAnimation<T> : IAnimation
     /// <param name="from">from</param>
     /// <param name="to">to</param>
     /// <param name="duration">duration</param>
+    /// <param name="easing">easing function (default linear)</param>
     public ValueAnimation(
         T from,
         T to,
-        double duration)
+        double duration,
+        Easing? easing = null)
     {
         From = from;
         To = to;
         Duration = duration;
+        Easing = easing ?? new Linear();
     }
 
     /// <summary>
@@ -68,12 +80,15 @@ public class ValueAnimation<T> : IAnimation
     /// </summary>
     /// <param name="to">to</param>
     /// <param name="duration">duration</param>
+    /// <param name="easing">easing function (default linear)</param>
     public ValueAnimation(
         T to,
-        double duration)
+        double duration,
+        Easing? easing = null)
     {
         To = to;
         Duration = duration;
+        Easing = easing ?? new Linear();
     }
 
     /// <summary>
@@ -116,11 +131,21 @@ public class ValueAnimation<T> : IAnimation
     }
 
     /// <summary>
+    /// set the value for any position in the animation time line
+    /// </summary>
+    /// <param name="position">position (ms)</param>
+    internal abstract ValueAnimation<T> SetValue(double position);
+
+    /// <summary>
     /// set value of target
     /// </summary>
     /// <param name="value">value</param>
     protected void SetValue(T value)
     {
+#if DEBUG
+        System.Diagnostics.Debug.WriteLine("value = " + value);
+#endif
+
         foreach (var (propertyInfo, obj) in _targets)
             SetValue(propertyInfo, obj, value);
     }

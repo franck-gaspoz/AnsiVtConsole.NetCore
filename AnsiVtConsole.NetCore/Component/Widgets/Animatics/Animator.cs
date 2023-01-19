@@ -1,6 +1,4 @@
-﻿#define dbg
-
-namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
+﻿namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 
 sealed class Animator
 {
@@ -14,7 +12,7 @@ sealed class Animator
     double _timeLapse;
     DateTime? _timeLineStartTime;
     DateTime? _timeLineEndTime;
-#if dbg
+#if DEBUG
     int _tick;
 #endif
 
@@ -50,7 +48,7 @@ sealed class Animator
 
     void Start(TimeLine timeLine)
     {
-#if dbg
+#if DEBUG
         _tick = 0;
 #endif
         _timeLineIndex = 0;
@@ -65,7 +63,7 @@ sealed class Animator
 
     void RunAnimation(object? obj)
     {
-#if dbg
+#if DEBUG
         Dbg($"start animation | fps={_animation.Fps} | timeLapse = {_timeLapse} ms");
 #endif
 
@@ -73,7 +71,7 @@ sealed class Animator
         {
             Start(_animation.TimeLines[_timeLineIndex]);
 
-#if dbg
+#if DEBUG
             Dbg($"start timeline {_timeLineIndex} : {_timeLine!.Duration} ms");
 #endif
 
@@ -84,7 +82,7 @@ sealed class Animator
 
                 foreach (var animation in _timeLine!.Animations)
                 {
-#if dbg
+#if DEBUG
                     Dbg($"animate tick {_tick} : {animation} # {DateStr(DateTime.Now)} (-> {DateStr(_timeLineEndTime!.Value)})");
                     _tick++;
 #endif
@@ -101,7 +99,7 @@ sealed class Animator
         OnStop?.Invoke(this, EventArgs.Empty);
     }
 
-#if dbg
+#if DEBUG
     static string DateStr(DateTime d)
         => $"{d.Hour}:{d.Month}:{d.Second}:{d.Millisecond}";
 
