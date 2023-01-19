@@ -22,5 +22,8 @@ public class IntAnimation : ValueAnimation<int>
 
     /// <inheritdoc/>
     public override void SetValueAt(double position)
-        => SetValue((int)Math.Max(To, (From - To) * position));
+        => SetValue((int)Math.Min(
+            To,
+            (To - From)
+                * (position / Duration)));
 }

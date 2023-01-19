@@ -232,7 +232,7 @@ void Title(IAnsiVtConsole console)
             new TimeLine()
                 .Add(
                     new IntAnimation(0, 255, 10000)
-                        .Target(bar, () => bar.OriginRGB.R)
+                        .Target(bar.OriginRGB, () => bar.OriginRGB.R)
                 )
             )
         .Start()

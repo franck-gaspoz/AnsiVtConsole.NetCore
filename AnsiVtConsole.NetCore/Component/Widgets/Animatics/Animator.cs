@@ -85,7 +85,7 @@ sealed class Animator
                 foreach (var animation in _timeLine!.Animations)
                 {
 #if DEBUG
-                    Dbg($"animate tick {_tick} : {animation} # {DateStr(DateTime.Now)} (-> {DateStr(_timeLineEndTime!.Value)})");
+                    Dbg($"animate tick {_tick} position {position} : {animation} # {DateStr(DateTime.Now)} (-> {DateStr(_timeLineEndTime!.Value)})");
                     _tick++;
 #endif
                     animation.SetValueAt(position);
