@@ -21,6 +21,6 @@ public class IntAnimation : ValueAnimation<int>
         Easing? easing = null) : base(to, duration, easing) { }
 
     /// <inheritdoc/>
-    public override void SetValue(double position)
-        => SetValue(Math.Max(To, (From - To) * position));
+    public override void SetValueAt(double position)
+        => SetValue((int)Math.Max(To, (From - To) * position));
 }

@@ -39,5 +39,5 @@ public interface IAnimation
     /// set the value for any position in the animation time line
     /// </summary>
     /// <param name="position">position (ms)</param>
-    abstract void SetValue(double position);
+    abstract void SetValueAt(double position);
 }

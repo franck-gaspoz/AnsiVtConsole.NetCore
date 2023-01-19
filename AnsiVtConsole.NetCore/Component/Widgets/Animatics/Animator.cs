@@ -88,7 +88,7 @@ sealed class Animator
                     Dbg($"animate tick {_tick} : {animation} # {DateStr(DateTime.Now)} (-> {DateStr(_timeLineEndTime!.Value)})");
                     _tick++;
 #endif
-                    animation.SetValue(position);
+                    animation.SetValueAt(position);
                 }
 
                 Thread.Sleep((int)_timeLapse);

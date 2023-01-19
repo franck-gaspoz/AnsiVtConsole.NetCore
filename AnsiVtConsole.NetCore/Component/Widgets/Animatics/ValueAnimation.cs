@@ -131,7 +131,7 @@ public abstract class ValueAnimation<T> : IAnimation
     }
 
     /// <inheritdoc/>
-    public abstract void SetValue(double position);
+    public abstract void SetValueAt(double position);
 
     /// <summary>
     /// set value of target
