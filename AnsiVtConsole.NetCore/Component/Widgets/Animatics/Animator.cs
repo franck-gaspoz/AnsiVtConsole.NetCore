@@ -57,7 +57,7 @@ sealed class Animator
         _timeLine = timeLine;
         _timeLineStartTime = DateTime.Now;
         _timeLineEndTime = _timeLineStartTime!.Value.Add(
-            TimeSpan.FromMilliseconds(_timeLapse));
+            TimeSpan.FromMilliseconds(_timeLine.Duration));
     }
 
     double GetTimeLapse()

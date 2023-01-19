@@ -9,7 +9,6 @@ using AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 using AnsiVtConsole.NetCore.Component.Widgets.Text.Raimbow;
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
-using static AnsiVtConsole.NetCore.Component.Console.ASCII;
 using static AnsiVtConsole.NetCore.Component.Console.Unicode;
 using static AnsiVtConsole.NetCore.Component.EchoDirective.Shortcuts;
 
@@ -223,7 +222,7 @@ void Title(IAnsiVtConsole console)
 
     RaimbowText(str);
 
-    RaimbowText($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}{LF}");
+    RaimbowText($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}");
 
     var bar = RaimbowText("".PadLeft(113, '_'));
 
