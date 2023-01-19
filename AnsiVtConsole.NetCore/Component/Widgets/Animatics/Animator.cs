@@ -79,6 +79,8 @@ sealed class Animator
             {
                 var time = DateTime.Now;
                 _end = time > _timeLineEndTime;
+                var position = (time - _timeLineStartTime!.Value)
+                    .TotalMilliseconds;
 
                 foreach (var animation in _timeLine!.Animations)
                 {
@@ -86,6 +88,7 @@ sealed class Animator
                     Dbg($"animate tick {_tick} : {animation} # {DateStr(DateTime.Now)} (-> {DateStr(_timeLineEndTime!.Value)})");
                     _tick++;
 #endif
+                    animation.SetValue(position);
                 }
 
                 Thread.Sleep((int)_timeLapse);

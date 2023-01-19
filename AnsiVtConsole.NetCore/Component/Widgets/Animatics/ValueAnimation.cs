@@ -130,11 +130,8 @@ public abstract class ValueAnimation<T> : IAnimation
         return this;
     }
 
-    /// <summary>
-    /// set the value for any position in the animation time line
-    /// </summary>
-    /// <param name="position">position (ms)</param>
-    internal abstract ValueAnimation<T> SetValue(double position);
+    /// <inheritdoc/>
+    public abstract void SetValue(double position);
 
     /// <summary>
     /// set value of target

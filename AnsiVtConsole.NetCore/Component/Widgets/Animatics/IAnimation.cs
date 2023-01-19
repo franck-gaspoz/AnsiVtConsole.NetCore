@@ -34,4 +34,10 @@ public interface IAnimation
     /// </summary>
     /// <returns>value</returns>
     double Duration { get; }
+
+    /// <summary>
+    /// set the value for any position in the animation time line
+    /// </summary>
+    /// <param name="position">position (ms)</param>
+    abstract void SetValue(double position);
 }
