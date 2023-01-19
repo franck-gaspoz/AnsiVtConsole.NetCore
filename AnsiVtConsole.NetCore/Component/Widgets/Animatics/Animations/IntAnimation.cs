@@ -12,17 +12,13 @@ public class IntAnimation : ValueAnimation<int>
         int from,
         int to,
         double duration,
-        Easing? easing = null) : base(from, to, duration, easing)
-    {
-    }
+        Easing? easing = null) : base(from, to, duration, easing) { }
 
     /// <inheritdoc/>
     public IntAnimation(
         int to,
         double duration,
-        Easing? easing = null) : base(to, duration, easing)
-    {
-    }
+        Easing? easing = null) : base(to, duration, easing) { }
 
     /// <inheritdoc/>
     internal override ValueAnimation<int> SetValue(double position)
