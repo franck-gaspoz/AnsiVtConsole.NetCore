@@ -4,6 +4,8 @@ namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 
 sealed class Animator
 {
+    public bool IsRunning { get; private set; }
+
     Thread? _thread;
     bool _end = false;
     readonly Animation _animation;
@@ -16,25 +18,28 @@ sealed class Animator
     int _tick;
 #endif
 
-    public EventHandler OnStart;
-    public EventHandler OnStop;
+    public event EventHandler OnStart;
+    public event EventHandler OnStop;
 
+#pragma warning disable CS8618
     public Animator(Animation animation) => _animation = animation;
+#pragma warning restore CS8618
 
     /// <summary>
     /// starts an animation
     /// </summary>
     public void Start()
     {
+        IsRunning = true;
+        _timeLapse = GetTimeLapse();
+
         if (!_animation.TimeLines.Any())
             return;
 
-        (_thread = new(() => RunAnimation(_animation)))
-             .Start();
-
         OnStart?.Invoke(this, EventArgs.Empty);
 
-        _thread!.Start();
+        (_thread = new(() => RunAnimation(_animation)))
+             .Start();
     }
 
     public void Stop()
@@ -50,25 +55,18 @@ sealed class Animator
 #endif
         _timeLineIndex = 0;
         _timeLine = timeLine;
-        _timeLapse = GetTimeLapse(timeLine);
         _timeLineStartTime = DateTime.Now;
         _timeLineEndTime = _timeLineStartTime!.Value.Add(
             TimeSpan.FromMilliseconds(_timeLapse));
     }
 
-    double GetTimeLapse(TimeLine timeLine)
-    {
-        var totalDuration = timeLine.Duration;
-        var nbFrames = totalDuration * _animation.Fps;
-        var timeLapse = totalDuration / nbFrames;
-        return timeLapse;
-    }
+    double GetTimeLapse()
+        => 1 / _animation.Fps * 1000;
 
     void RunAnimation(object? obj)
     {
-
 #if dbg
-        Dbg("start animation");
+        Dbg($"start animation | fps={_animation.Fps} | timeLapse = {_timeLapse} ms");
 #endif
 
         while (_timeLineIndex < _animation.TimeLines.Count)
@@ -98,10 +96,15 @@ sealed class Animator
 
             _timeLineIndex++;
         }
+
+        IsRunning = false;
+        OnStop?.Invoke(this, EventArgs.Empty);
     }
 
+#if dbg
     static string DateStr(DateTime d)
         => $"{d.Hour}:{d.Month}:{d.Second}:{d.Millisecond}";
 
-    void Dbg(string text) => System.Diagnostics.Debug.WriteLine(text);
+    static void Dbg(string text) => System.Diagnostics.Debug.WriteLine(text);
+#endif
 }

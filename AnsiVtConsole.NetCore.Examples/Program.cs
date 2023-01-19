@@ -235,7 +235,8 @@ void Title(IAnsiVtConsole console)
                         .Target(bar, () => bar.OriginRGB.R)
                 )
             )
-        .Start();
+        .Start()
+        .Wait();
 
     console.Out.WriteLine();
     console.Out.WriteLine();

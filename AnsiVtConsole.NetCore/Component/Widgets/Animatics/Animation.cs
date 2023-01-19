@@ -34,6 +34,13 @@ public sealed class Animation
     /// </summary>
     public bool IsRunning { get; private set; }
 
+    readonly Animator _animator;
+
+    /// <summary>
+    /// animation
+    /// </summary>
+    public Animation() => _animator = new(this);
+
     /// <summary>
     /// add a time line to the animation
     /// </summary>
@@ -51,9 +58,13 @@ public sealed class Animation
     /// <returns>this object</returns>
     public Animation Start()
     {
-        IsRunning = true;
+        _animator.OnStart += OnStart;
+        _animator.OnStop += OnStop;
+        _animator.Start();
         return this;
     }
+
+    void OnStart(object? o, EventArgs e) => IsRunning = true;
 
     /// <summary>
     /// starts animation
@@ -61,7 +72,27 @@ public sealed class Animation
     /// <returns>this object</returns>
     public Animation Stop()
     {
+        _animator.Stop();
+        return this;
+    }
+
+    void OnStop(object? o, EventArgs e)
+    {
         IsRunning = false;
+        _animator.OnStart -= OnStart;
+        _animator.OnStop -= OnStop;
+    }
+
+    /// <summary>
+    /// wait end of animation. blocks current thread
+    /// </summary>
+    /// <returns>this object</returns>    
+    public Animation Wait()
+    {
+        while (IsRunning)
+        {
+            Thread.Yield();
+        }
         return this;
     }
 }
