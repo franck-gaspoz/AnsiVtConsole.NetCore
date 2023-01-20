@@ -31,13 +31,24 @@ public sealed class TimeLine
     readonly List<IWidget> _widgets = new();
 
     /// <summary>
-    /// add an animation to the timeline
+    /// add animation(s) to the timeline
     /// </summary>
-    /// <param name="animation">animation</param>
+    /// <param name="animations">animations</param>
     /// <returns>this object</returns>
-    public TimeLine Add(IAnimation animation)
+    public TimeLine Add(params IAnimation[] animations)
     {
-        _animations.Add(animation);
+        _animations.AddRange(animations);
+        return this;
+    }
+
+    /// <summary>
+    /// add animation(s) to the timeline
+    /// </summary>
+    /// <param name="animations">animations</param>
+    /// <returns>this object</returns>
+    public TimeLine Add(AnimationGroup animations)
+    {
+        _animations.AddRange(animations.Animations);
         return this;
     }
 

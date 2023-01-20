@@ -229,14 +229,15 @@ void Title(IAnsiVtConsole console)
 
     var bar = RaimbowText("".PadLeft(113, '─'));
 
-    var colorAnim = new IntAnimation(0, 255, 10000)
-        .For(() => bar.OriginRGB.R)
-        .Target(bar.OriginRGB);
+    var anims = new AnimationGroup(
+        new IntAnimation(0, 255, 10000)
+            .For(() => bar.OriginRGB.R))
+         .Target(bar.OriginRGB);
 
     var anim = new Animation()
         .Add(
             new TimeLine()
-                .Add(colorAnim)
+                .Add(anims)
                 .Update(bar)
             )
         .Start()

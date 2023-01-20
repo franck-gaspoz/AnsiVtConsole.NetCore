@@ -164,7 +164,7 @@ public abstract class ValueAnimation<T> : IAnimation
     /// <summary>
     /// enable auto reverse
     /// </summary>
-    /// <returns>loop</returns>
+    /// <returns>this object</returns>
     public IAnimation AutoReverse()
     {
         IsAutoReverse = true;
