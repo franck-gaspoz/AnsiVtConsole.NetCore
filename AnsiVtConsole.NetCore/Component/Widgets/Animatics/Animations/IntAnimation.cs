@@ -12,14 +12,14 @@ public sealed class IntAnimation : ValueAnimation<int>
         int from,
         int to,
         double duration,
-        int increment,
+        int increment = 1,
         Easing? easing = null) : base(from, to, duration, increment, easing) { }
 
     /// <inheritdoc/>
     public IntAnimation(
         int to,
         double duration,
-        int increment,
+        int increment = 1,
         Easing? easing = null) : base(to, duration, increment, easing) { }
 
     /// <inheritdoc/>
