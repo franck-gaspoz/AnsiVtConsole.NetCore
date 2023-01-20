@@ -75,12 +75,7 @@ public abstract class ValueAnimation<T> : IAnimation
         Easing = easing ?? new Linear();
     }
 
-    /// <summary>
-    /// animation
-    /// </summary>
-    /// <param name="to">to</param>
-    /// <param name="duration">duration</param>
-    /// <param name="easing">easing function (default linear)</param>
+    /// <inheritdoc/>
     public ValueAnimation(
         T to,
         double duration,
@@ -91,13 +86,8 @@ public abstract class ValueAnimation<T> : IAnimation
         Easing = easing ?? new Linear();
     }
 
-    /// <summary>
-    /// add target property of an object to animation
-    /// </summary>
-    /// <param name="target">target</param>
-    /// <param name="propertyName">property name</param>
-    /// <returns>this object</returns>
-    public ValueAnimation<T> For(object target, string propertyName)
+    /// <inheritdoc/>
+    public IAnimation For(object target, string propertyName)
     {
         _propertyInfo = target.GetType()
             .GetProperty(propertyName)
@@ -108,12 +98,8 @@ public abstract class ValueAnimation<T> : IAnimation
         return this;
     }
 
-    /// <summary>
-    /// add target property of a class to animation
-    /// </summary>
-    /// <param name="propertyName">property name</param>
-    /// <returns>this object</returns>
-    public ValueAnimation<T> For<TargetType>(string propertyName)
+    /// <inheritdoc/>
+    public IAnimation For<TargetType>(string propertyName)
     {
         _propertyInfo = typeof(TargetType)
             .GetProperty(propertyName)
@@ -122,13 +108,8 @@ public abstract class ValueAnimation<T> : IAnimation
         return this;
     }
 
-    /// <summary>
-    /// add target property of an object to animation
-    /// </summary>
-    /// <param name="target">animation target object</param>
-    /// <param name="expression">linq expression that reference the target property of an object: () => obj.a.b.. Expression0&lt;Func&lt;ValueTypeglt;&gt;&gt;</param>
-    /// <returns>this object</returns>
-    public ValueAnimation<T> For(object target, LambdaExpression expression)
+    /// <inheritdoc/>
+    public IAnimation For(object target, LambdaExpression expression)
     {
         Type? returnType;
         if (expression.Body is MemberExpression expr
@@ -145,12 +126,8 @@ public abstract class ValueAnimation<T> : IAnimation
         return this;
     }
 
-    /// <summary>
-    /// add target property of a class to animation
-    /// </summary>
-    /// <param name="expression">linq expression that reference the target property of an object: () => obj.a.b.. Expression0&lt;Func&lt;ValueTypeglt;&gt;&gt;</param>
-    /// <returns>this object</returns>
-    public ValueAnimation<T> For(LambdaExpression expression)
+    /// <inheritdoc/>
+    public IAnimation For(LambdaExpression expression)
     {
         Type? returnType;
         if (expression.Body is MemberExpression expr
@@ -166,12 +143,9 @@ public abstract class ValueAnimation<T> : IAnimation
         return this;
     }
 
-    /// <summary>
-    /// setup target(s) for this animation
-    /// </summary>
-    /// <param name="targets">one or several targets</param>
+    /// <inheritdoc/>
     /// <returns>this object</returns>
-    public ValueAnimation<T> Target(params object[] targets)
+    public IAnimation Target(params object[] targets)
     {
         _targets.AddRange(targets);
         return this;

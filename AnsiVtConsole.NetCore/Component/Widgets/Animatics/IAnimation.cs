@@ -1,4 +1,6 @@
-﻿using AnsiVtConsole.NetCore.Component.Widgets.Animatics.Easings;
+﻿using System.Linq.Expressions;
+
+using AnsiVtConsole.NetCore.Component.Widgets.Animatics.Easings;
 
 namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 
@@ -30,6 +32,43 @@ public interface IAnimation
     /// <returns>value</returns>
     TValue? To<TValue>()
         where TValue : class;
+
+    /// <summary>
+    /// add target property of a class to animation
+    /// </summary>
+    /// <param name="expression">linq expression that reference the target property of an object: () => obj.a.b.. Expression0&lt;Func&lt;ValueTypeglt;&gt;&gt;</param>
+    /// <returns>this object</returns>
+    IAnimation For(LambdaExpression expression);
+
+    /// <summary>
+    /// add target property of a class to animation
+    /// </summary>
+    /// <param name="propertyName">property name</param>
+    /// <returns>this object</returns>
+    IAnimation For<TargetType>(string propertyName);
+
+    /// <summary>
+    /// add target property of an object to animation
+    /// </summary>
+    /// <param name="target">target</param>
+    /// <param name="propertyName">property name</param>
+    /// <returns>this object</returns>
+    IAnimation For(object target, string propertyName);
+
+    /// <summary>
+    /// add target property of an object to animation
+    /// </summary>
+    /// <param name="target">animation target object</param>
+    /// <param name="expression">linq expression that reference the target property of an object: () => obj.a.b.. Expression0&lt;Func&lt;ValueTypeglt;&gt;&gt;</param>
+    /// <returns>this object</returns>
+    IAnimation For(object target, LambdaExpression expression);
+
+    /// <summary>
+    /// setup target(s) for this animation
+    /// </summary>
+    /// <param name="targets">one or several targets</param>
+    /// <returns>this object</returns>
+    IAnimation Target(params object[] targets);
 
     /// <summary>
     /// duration (ms)
