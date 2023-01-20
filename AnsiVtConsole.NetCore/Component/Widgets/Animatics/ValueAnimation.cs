@@ -18,25 +18,25 @@ public abstract class ValueAnimation<T> : IAnimation
     PropertyInfo? _propertyInfo;
 
     /// <inheritdoc/>
-    public T? Value { get; protected set; }
+    public T? Value { get; private set; }
 
     /// <inheritdoc/>
-    public T? From { get; protected set; }
+    public T? From { get; private set; }
 
     /// <inheritdoc/>
-    public T? To { get; protected set; }
+    public T? To { get; private set; }
 
     /// <inheritdoc/>
-    public double Duration { get; protected set; }
+    public double Duration { get; private set; }
 
     /// <inheritdoc/>
-    public Easing Easing { get; protected set; }
+    public Easing Easing { get; private set; }
 
     /// <inheritdoc/>
-    public bool IsLoop { get; }
+    public bool IsLoop { get; private set; }
 
     /// <inheritdoc/>
-    public bool IsAutoReverse { get; }
+    public bool IsAutoReverse { get; private set; }
 
     /// <inheritdoc/>
     TValue? IAnimation.Value<TValue>()
@@ -148,6 +148,26 @@ public abstract class ValueAnimation<T> : IAnimation
     public IAnimation Target(params object[] targets)
     {
         _targets.AddRange(targets);
+        return this;
+    }
+
+    /// <summary>
+    /// enable loop
+    /// </summary>
+    /// <returns>this object</returns>
+    public IAnimation Loop()
+    {
+        IsLoop = true;
+        return this;
+    }
+
+    /// <summary>
+    /// enable auto reverse
+    /// </summary>
+    /// <returns>loop</returns>
+    public IAnimation AutoReverse()
+    {
+        IsAutoReverse = true;
         return this;
     }
 

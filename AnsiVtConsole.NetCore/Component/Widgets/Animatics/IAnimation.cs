@@ -92,6 +92,18 @@ public interface IAnimation
     bool IsAutoReverse { get; }
 
     /// <summary>
+    /// enable loop
+    /// </summary>
+    /// <returns>this object</returns>
+    IAnimation Loop();
+
+    /// <summary>
+    /// enable auto reverse
+    /// </summary>
+    /// <returns>loop</returns>
+    IAnimation AutoReverse();
+
+    /// <summary>
     /// set the value for any position in the animation time line
     /// </summary>
     /// <param name="position">position (ms)</param>
