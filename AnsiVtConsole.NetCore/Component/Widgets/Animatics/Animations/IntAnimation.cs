@@ -12,13 +12,15 @@ public sealed class IntAnimation : ValueAnimation<int>
         int from,
         int to,
         double duration,
-        Easing? easing = null) : base(from, to, duration, easing) { }
+        int increment,
+        Easing? easing = null) : base(from, to, duration, increment, easing) { }
 
     /// <inheritdoc/>
     public IntAnimation(
         int to,
         double duration,
-        Easing? easing = null) : base(to, duration, easing) { }
+        int increment,
+        Easing? easing = null) : base(to, duration, increment, easing) { }
 
     /// <inheritdoc/>
     public override void SetValueAt(double position) => SetValue((int)Math.Min(

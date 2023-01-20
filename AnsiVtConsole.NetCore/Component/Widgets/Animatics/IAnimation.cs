@@ -34,6 +34,14 @@ public interface IAnimation
         where TValue : class;
 
     /// <summary>
+    /// value increment
+    /// </summary>
+    /// <typeparam name="TValue">value type</typeparam>
+    /// <returns>value</returns>
+    TValue? Increment<TValue>()
+        where TValue : class;
+
+    /// <summary>
     /// add target property of a class to animation
     /// </summary>
     /// <param name="expression">linq expression that reference the target property of an object: () => obj.a.b.. Expression0&lt;Func&lt;ValueTypeglt;&gt;&gt;</param>

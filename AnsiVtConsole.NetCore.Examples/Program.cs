@@ -230,8 +230,13 @@ void Title(IAnsiVtConsole console)
     var bar = RaimbowText("".PadLeft(113, '─'));
 
     var anims = new AnimationGroup(
-        new IntAnimation(0, 255, 10000)
-            .For(() => bar.OriginRGB.R))
+        new IntAnimation(0, 255, 10000d)
+            .For(() => bar.OriginRGB.R),
+        new IntAnimation(0, 255, 10000d)
+            .For(() => bar.OriginRGB.G),
+        new IntAnimation(128, 255, 10000d)
+            .For(() => bar.OriginRGB.B)
+        )
          .Target(bar.OriginRGB);
 
     var anim = new Animation()

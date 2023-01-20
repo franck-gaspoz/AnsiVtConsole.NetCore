@@ -24,7 +24,10 @@ public abstract class ValueAnimation<T> : IAnimation
     public T? From { get; private set; }
 
     /// <inheritdoc/>
-    public T? To { get; private set; }
+    public T To { get; private set; }
+
+    /// <inheritdoc/>
+    public T Increment { get; private set; }
 
     /// <inheritdoc/>
     public double Duration { get; private set; }
@@ -54,6 +57,11 @@ public abstract class ValueAnimation<T> : IAnimation
             => To as TValue;
 
     /// <inheritdoc/>
+    TValue? IAnimation.Increment<TValue>()
+        where TValue : class
+            => To as TValue;
+
+    /// <inheritdoc/>
     double IAnimation.Duration => Duration;
 
     /// <summary>
@@ -62,25 +70,36 @@ public abstract class ValueAnimation<T> : IAnimation
     /// <param name="from">from</param>
     /// <param name="to">to</param>
     /// <param name="duration">duration</param>
+    /// <param name="increment">increment</param>
     /// <param name="easing">easing function (default linear)</param>
     public ValueAnimation(
         T from,
         T to,
         double duration,
+        T increment,
         Easing? easing = null)
     {
+        Increment = increment;
         From = from;
         To = to;
         Duration = duration;
         Easing = easing ?? new Linear();
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// animation
+    /// </summary>
+    /// <param name="to">to</param>
+    /// <param name="duration">duration</param>
+    /// <param name="increment">increment</param>
+    /// <param name="easing">easing function (default linear)</param>
     public ValueAnimation(
         T to,
         double duration,
+        T increment,
         Easing? easing = null)
     {
+        Increment = increment;
         To = to;
         Duration = duration;
         Easing = easing ?? new Linear();
