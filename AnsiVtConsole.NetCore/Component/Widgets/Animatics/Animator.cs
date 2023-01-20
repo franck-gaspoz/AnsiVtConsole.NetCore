@@ -1,4 +1,8 @@
-﻿namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
+﻿using System.Diagnostics;
+
+using Microsoft.CodeAnalysis;
+
+namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 
 sealed class Animator
 {
@@ -12,9 +16,8 @@ sealed class Animator
     double _timeLapse;
     DateTime? _timeLineStartTime;
     DateTime? _timeLineEndTime;
-#if DEBUG
+    double _sumAnimationDuration;
     int _tick;
-#endif
 
     public event EventHandler OnStart;
     public event EventHandler OnStop;
@@ -51,6 +54,7 @@ sealed class Animator
 #if DEBUG
         _tick = 0;
 #endif
+        _sumAnimationDuration = 0;
         _timeLineIndex = 0;
         _timeLine = timeLine;
         _timeLineStartTime = DateTime.Now;
@@ -88,17 +92,18 @@ sealed class Animator
                 {
 #if DEBUG
                     Dbg($"animate tick {_tick} position {position} : {animation} # {DateStr(DateTime.Now)} (-> {DateStr(_timeLineEndTime!.Value)})");
-                    _tick++;
 #endif
                     animation.SetValueAt(position);
                 }
 
+                _tick++;
                 _timeLine.Render();
 
                 var animationDuration = (DateTime.Now - animationStartTime).TotalMilliseconds;
+                _sumAnimationDuration += animationDuration;
 
                 if (animationDuration > _timeLapse)
-                    System.Diagnostics.Debug.WriteLine(
+                    Debug.WriteLine(
                         $"animation frame time overriden: took {animationDuration}ms but frame length is {_timeLapse} ms");
 
                 var wait = Math.Max(0, _timeLapse - animationDuration);
@@ -107,6 +112,10 @@ sealed class Animator
 
             }
 
+#if DEBUG
+            if (_tick > 0)
+                Debug.WriteLine($"average animation duration = {_sumAnimationDuration / _tick} ms. frame delay = {_timeLapse} ms");
+#endif
             _timeLineIndex++;
         }
 

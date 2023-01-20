@@ -14,7 +14,7 @@ public sealed class Animation
 
     readonly List<TimeLine> _timeLines = new();
 
-    double _fps = 20;
+    double _fps = 10;
     /// <summary>
     /// frame per seconds
     /// </summary>
@@ -24,7 +24,7 @@ public sealed class Animation
         set
         {
             if (IsRunning)
-                throw new InvalidOperationException("can't change IsRunning when running");
+                throw new InvalidOperationException("can't change fps when running");
             _fps = value;
         }
     }
@@ -39,7 +39,12 @@ public sealed class Animation
     /// <summary>
     /// animation
     /// </summary>
-    public Animation() => _animator = new(this);
+    /// <param name="fps">frames per seconds (default 10)</param>
+    public Animation(double? fps = null)
+    {
+        _animator = new(this);
+        _fps = fps ?? 10;
+    }
 
     /// <summary>
     /// add a time line to the animation

@@ -231,13 +231,13 @@ void Title(IAnsiVtConsole console)
 
     var colorAnim = new IntAnimation(0, 255, 10000)
         .For(() => bar.OriginRGB.R)
-        .Target(title.OriginRGB/*, bar.OriginRGB*/);
+        .Target(bar.OriginRGB);
 
     var anim = new Animation()
         .Add(
             new TimeLine()
                 .Add(colorAnim)
-                .Update(title)
+                .Update(bar)
             )
         .Start()
         .Wait();
