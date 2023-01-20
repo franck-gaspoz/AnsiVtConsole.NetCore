@@ -82,6 +82,8 @@ sealed class Animator
                 var position = (time - _timeLineStartTime!.Value)
                     .TotalMilliseconds;
 
+                var animationStartTime = DateTime.Now;
+
                 foreach (var animation in _timeLine!.Animations)
                 {
 #if DEBUG
@@ -90,6 +92,16 @@ sealed class Animator
 #endif
                     animation.SetValueAt(position);
                 }
+
+                _timeLine.Render();
+
+                var animationDuration = (DateTime.Now - animationStartTime).TotalMilliseconds;
+
+                if (animationDuration > _timeLapse)
+                    System.Diagnostics.Debug.WriteLine(
+                        $"animation frame time overriden: took {animationDuration}ms but frame length is {_timeLapse} ms");
+
+                var wait = Math.Max(0, _timeLapse - animationDuration);
 
                 Thread.Sleep((int)_timeLapse);
 

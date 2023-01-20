@@ -1,4 +1,6 @@
-﻿namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
+﻿using AnsiVtConsole.NetCore.Component.Widgets.Animatics.Easings;
+
+namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 
 /// <summary>
 /// animation
@@ -34,6 +36,21 @@ public interface IAnimation
     /// </summary>
     /// <returns>value</returns>
     double Duration { get; }
+
+    /// <summary>
+    /// easing function
+    /// </summary>
+    public Easing Easing { get; }
+
+    /// <summary>
+    /// is cyclic
+    /// </summary>
+    bool IsLoop { get; }
+
+    /// <summary>
+    /// auto reverse or not when cyclic
+    /// </summary>
+    bool IsAutoReverse { get; }
 
     /// <summary>
     /// set the value for any position in the animation time line

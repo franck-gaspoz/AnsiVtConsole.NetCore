@@ -30,21 +30,21 @@ public class Cursor
     }
 
     /// <summary>
-    /// get an int value from a x string coordinate
+    /// get an int value from a x string coordinate or the real cursor position if no or not valid parameter
     /// </summary>
     /// <param name="x">x</param>
     /// <returns>x</returns>
     public int GetCursorX(object? x = null)
     {
-        if (x != null && x is string s && !string.IsNullOrWhiteSpace(s)
-            && int.TryParse(s, out var v))
+        if (x != null && x is string s && !string.IsNullOrWhiteSpace(s))
         {
-            return v;
-        }
-        else
-        {
-            if (_console.Settings.TraceCommandErrors)
-                _console.Logger.LogError($"wrong cursor x: {x}");
+            if (int.TryParse(s, out var v))
+                return v;
+            else
+            {
+                if (_console.Settings.TraceCommandErrors)
+                    _console.Logger.LogError($"wrong cursor x: {x}");
+            }
         }
         if (!_console.WorkArea.IsConsoleGeometryEnabled)
             return 0;
@@ -56,19 +56,21 @@ public class Cursor
     }
 
     /// <summary>
-    /// get an int value from a y string coordinate
+    /// get an int value from a y string coordinate or the real cursor position if no or not valid parameter
     /// </summary>
     /// <param name="x">y</param>
     /// <returns>y</returns>
     public int GetCursorY(object? x = null)
     {
-        if (x != null && x is string s && !string.IsNullOrWhiteSpace(s)
-            && int.TryParse(s, out var v))
-            return v;
-        else
+        if (x != null && x is string s && !string.IsNullOrWhiteSpace(s))
         {
-            if (_console.Settings.TraceCommandErrors)
-                _console.Logger.LogError($"wrong cursor y: {x}");
+            if (int.TryParse(s, out var v))
+                return v;
+            else
+            {
+                if (_console.Settings.TraceCommandErrors)
+                    _console.Logger.LogError($"wrong cursor y: {x}");
+            }
         }
         if (!_console.WorkArea.IsConsoleGeometryEnabled)
             return 0;
@@ -78,4 +80,14 @@ public class Cursor
             return sc.CursorTop;
         }
     }
+
+    /// <summary>
+    /// hide cursor (not thread safe)
+    /// </summary>
+    public void Hide() => sc.CursorVisible = false;
+
+    /// <summary>
+    /// show cursor (not thread safe)
+    /// </summary>
+    public void Show() => sc.CursorVisible = true;
 }

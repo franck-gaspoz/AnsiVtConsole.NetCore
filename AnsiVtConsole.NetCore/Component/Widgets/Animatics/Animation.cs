@@ -14,7 +14,7 @@ public sealed class Animation
 
     readonly List<TimeLine> _timeLines = new();
 
-    double _fps = 2;
+    double _fps = 20;
     /// <summary>
     /// frame per seconds
     /// </summary>

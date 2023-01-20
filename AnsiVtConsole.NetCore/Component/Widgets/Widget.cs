@@ -18,8 +18,6 @@ public abstract class Widget<T> : IWidget
     /// </summary>
     protected const string RestoreColors = "(rsf,rsb)";
 
-    static readonly object _lock = new();
-
     /// <inheritdoc/>
     public int X { get; protected set; } = -1;
 
@@ -27,9 +25,14 @@ public abstract class Widget<T> : IWidget
     public int Y { get; protected set; } = -1;
 
     /// <summary>
+    /// true if not already rendered
+    /// </summary>
+    bool _notRendered = true;
+
+    /// <summary>
     /// console the widet is attached to
     /// </summary>
-    public IAnsiVtConsole Console { get; protected set; }
+    public IAnsiVtConsole? Console { get; protected set; }
 
     /// <summary>
     /// wrapped widget
@@ -64,9 +67,10 @@ public abstract class Widget<T> : IWidget
     /// <inheritdoc/>
     public string Render(IAnsiVtConsole console)
     {
-        lock (_lock)
+        lock (console.Out.Lock)
         {
-            Console = console;
+            if (Console is null)
+                Console = console;
             var render = WrappedWidget is null ?
                 RenderWidget()
                 : WrappedWidget.Render(console);
@@ -75,11 +79,22 @@ public abstract class Widget<T> : IWidget
     }
 
     /// <inheritdoc/>
-    public void Update()
+    public void Update(bool shouldHideCursor = true)
     {
-        lock (_lock)
-        {
+        if (Console is null)
+            throw new InvalidOperationException("console is null");
 
+        lock (Console.Out.Lock)
+        {
+            if (shouldHideCursor)
+                Console.Out.HideCur();
+
+            var cur = Console.Out.CursorPos;
+            Console.Out.SetCursorPos(X, Y);
+
+            Console.Out.WriteLine(Render(Console));
+
+            Console.Out.CursorPos = cur;
         }
     }
 
@@ -98,7 +113,7 @@ public abstract class Widget<T> : IWidget
     {
         render = Widget<T>.BackupColors + render;
         if (X != -1 && Y != -1)
-            render = CUP(X, Y) + render;
+            render = CUP(X + 1, Y + 1) + render;
         render += Widget<T>.RestoreColors;
         return render;
     }
@@ -110,12 +125,16 @@ public abstract class Widget<T> : IWidget
     /// <returns>this object</returns>
     public T Add(IAnsiVtConsole console)
     {
-        lock (_lock)
+        lock (console.Out.Lock)
         {
-            if (X == -1)
-                X = console.Cursor.GetCursorX();
-            if (Y == -1)
-                Y = console.Cursor.GetCursorY();
+            if (_notRendered)
+            {
+                if (X == -1)
+                    X = console.Cursor.GetCursorX();
+                if (Y == -1)
+                    Y = console.Cursor.GetCursorY();
+                _notRendered = false;
+            }
 
             console.Out.WriteLine(Render(console));
             return (this as T)!;

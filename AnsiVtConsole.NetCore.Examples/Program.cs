@@ -221,19 +221,23 @@ void Title(IAnsiVtConsole console)
             .CyclicGradient(4, 9, 14)
             .Add(console);
 
-    RaimbowText(str);
+    var title = RaimbowText(str);
 
     RaimbowText($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}");
 
-    var bar = RaimbowText("".PadLeft(113, '_'));
+    console.Out.WriteLine();
+
+    var bar = RaimbowText("".PadLeft(113, '─'));
+
+    var colorAnim = new IntAnimation(0, 255, 10000)
+        .For(() => bar.OriginRGB.R)
+        .Target(title.OriginRGB/*, bar.OriginRGB*/);
 
     var anim = new Animation()
         .Add(
             new TimeLine()
-                .Add(
-                    new IntAnimation(0, 255, 10000)
-                        .Target(bar.OriginRGB, () => bar.OriginRGB.R)
-                )
+                .Add(colorAnim)
+                .Update(title)
             )
         .Start()
         .Wait();

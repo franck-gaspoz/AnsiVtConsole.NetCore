@@ -21,12 +21,8 @@ public sealed class IntAnimation : ValueAnimation<int>
         Easing? easing = null) : base(to, duration, easing) { }
 
     /// <inheritdoc/>
-    public override void SetValueAt(double position)
-    {
-        SetValue((int)Math.Min(
+    public override void SetValueAt(double position) => SetValue((int)Math.Min(
             To,
             (To - From)
                 * (position / Duration)));
-        Update();
-    }
 }

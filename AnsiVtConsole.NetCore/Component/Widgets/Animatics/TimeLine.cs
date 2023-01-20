@@ -24,13 +24,42 @@ public sealed class TimeLine
     public bool IsAutoReverse { get; private set; }
 
     /// <summary>
-    /// add an animatable to the animation
+    /// widgets that must be updated during animation
     /// </summary>
-    /// <param name="animatable">animatable</param>
+    public IReadOnlyList<IWidget> Widgets => _widgets;
+
+    readonly List<IWidget> _widgets = new();
+
+    /// <summary>
+    /// add an animation to the timeline
+    /// </summary>
+    /// <param name="animation">animation</param>
     /// <returns>this object</returns>
-    public TimeLine Add(IAnimation animatable)
+    public TimeLine Add(IAnimation animation)
     {
-        _animations.Add(animatable);
+        _animations.Add(animation);
+        return this;
+    }
+
+    /// <summary>
+    /// specifiy widgets to be updated during animation
+    /// </summary>
+    /// <param name="widgets">widgets</param>
+    /// <returns>this object</returns>
+    public TimeLine Update(params IWidget[] widgets)
+    {
+        _widgets.AddRange(widgets);
+        return this;
+    }
+
+    /// <summary>
+    /// render widgets
+    /// </summary>
+    /// <returns>this object</returns>
+    public TimeLine Render()
+    {
+        foreach (var widget in _widgets)
+            widget.Update();
         return this;
     }
 

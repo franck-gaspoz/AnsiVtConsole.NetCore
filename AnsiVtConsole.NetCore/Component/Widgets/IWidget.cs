@@ -30,5 +30,5 @@ public interface IWidget
     /// <summary>
     /// update the display of the widget previously attached to a console (already rendered)
     /// </summary>
-    void Update();
+    void Update(bool shouldHideCursor = true);
 }

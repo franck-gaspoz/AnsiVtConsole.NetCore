@@ -13,35 +13,30 @@ namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 /// <typeparam name="T">value type</typeparam>
 public abstract class ValueAnimation<T> : IAnimation
 {
-    readonly Dictionary<PropertyInfo, object> _targets = new();
+    readonly List<object> _targets = new();
 
-    /// <summary>
-    /// current value
-    /// </summary>
+    PropertyInfo? _propertyInfo;
+
+    /// <inheritdoc/>
     public T? Value { get; protected set; }
 
-    /// <summary>
-    /// from
-    /// </summary>
+    /// <inheritdoc/>
     public T? From { get; protected set; }
 
-    /// <summary>
-    /// to
-    /// </summary>
+    /// <inheritdoc/>
     public T? To { get; protected set; }
 
     /// <inheritdoc/>
     public double Duration { get; protected set; }
 
-    /// <summary>
-    /// easing function
-    /// </summary>
+    /// <inheritdoc/>
     public Easing Easing { get; protected set; }
 
-    /// <summary>
-    /// widget if concerned
-    /// </summary>
-    public IWidget? Widget { get; protected set; }
+    /// <inheritdoc/>
+    public bool IsLoop { get; }
+
+    /// <inheritdoc/>
+    public bool IsAutoReverse { get; }
 
     /// <inheritdoc/>
     TValue? IAnimation.Value<TValue>()
@@ -99,31 +94,32 @@ public abstract class ValueAnimation<T> : IAnimation
     /// <summary>
     /// add target property of an object to animation
     /// </summary>
-    /// <param name="propertyName">property name</param>
     /// <param name="target">target</param>
+    /// <param name="propertyName">property name</param>
     /// <returns>this object</returns>
-    public ValueAnimation<T> Target(string propertyName, object target)
+    public ValueAnimation<T> For(object target, string propertyName)
     {
-        var propertyInfo = target.GetType()
+        _propertyInfo = target.GetType()
             .GetProperty(propertyName)
                 ?? throw new ArgumentException($"property {propertyName} not found in object: {target}");
 
-        _targets.Add(propertyInfo, target);
+        _targets.Add(_targets);
 
         return this;
     }
 
     /// <summary>
-    /// add target property of an object to animation
+    /// add target property of a class to animation
     /// </summary>
-    /// <param name="widget">widget</param>
     /// <param name="propertyName">property name</param>
-    /// <param name="target">target</param>
     /// <returns>this object</returns>
-    public ValueAnimation<T> Target(IWidget widget, string propertyName, object target)
+    public ValueAnimation<T> For<TargetType>(string propertyName)
     {
-        Widget = widget;
-        return Target(propertyName, target);
+        _propertyInfo = typeof(TargetType)
+            .GetProperty(propertyName)
+                ?? throw new ArgumentException($"property {propertyName} not found in object: {typeof(TargetType)}");
+
+        return this;
     }
 
     /// <summary>
@@ -132,10 +128,10 @@ public abstract class ValueAnimation<T> : IAnimation
     /// <param name="target">animation target object</param>
     /// <param name="expression">linq expression that reference the target property of an object: () => obj.a.b.. Expression0&lt;Func&lt;ValueTypeglt;&gt;&gt;</param>
     /// <returns>this object</returns>
-    public ValueAnimation<T> Target(object target, LambdaExpression expression)
+    public ValueAnimation<T> For(object target, LambdaExpression expression)
     {
         Type? returnType;
-        if (expression.Body is System.Linq.Expressions.MemberExpression expr
+        if (expression.Body is MemberExpression expr
             && expr.Member is PropertyInfo propertyInfo)
             returnType = expression.ReturnType;
         else
@@ -143,34 +139,46 @@ public abstract class ValueAnimation<T> : IAnimation
         if (returnType != typeof(T))
             throw new ArgumentException("expression is not valid. Expected return type: " + typeof(T).Name);
 
-        _targets.Add(propertyInfo, target);
+        _propertyInfo = propertyInfo;
+        _targets.Add(target);
 
         return this;
     }
 
     /// <summary>
-    /// add target property of an object to animation
+    /// add target property of a class to animation
     /// </summary>
-    /// <param name="widget">widget</param>
-    /// <param name="target">animation target object</param>
     /// <param name="expression">linq expression that reference the target property of an object: () => obj.a.b.. Expression0&lt;Func&lt;ValueTypeglt;&gt;&gt;</param>
     /// <returns>this object</returns>
-    public ValueAnimation<T> Target(IWidget widget, object target, LambdaExpression expression)
+    public ValueAnimation<T> For(LambdaExpression expression)
     {
-        Widget = widget;
-        return Target(target, expression);
+        Type? returnType;
+        if (expression.Body is MemberExpression expr
+            && expr.Member is PropertyInfo propertyInfo)
+            returnType = expression.ReturnType;
+        else
+            throw new ArgumentException("expression is not valid", nameof(expression));
+        if (returnType != typeof(T))
+            throw new ArgumentException("expression is not valid. Expected return type: " + typeof(T).Name);
+
+        _propertyInfo = propertyInfo;
+
+        return this;
+    }
+
+    /// <summary>
+    /// setup target(s) for this animation
+    /// </summary>
+    /// <param name="targets">one or several targets</param>
+    /// <returns>this object</returns>
+    public ValueAnimation<T> Target(params object[] targets)
+    {
+        _targets.AddRange(targets);
+        return this;
     }
 
     /// <inheritdoc/>
     public abstract void SetValueAt(double position);
-
-    /// <summary>
-    /// update when (eg. value has changed)
-    /// </summary>
-    public void Update()
-    {
-
-    }
 
     /// <summary>
     /// set value of target
@@ -181,9 +189,11 @@ public abstract class ValueAnimation<T> : IAnimation
 #if DEBUG
         System.Diagnostics.Debug.WriteLine("value = " + value);
 #endif
+        if (_propertyInfo is null)
+            throw new InvalidDataException("property is not defined");
 
-        foreach (var (propertyInfo, obj) in _targets)
-            SetValue(propertyInfo, obj, value);
+        foreach (var target in _targets)
+            SetValue(_propertyInfo, target, value);
     }
 
     static void SetValue(PropertyInfo propertyInfo, object target, T value)

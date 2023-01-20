@@ -57,8 +57,8 @@ namespace AnsiVtConsole.NetCore.Component.Console
 
         int _cursorLeftBackup;
         int _cursorTopBackup;
-        ConsoleColor _backgroundBackup = ConsoleColor.Black;
-        ConsoleColor _foregroundBackup = ConsoleColor.White;
+        ConsoleColor? _foregroundBackup;
+        ConsoleColor? _backgroundBackup;
         EchoDirectiveProcessor _echoDirectiveProcessor;
 
         /// <summary>
@@ -1000,7 +1000,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             lock (Lock!)
             {
-                SetForeground(Console.Settings.DefaultForeground);
+                SetForeground(_foregroundBackup);
             }
         }
 
@@ -1013,7 +1013,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
                 return;
             lock (Lock!)
             {
-                SetBackground(Console.Settings.DefaultBackground);
+                SetBackground(_backgroundBackup);
             }
         }
 

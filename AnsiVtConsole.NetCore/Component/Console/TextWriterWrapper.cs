@@ -55,10 +55,14 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// </summary>
         public static int InitialBufferCapacity { get; set; } = 1_000_000;
 
+        static readonly object _lock = new();
+
         /// <summary>
         /// get lock
         /// </summary>
-        public object? Lock => _textWriter;
+#pragma warning disable CA1822
+        public object Lock => _lock;
+#pragma warning restore CA1822
 
         /// <summary>
         /// initial TextWriterInitialCapacity buffer capacity
