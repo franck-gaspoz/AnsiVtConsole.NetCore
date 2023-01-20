@@ -4,7 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<AssemblyVersion>1.0.20.0</AssemblyVersion>
 	<FileVersion>1.0.20.0</FileVersion>
 	  
@@ -58,7 +59,10 @@
     <None Remove="assets\example2.png" />
     <None Remove="assets\example3.png" />
     <None Remove="assets\example4.png" />
+    <None Remove="assets\example5.png" />
+    <None Remove="assets\example6.png" />
     <None Remove="assets\output.png" />
+    <None Remove="assets\title.png" />
     <None Remove="Component\Parser\ANSI\ansi-seq-patterns.txt" />
     <None Remove="LICENSE.md" />
     <None Remove="README.md" />
@@ -105,6 +109,12 @@
       <PackageCopyToOutput>true</PackageCopyToOutput>
 	  <IncludeInPackage>true</IncludeInPackage>
     </Content>
+    <Content Include="assets\example5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\example6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\output.png">
       <Pack>True</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -112,6 +122,9 @@
       <PackageCopyToOutput>true</PackageCopyToOutput>
       <IncludeInPackage>true</IncludeInPackage>
 	</Content>
+    <Content Include="assets\title.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Component\Parser\ANSI\ansi-seq-patterns.txt">
 		<CopyToOuput>true</CopyToOuput>
 		<copyToOuput>true</copyToOuput>
@@ -143,10 +156,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.4.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Component\Widgets\Images\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

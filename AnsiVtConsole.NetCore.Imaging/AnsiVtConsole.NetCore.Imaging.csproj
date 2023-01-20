@@ -1,0 +1,164 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <AssemblyVersion>1.0.20.0</AssemblyVersion>
+	  <FileVersion>1.0.20.0</FileVersion>
+
+	  <RootNamespace>AnsiVtConsole.NetCore.Imaging</RootNamespace>
+	  <AssemblyName>AnsiVtConsole.NetCore.Imaging</AssemblyName>
+	  <NeutralLanguage>en-US</NeutralLanguage>
+
+	  <PackageId>AnsiVtConsole.NetCore.Imaging</PackageId>
+	  <IsPackable>true</IsPackable>
+	  <Authors>Franck Gaspoz</Authors>
+	  <Company>Franck Gaspoz</Company>
+	  <Product>AnsiVtConsole.NetCore.Imaging</Product>
+	  <Description>ANSI VT console library for .Net Core system console</Description>
+	  <Copyright>(c) Franck Gaspoz 2023 Licence MIT</Copyright>
+	  <Version>1.0.20</Version>
+	  <InformationalVersion>1.0.20</InformationalVersion>
+	  <DebugType>embedded</DebugType>
+	  <EmbedAllSources>True</EmbedAllSources>
+	  <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+	  <PackageReleaseNotes>
+		  1.0.20 - 20-1-2023
+		  - inital version. add widget image to AnsiConsole.NetCore
+	  </PackageReleaseNotes>
+	  <PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</RepositoryUrl>
+	  <RepositoryType>git</RepositoryType>
+	  <PackageTags>ansi vt vt100 console color shell prompt bash powershell linux csharp netcore6 cli cmd command line tool</PackageTags>
+	  <PackageIcon>content\assets\ascii-icon.png</PackageIcon>
+
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+	  <Platforms>AnyCPU</Platforms>
+	  <PackageReadmeFile>content\README.md</PackageReadmeFile>
+	  <PackageLicenseFile>content\LICENSE.md</PackageLicenseFile>
+	  <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	  <PackageFlatten>false</PackageFlatten>
+	  <RunPostBuildEvent>Always</RunPostBuildEvent>
+	  
+  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<Optimize>false</Optimize>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\assets\ascii-icon.png" />
+	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\assets\example1.png" />
+	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\assets\example2.png" />
+	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\assets\example3.png" />
+	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\assets\example4.png" />
+	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\assets\output.png" />
+	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\LICENSE.md" />
+	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\README.md" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="assets\ascii-icon.png" />
+	  <None Remove="assets\example1.png" />
+	  <None Remove="assets\example2.png" />
+	  <None Remove="assets\example3.png" />
+	  <None Remove="assets\example4.png" />
+	  <None Remove="assets\example5.png" />
+	  <None Remove="assets\example6.png" />
+	  <None Remove="assets\output.png" />
+	  <None Remove="assets\title - Copie.png" />
+	  <None Remove="assets\title.png" />
+	  <None Remove="LICENSE.md" />
+	  <None Remove="README.md" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="assets\ascii-icon.png">
+			<CopyToOuput>true</CopyToOuput>
+			<copyToOuput>true</copyToOuput>
+			<IncludeInPackage>true</IncludeInPackage>
+			<BuildAction>Content</BuildAction>
+			<copyToOutput>true</copyToOutput>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+			<Pack>True</Pack>
+			<PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</Content>
+		<Content Include="assets\example1.png">
+			<Pack>True</Pack>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<IncludeInPackage>true</IncludeInPackage>
+		</Content>
+		<Content Include="assets\example2.png">
+			<Pack>True</Pack>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<IncludeInPackage>true</IncludeInPackage>
+		</Content>
+		<Content Include="assets\example3.png">
+			<Pack>True</Pack>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<IncludeInPackage>true</IncludeInPackage>
+		</Content>
+		<Content Include="assets\example4.png">
+			<Pack>True</Pack>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<IncludeInPackage>true</IncludeInPackage>
+		</Content>
+		<Content Include="assets\example5.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="assets\example6.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="assets\output.png">
+			<Pack>True</Pack>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<IncludeInPackage>true</IncludeInPackage>
+		</Content>
+		<Content Include="assets\title.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="LICENSE.md">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Pack>True</Pack>
+			<PackagePath>contentFiles/any/any/;content/</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<IncludeInPackage>true</IncludeInPackage>
+		</Content>
+		<Content Include="README.md">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Pack>True</Pack>
+			<PackagePath>contentFiles/any/any/;content/</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<IncludeInPackage>true</IncludeInPackage>
+		</Content>
+	</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AnsiVtConsole.NetCore" Version="1.0.19" />
+    <PackageReference Include="SkiaSharp" Version="2.88.3" />
+  </ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy &quot;$(ProjectDir)README.md&quot; &quot;$(SolutionDir)&quot; /Y" />
+	</Target>
+
+</Project>
