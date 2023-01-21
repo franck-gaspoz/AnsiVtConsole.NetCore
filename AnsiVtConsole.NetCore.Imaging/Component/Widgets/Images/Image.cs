@@ -57,7 +57,11 @@ public sealed class Image : Widget<Image>
     string GetImage()
     {
         if (_image is null)
+        {
             _image = SKBitmap.Decode(Filename);
+            if (_image is null)
+                throw new InvalidOperationException($"failed to load or decode image: " + Filename);
+        }
 
         if (_scaledImage is null)
         {

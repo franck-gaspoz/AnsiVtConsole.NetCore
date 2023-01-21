@@ -233,7 +233,7 @@ void Title(IAnsiVtConsole console)
     console.Out.WriteLine();
     console.Out.WriteLine();
 
-    new Image("assets/ascii-icon.png", 64, 64)
+    new Image("assets/road.jpg", 60, 32)
         .Add(console);
 
     var anims = new AnimationGroup(
