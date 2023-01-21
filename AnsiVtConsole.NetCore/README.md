@@ -272,7 +272,8 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 # Version history
 
 `1.0.20` - 18-1-2023
-- ..
+- widget animation
+- widget image (project AnsiVtConsole.NetCore.Imaging)
 
 `1.0.19` - 17-1-2023
 - add **widgets** feature + RaimbowText widget
@@ -307,5 +308,11 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 - rename Writeln methods by WriteLine
 - suppress Log,Logln & logger refactoring
 - add code documentation
+
+**AnsiVtConsole.NetCore.Imaging**
+
+`1.0.0` - 21-1-2023
+- inital version. provide widget image to AnsiConsole.NetCore
+
 ___
 

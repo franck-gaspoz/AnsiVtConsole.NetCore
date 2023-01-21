@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
 
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
-	  <AssemblyVersion>1.0.20.0</AssemblyVersion>
-	  <FileVersion>1.0.20.0</FileVersion>
+	  <AssemblyVersion>1.0.0.0</AssemblyVersion>
+	  <FileVersion>1.0.0.0</FileVersion>
 
 	  <RootNamespace>AnsiVtConsole.NetCore.Imaging</RootNamespace>
 	  <AssemblyName>AnsiVtConsole.NetCore.Imaging</AssemblyName>
@@ -18,17 +18,17 @@
 	  <Authors>Franck Gaspoz</Authors>
 	  <Company>Franck Gaspoz</Company>
 	  <Product>AnsiVtConsole.NetCore.Imaging</Product>
-	  <Description>ANSI VT console library for .Net Core system console</Description>
+	  <Description>ANSI VT console library for .Net Core system console Imaging component</Description>
 	  <Copyright>(c) Franck Gaspoz 2023 Licence MIT</Copyright>
-	  <Version>1.0.20</Version>
-	  <InformationalVersion>1.0.20</InformationalVersion>
+	  <Version>1.0.0</Version>
+	  <InformationalVersion>1.0.0</InformationalVersion>
 	  <DebugType>embedded</DebugType>
 	  <EmbedAllSources>True</EmbedAllSources>
 	  <EmbedUntrackedSources>true</EmbedUntrackedSources>
 
 	  <PackageReleaseNotes>
-		  1.0.20 - 20-1-2023
-		  - inital version. add widget image to AnsiConsole.NetCore
+1.0.0 - 20-1-2023
+- inital version. add widget image to AnsiConsole.NetCore
 	  </PackageReleaseNotes>
 	  <PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</PackageProjectUrl>
 	  <RepositoryUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</RepositoryUrl>
@@ -161,9 +161,5 @@
   <ItemGroup>
     <ProjectReference Include="..\AnsiVtConsole.NetCore\AnsiVtConsole.NetCore.csproj" />
   </ItemGroup>
-
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="xcopy &quot;$(ProjectDir)README.md&quot; &quot;$(SolutionDir)&quot; /Y" />
-	</Target>
 
 </Project>
