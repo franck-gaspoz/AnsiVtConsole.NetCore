@@ -11,12 +11,12 @@ public interface IWidget
     IWidget? WrappedWidget { get; }
 
     /// <summary>
-    /// fixed location X if any else -1
+    /// fixed location X if any else -1 (origin 0)
     /// </summary>
     int X { get; }
 
     /// <summary>
-    /// fixed location Y if any else -1
+    /// fixed location Y if any else -1 (origin 0)
     /// </summary>
     int Y { get; }
 

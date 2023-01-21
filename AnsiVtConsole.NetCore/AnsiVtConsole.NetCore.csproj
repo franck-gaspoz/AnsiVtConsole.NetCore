@@ -62,6 +62,7 @@
     <None Remove="assets\example4.png" />
     <None Remove="assets\example5.png" />
     <None Remove="assets\example6.png" />
+    <None Remove="assets\example7.png" />
     <None Remove="assets\output.png" />
     <None Remove="assets\title.png" />
     <None Remove="Component\Parser\ANSI\ansi-seq-patterns.txt" />
@@ -114,6 +115,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\example6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\example7.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\output.png">

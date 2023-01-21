@@ -233,7 +233,12 @@ void Title(IAnsiVtConsole console)
     console.Out.WriteLine();
     console.Out.WriteLine();
 
-    new Image("assets/road.jpg", 60, 32)
+    var img1 = new Image("assets/smiley.png", 32, 16, false, (x, y) => "☻")
+        .Add(console);
+
+    console.Out.SetCursorPos(img1.Width!.Value, img1.Y);
+
+    var img2 = new Image("assets/smiley.png", 16, 16)
         .Add(console);
 
     var anims = new AnimationGroup(
