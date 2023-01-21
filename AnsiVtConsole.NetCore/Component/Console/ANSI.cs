@@ -159,8 +159,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// Device Status Report - Reports the cursor position (CPR) to the application as (as though typed at the keyboard) ESC[n;mR, where n is the row and m is the column.)
         /// </summary>
         /// <returns>ansi seq</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2211:Les champs non constants ne doivent pas être visibles", Justification = "<En attente>")]
-        public static string DSR = $"{CSI}6n";
+        public static readonly string DSR = $"{CSI}6n";
 
         /// <summary>
         /// ED parameter

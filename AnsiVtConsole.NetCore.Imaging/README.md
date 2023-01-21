@@ -20,7 +20,9 @@ The library provides functionalities needed to build console applications runnin
 
 - A ANSI Parser that can identify/remove escape sequences in a text
 
-- Can compile a .exe for a one command, showing only the help for a specific command, or several ones, showing a help for all commands as a shell would do
+- **widgets** : UI elements with live update and animations  
+    - raimbow text
+    - image (provided in a separate package: [AnsiVtConsole.NetCore.Imaging](https://www.nuget.org/packages/AnsiVtConsole.NetCore/))
 
 - The console output can be controlled by:
     - tokens in a string (print directives)
@@ -76,7 +78,16 @@ using static AnsiVtConsole.NetCore.Component.EchoDirective;
 System.Console.Out.Writeline($"{Br}{Yellow}{BRed}yellow text on red background{Br}{Cyan}current time is: {System.DateTime.Now}{Br}");
 ```
 
-### both outputs:
+## 3. using the ANSI sequences:
+
+``` csharp
+using static AnsiVtConsole.NetCore.Component.Console.ANSI;
+
+System.Console.Out.Writeline($"{CRLF}{SGRF("Yellow")}{SGRB("Red")}yellow text on red background{CRLF}{SGRF("Cyan")}current time is: {System.DateTime.Now}{CRLF}");
+```
+
+
+### all outputs:
 
 ![output](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/output.png "output")
 
@@ -312,7 +323,7 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 **AnsiVtConsole.NetCore.Imaging**
 
 `1.0.0` - 21-1-2023
-- inital version. provide widget image to AnsiConsole.NetCore
+- inital version. provide widget image to AnsiConsole.NetCore (package [AnsiVtConsole.NetCore.Imaging](https://www.nuget.org/packages/AnsiVtConsole.NetCore/))
 
 ___
 

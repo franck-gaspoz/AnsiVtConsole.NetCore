@@ -68,7 +68,6 @@ public sealed class Image : Widget<Image>
 
         if (_sb.Length == 0)
         {
-            _sb.Append("(bkb)");
             var pixelIndex = 0;
             for (var y = 0; y < Height; y++)
             {
@@ -85,7 +84,6 @@ public sealed class Image : Widget<Image>
                 _sb.Append(RSTXTA);
                 _sb.Append(CRLF);
             }
-            _sb.Append("(rsb)");
         }
 
         return _sb.ToString();
