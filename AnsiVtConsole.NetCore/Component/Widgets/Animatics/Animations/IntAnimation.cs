@@ -24,10 +24,19 @@ public sealed class IntAnimation : ValueAnimation<int>
 
     /// <inheritdoc/>
     public override void SetValueAt(double position)
-        => SetValue((int)Math.Min(
-            To,
-            (To - From)
+    {
+        var value = Math.Min(
+            Math.Max(From, To),
+            Math.Abs(To - From)
                 * (position / Duration)
-            + From
-        ));
+            + Math.Min(From, To)
+        );
+
+        var intValue = (int)Math.Max(
+            Math.Min(From, To),
+            value
+            );
+
+        SetValue(intValue);
+    }
 }

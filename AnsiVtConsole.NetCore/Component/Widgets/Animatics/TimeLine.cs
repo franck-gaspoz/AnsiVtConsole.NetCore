@@ -79,14 +79,20 @@ public sealed class TimeLine
     /// </summary>
     /// <returns>this object</returns>
     public TimeLine Loop()
-        => this!;
+    {
+        IsLoop = true;
+        return this;
+    }
 
     /// <summary>
     /// enable auto reverse
     /// </summary>
     /// <returns>this object</returns>
     public TimeLine AutoReverse()
-        => this!;
+    {
+        IsAutoReverse = true;
+        return this;
+    }
 
     /// <summary>
     /// time line

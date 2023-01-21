@@ -66,6 +66,7 @@ sealed class Animator
         _timeLineStartTime = DateTime.Now;
         _timeLineEndTime = _timeLineStartTime!.Value.Add(
             TimeSpan.FromMilliseconds(_timeLine.Duration));
+        _end = false;
     }
 
     double GetTimeLapse()
@@ -78,6 +79,7 @@ sealed class Animator
 #endif
 
         var reverse = false;
+        var reverseCount = 0;
 
         while (_timeLineIndex < _animation.TimeLines.Count)
         {
@@ -127,19 +129,12 @@ sealed class Animator
             }
 
             if (_timeLine.IsAutoReverse)
-            {
                 reverse = !reverse;
-            }
-
-            if (_timeLine.IsLoop)
-            {
-
-            }
 #if DEBUG
             if (_tick > 0)
                 Debug.WriteLine($"average animation duration = {_sumAnimationDuration / _tick} ms. frame delay = {_timeLapse} ms");
 #endif
-            if (!_timeLine.IsAutoReverse && !_timeLine.IsLoop)
+            if (!_timeLine.IsLoop || !(_timeLine.IsAutoReverse && reverseCount == 0))
                 _timeLineIndex++;
         }
 

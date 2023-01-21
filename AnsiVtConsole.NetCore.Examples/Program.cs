@@ -254,6 +254,8 @@ void Title(IAnsiVtConsole console)
     var anim = new Animation()
         .Add(
             new TimeLine()
+                .Loop()
+                .AutoReverse()
                 .Add(anims)
                 .Update(bar)
             )
