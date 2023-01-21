@@ -8,6 +8,7 @@ using AnsiVtConsole.NetCore.Component.Parser.ANSI;
 using AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 using AnsiVtConsole.NetCore.Component.Widgets.Animatics.Animations;
 using AnsiVtConsole.NetCore.Component.Widgets.Text.Raimbow;
+using AnsiVtConsole.NetCore.Imaging.Component.Widgets.Images;
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 using static AnsiVtConsole.NetCore.Component.Console.Unicode;
@@ -229,15 +230,21 @@ void Title(IAnsiVtConsole console)
 
     var bar = RaimbowText("".PadLeft(113, '─'));
 
+    console.Out.WriteLine();
+    console.Out.WriteLine();
+
+    new Image("assets/ascii-icon.png", 64, 64)
+        .Add(console);
+
     var anims = new AnimationGroup(
-        new IntAnimation(0, 255, 10000d)
-            .For(() => bar.OriginRGB.R),
-        new IntAnimation(0, 255, 10000d)
-            .For(() => bar.OriginRGB.G),
-        new IntAnimation(128, 255, 10000d)
-            .For(() => bar.OriginRGB.B)
-        )
-         .Target(bar.OriginRGB);
+    new IntAnimation(0, 255, 10000d)
+        .For(() => bar.OriginRGB.R),
+    new IntAnimation(0, 255, 10000d)
+        .For(() => bar.OriginRGB.G),
+    new IntAnimation(128, 255, 10000d)
+        .For(() => bar.OriginRGB.B)
+    )
+     .Target(bar.OriginRGB);
 
     var anim = new Animation()
         .Add(
@@ -245,11 +252,9 @@ void Title(IAnsiVtConsole console)
                 .Add(anims)
                 .Update(bar)
             )
-        .Start()
-        .Wait();
+        .Start();
 
-    console.Out.WriteLine();
-    console.Out.WriteLine();
+    anim.Wait();
 
     console.Exit();
 }

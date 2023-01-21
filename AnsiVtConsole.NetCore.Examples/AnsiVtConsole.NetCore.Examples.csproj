@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AnsiVtConsole.NetCore.Imaging\AnsiVtConsole.NetCore.Imaging.csproj" />
     <ProjectReference Include="..\AnsiVtConsole.NetCore\AnsiVtConsole.NetCore.csproj" />
   </ItemGroup>
 

@@ -60,6 +60,7 @@
 	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\assets\example3.png" />
 	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\assets\example4.png" />
 	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\assets\output.png" />
+	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\Component\Parser\ANSI\ansi-seq-patterns.txt" />
 	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\LICENSE.md" />
 	  <Content Remove="C:\Users\franc\.nuget\packages\ansivtconsole.netcore\1.0.19\contentFiles\any\any\README.md" />
 	</ItemGroup>
@@ -155,6 +156,10 @@
   <ItemGroup>
     <PackageReference Include="AnsiVtConsole.NetCore" Version="1.0.19" />
     <PackageReference Include="SkiaSharp" Version="2.88.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AnsiVtConsole.NetCore\AnsiVtConsole.NetCore.csproj" />
   </ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
