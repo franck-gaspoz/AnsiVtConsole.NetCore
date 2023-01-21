@@ -31,7 +31,7 @@ public sealed class Image : Widget<Image>
     /// <summary>
     /// pixel char function
     /// </summary>
-    public Func<int, int, string> PixelChar { get; private set; }
+    public Func<int, int, SKColor, string> PixelChar { get; private set; }
 
     /// <summary>
     /// if true the bitmap is painted on background
@@ -60,7 +60,7 @@ public sealed class Image : Widget<Image>
         int? width = null,
         int? height = null,
         bool paintOnBackground = true,
-        Func<int, int, string>? pixelChar = null)
+        Func<int, int, SKColor, string>? pixelChar = null)
     {
         if (width is not null && width <= 0)
             throw new ArgumentException("width must be > 0");
@@ -73,7 +73,7 @@ public sealed class Image : Widget<Image>
         PaintOnBackground = paintOnBackground;
     }
 
-    string DefaultPixelCharFunc(int x, int y) => DefaultPixelChar;
+    string DefaultPixelCharFunc(int x, int y, SKColor color) => DefaultPixelChar;
 
     /// <inheritdoc/>
     public Image(IWidget wrappedWidget)
@@ -126,7 +126,7 @@ public sealed class Image : Widget<Image>
                             green,
                             blue
                             ))
-                    + PixelChar(x, y));
+                    + PixelChar(x, y, color));
             }
             _sb.Append(RSTXTA + CRLF);
             if (y != image.Height)

@@ -136,10 +136,18 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <summary>
         /// Cursor Position - Moves the cursor to row n, column m. The values are 1-based, and default to 1 (top left corner) if omitted. A sequence such as CSI ;5H is a synonym for CSI 1;5H as well as CSI 17;H is the same as CSI 17H and CSI 17;1H
         /// </summary>
-        /// <param name="row">row index</param>
-        /// <param name="column">column index</param>
+        /// <param name="row">row index (origin 1)</param>
+        /// <param name="column">column index (origin 1)</param>
         /// <returns>ansi seq</returns>
         public static string CUP(int column = 1, int row = 1) => $"{CSI}{row};{column}H";
+
+        /// <summary>
+        /// Horizontal Vertical Position
+        /// </summary>
+        /// <param name="row">row index (origin 1)</param>
+        /// <param name="column">column index (origin 1)</param>
+        /// <returns></returns>
+        public static string HVP(int column = 1, int row = 1) => $"{CSI}{row};{column}F";
 
         /// <summary>
         /// Scroll Up - Scroll whole page up by n (default 1) lines. New lines are added at the bottom. (not ANSI.SYS)

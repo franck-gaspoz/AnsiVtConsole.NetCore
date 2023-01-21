@@ -135,8 +135,8 @@ public abstract class Widget<T> : IWidget
                     Y = console.Cursor.GetCursorY();
                 _notRendered = false;
             }
-
             console.Out.WriteLine(Render(console));
+
             return (this as T)!;
         }
     }

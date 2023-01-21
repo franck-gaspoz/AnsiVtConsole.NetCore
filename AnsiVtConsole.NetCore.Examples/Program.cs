@@ -233,7 +233,7 @@ void Title(IAnsiVtConsole console)
     console.Out.WriteLine();
     console.Out.WriteLine();
 
-    var img1 = new Image("assets/smiley.png", 32, 16, false, (x, y) => "☻")
+    var img1 = new Image("assets/smiley.png", 32, 16, false, (x, y, c) => "☻")
         .Add(console);
 
     console.Out.SetCursorPos(img1.Width!.Value, img1.Y);
