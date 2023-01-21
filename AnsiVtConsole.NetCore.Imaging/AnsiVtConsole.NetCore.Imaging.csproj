@@ -73,6 +73,7 @@
 	  <None Remove="assets\example4.png" />
 	  <None Remove="assets\example5.png" />
 	  <None Remove="assets\example6.png" />
+	  <None Remove="assets\example7.png" />
 	  <None Remove="assets\output.png" />
 	  <None Remove="assets\road.jpg" />
 	  <None Remove="assets\smiley.png" />
@@ -129,15 +130,15 @@
 		<Content Include="assets\example6.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<Content Include="assets\example7.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Content Include="assets\output.png">
 			<Pack>True</Pack>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 			<IncludeInPackage>true</IncludeInPackage>
-		</Content>
-		<Content Include="assets\road.jpg">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="assets\smiley.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
