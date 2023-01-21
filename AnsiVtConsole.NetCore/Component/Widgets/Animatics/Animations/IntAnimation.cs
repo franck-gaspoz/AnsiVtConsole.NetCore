@@ -26,5 +26,7 @@ public sealed class IntAnimation : ValueAnimation<int>
     public override void SetValueAt(double position) => SetValue((int)Math.Min(
             To,
             (To - From)
-                * (position / Duration)));
+                * (position / Duration)
+            + From
+        ));
 }

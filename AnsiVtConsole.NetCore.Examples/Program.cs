@@ -241,15 +241,15 @@ void Title(IAnsiVtConsole console)
     var img2 = new Image("assets/smiley.png", 16, 16)
         .Add(console);
 
-    var anims = new AnimationGroup(
-    new IntAnimation(0, 255, 10000d)
-        .For(() => bar.OriginRGB.R),
-    new IntAnimation(0, 255, 10000d)
-        .For(() => bar.OriginRGB.G),
-    new IntAnimation(128, 255, 10000d)
-        .For(() => bar.OriginRGB.B)
-    )
-     .Target(bar.OriginRGB);
+    var anims =
+        new AnimationGroup(
+            new IntAnimation(0, 255, 2000d)
+                .For(() => bar.OriginRGB.R),
+            new IntAnimation(0, 255, 2000d)
+                .For(() => bar.OriginRGB.G),
+            new IntAnimation(128, 255, 2000d)
+                .For(() => bar.OriginRGB.B))
+         .Target(bar.OriginRGB);
 
     var anim = new Animation()
         .Add(

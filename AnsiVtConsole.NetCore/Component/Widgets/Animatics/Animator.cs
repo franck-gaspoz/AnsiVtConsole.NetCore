@@ -93,7 +93,14 @@ sealed class Animator
 #if DEBUG
                     Dbg($"animate tick {_tick} position {position} : {animation} # {DateStr(DateTime.Now)} (-> {DateStr(_timeLineEndTime!.Value)})");
 #endif
-                    animation.SetValueAt(position);
+                    animation.SetValueAt(
+                        Math.Min(
+                            animation.Duration, position));
+
+                    if (position > animation.Duration)
+                    {
+
+                    }
                 }
 
                 _tick++;
@@ -108,7 +115,7 @@ sealed class Animator
 
                 var wait = Math.Max(0, _timeLapse - animationDuration);
 
-                Thread.Sleep((int)_timeLapse);
+                Thread.Sleep((int)wait);
 
             }
 
