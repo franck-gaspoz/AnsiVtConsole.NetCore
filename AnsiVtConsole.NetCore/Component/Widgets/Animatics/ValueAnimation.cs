@@ -168,17 +168,17 @@ public abstract class ValueAnimation<T> : IAnimation
     /// <inheritdoc/>
     public void SetValueAt(double position, bool reverse)
     {
-        var to = reverse ? From : To;
-        var from = reverse ? To : From;
-        var toBack = To;
-        var fromBack = From;
-        To = to;
-        From = from;
+        var to = reverse ? From! : To!;
+        var from = reverse ? To! : From!;
+        var toBack = To!;
+        var fromBack = From!;
+        To = to!;
+        From = from!;
 
         SetValueAt(position);
 
-        To = toBack;
-        From = fromBack;
+        To = toBack!;
+        From = fromBack!;
     }
 
     /// <inheritdoc/>

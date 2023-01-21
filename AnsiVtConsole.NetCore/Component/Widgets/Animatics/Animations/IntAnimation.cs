@@ -30,7 +30,4 @@ public sealed class IntAnimation : ValueAnimation<int>
                 * (position / Duration)
             + From
         ));
-
-    /// <inheritdoc/>
-    public abstract T GetInitialValue();
 }
