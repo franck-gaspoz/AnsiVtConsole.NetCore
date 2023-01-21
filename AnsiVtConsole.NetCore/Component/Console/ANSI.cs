@@ -142,7 +142,7 @@ namespace AnsiVtConsole.NetCore.Component.Console
         public static string CUP(int column = 1, int row = 1) => $"{CSI}{row};{column}H";
 
         /// <summary>
-        /// Horizontal Vertical Position
+        /// Horizontal Vertical Position - Same as CUP, but counts as a format effector function (like CR or LF) rather than an editor function (like CUD or CNL). This can lead to different handling in certain terminal modes
         /// </summary>
         /// <param name="row">row index (origin 1)</param>
         /// <param name="column">column index (origin 1)</param>
@@ -234,6 +234,18 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <param name="n">ELparameter</param>
         /// <returns>ansi seq</returns> 
         public static string EL(ELParameter n) => $"{CSI}{(int)n}K";
+
+        /// <summary>
+        /// show the cursor from vt 220
+        /// </summary>
+        /// <returns></returns>
+        public static string DECTCEMShow => $"{CSI}?25h";
+
+        /// <summary>
+        /// hide the cursor from vt 220
+        /// </summary>
+        /// <returns></returns>
+        public static string DECTCEMHide => $"{CSI}?25l";
 
         #endregion
 

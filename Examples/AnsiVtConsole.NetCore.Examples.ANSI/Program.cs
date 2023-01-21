@@ -5,10 +5,6 @@ using System.Text;
 using AnsiVtConsole.NetCore;
 using AnsiVtConsole.NetCore.Component.Console;
 using AnsiVtConsole.NetCore.Component.Parser.ANSI;
-using AnsiVtConsole.NetCore.Component.Widgets.Animatics;
-using AnsiVtConsole.NetCore.Component.Widgets.Animatics.Animations;
-using AnsiVtConsole.NetCore.Component.Widgets.Text.Raimbow;
-using AnsiVtConsole.NetCore.Imaging.Component.Widgets.Images;
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 using static AnsiVtConsole.NetCore.Component.Console.Unicode;
@@ -215,54 +211,14 @@ void Title(IAnsiVtConsole console)
   | - || ' \ (_-/| | \   / |  _|| (__ / _ \| ' \ (_-// _ \| |/ -_)  _    | .  |/ -_)|  _|| (__ / _ \| '_|/ -_)  
   |_|_||_||_|/__/|_|  \_/   \__| \___|\___/|_||_|/__/\___/|_|\___| (_)   |_|\_|\___| \__| \___|\___/|_|  \___|  
 ";
-
-    RaimbowText RaimbowText(string str)
-        => new RaimbowText(str)
-            .Origin(0, 0, 128)
-            .CyclicGradient(4, 9, 14)
-            .Add(console);
-
-    var title = RaimbowText(str);
-
-    RaimbowText($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}");
-
+    console.Out.WriteLine($"(bkf,f=white){str}(rsf,tdoff)");
+    console.Out.WriteLine($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}");
     console.Out.WriteLine();
 
-    var bar = RaimbowText("".PadLeft(113, '─'));
+    console.Out.WriteLine("".PadLeft(113, '─'));
 
     console.Out.WriteLine();
     console.Out.WriteLine();
-
-    var img1 = new Image("assets/smiley.png", 32, 16, false, (x, y, c) => "☻")
-        .Add(console);
-
-    console.Out.SetCursorPos(img1.Width!.Value, img1.Y);
-
-    var img2 = new Image("assets/smiley.png", 16, 16)
-        .Add(console);
-
-    var anims =
-        new AnimationGroup(
-            new IntAnimation(0, 255, 2000d)
-                .For(() => bar.OriginRGB.R),
-            new IntAnimation(0, 255, 2000d)
-                .For(() => bar.OriginRGB.G),
-            new IntAnimation(128, 255, 2000d)
-                .For(() => bar.OriginRGB.B))
-         .Target(bar.OriginRGB);
-
-    var anim = new Animation()
-        .Add(
-            new TimeLine()
-                .Loop()
-                .AutoReverse()
-                .Add(anims)
-                .Update(bar)
-            )
-        .Start()
-        .Wait();
-
-    console.Exit();
 }
 
 void AnsiColorTest(IAnsiVtConsole console)
