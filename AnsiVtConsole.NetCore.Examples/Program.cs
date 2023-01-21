@@ -259,9 +259,8 @@ void Title(IAnsiVtConsole console)
                 .Add(anims)
                 .Update(bar)
             )
-        .Start();
-
-    anim.Wait();
+        .Start()
+        .Wait();
 
     console.Exit();
 }

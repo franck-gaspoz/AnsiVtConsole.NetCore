@@ -51,7 +51,8 @@ sealed class Animator
     /// </summary>
     public void Stop()
     {
-        if (_end) _end = false;
+        _end = true;
+        IsRunning = false;
         OnStop?.Invoke(this, EventArgs.Empty);
         _thread = null;
     }
@@ -81,7 +82,7 @@ sealed class Animator
         var reverse = false;
         var reverseCount = 0;
 
-        while (_timeLineIndex < _animation.TimeLines.Count)
+        while (IsRunning && _timeLineIndex < _animation.TimeLines.Count)
         {
             Start(reverse, _animation.TimeLines[_timeLineIndex]);
 
