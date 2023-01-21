@@ -36,12 +36,6 @@ public abstract class ValueAnimation<T> : IAnimation
     public Easing Easing { get; private set; }
 
     /// <inheritdoc/>
-    public bool IsLoop { get; private set; }
-
-    /// <inheritdoc/>
-    public bool IsAutoReverse { get; private set; }
-
-    /// <inheritdoc/>
     TValue? IAnimation.Value<TValue>()
         where TValue : class
             => Value as TValue;
@@ -103,6 +97,7 @@ public abstract class ValueAnimation<T> : IAnimation
         To = to;
         Duration = duration;
         Easing = easing ?? new Linear();
+        SetInitialValue();
     }
 
     /// <inheritdoc/>
@@ -170,28 +165,34 @@ public abstract class ValueAnimation<T> : IAnimation
         return this;
     }
 
-    /// <summary>
-    /// enable loop
-    /// </summary>
-    /// <returns>this object</returns>
-    public IAnimation Loop()
+    /// <inheritdoc/>
+    public void SetValueAt(double position, bool reverse)
     {
-        IsLoop = true;
-        return this;
-    }
+        var to = reverse ? From : To;
+        var from = reverse ? To : From;
+        var toBack = To;
+        var fromBack = From;
+        To = to;
+        From = from;
 
-    /// <summary>
-    /// enable auto reverse
-    /// </summary>
-    /// <returns>this object</returns>
-    public IAnimation AutoReverse()
-    {
-        IsAutoReverse = true;
-        return this;
+        SetValueAt(position);
+
+        To = toBack;
+        From = fromBack;
     }
 
     /// <inheritdoc/>
     public abstract void SetValueAt(double position);
+
+    /// <inheritdoc/>
+    protected void SetInitialValue()
+    {
+        if (_propertyInfo is null)
+            throw new InvalidDataException("property is not defined");
+
+        foreach (var target in _targets)
+            From = GetValue(_propertyInfo, target);
+    }
 
     /// <summary>
     /// set value of target
@@ -211,4 +212,7 @@ public abstract class ValueAnimation<T> : IAnimation
 
     static void SetValue(PropertyInfo propertyInfo, object target, T value)
         => propertyInfo.SetValue(target, value);
+
+    static T? GetValue(PropertyInfo propertyInfo, object target)
+        => (T?)propertyInfo.GetValue(target);
 }

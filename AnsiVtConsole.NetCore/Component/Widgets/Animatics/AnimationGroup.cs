@@ -3,7 +3,7 @@
 namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 
 /// <summary>
-/// value animation group
+/// value animation group - usefull to setup properties for a set of animations in one time
 /// </summary>
 public sealed class AnimationGroup
 {
@@ -54,28 +54,6 @@ public sealed class AnimationGroup
     {
         foreach (var anim in _animations)
             anim.Target(targets);
-        return this;
-    }
-
-    /// <summary>
-    /// enable loop
-    /// </summary>
-    /// <returns>this object</returns>
-    public AnimationGroup Loop()
-    {
-        foreach (var anim in _animations)
-            anim.Loop();
-        return this;
-    }
-
-    /// <summary>
-    /// enable auto reverse
-    /// </summary>
-    /// <returns>this object</returns>
-    public AnimationGroup AutoReverse()
-    {
-        foreach (var anim in _animations)
-            anim.AutoReverse();
         return this;
     }
 }

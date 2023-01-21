@@ -2,7 +2,8 @@
 
 /// <summary>
 /// animation
-/// <para>run concurrent values animations grouped in time lines</para>
+/// <para>run parallely values animations grouped in one time line</para>
+/// <para>run sequencially times lines</para>
 /// </summary>
 public sealed class Animation
 {

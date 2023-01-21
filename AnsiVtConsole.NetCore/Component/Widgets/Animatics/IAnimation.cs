@@ -90,30 +90,18 @@ public interface IAnimation
     public Easing Easing { get; }
 
     /// <summary>
-    /// is cyclic
+    /// set the value for any position in the animation time line
     /// </summary>
-    bool IsLoop { get; }
-
-    /// <summary>
-    /// auto reverse or not when cyclic
-    /// </summary>
-    bool IsAutoReverse { get; }
-
-    /// <summary>
-    /// enable loop
-    /// </summary>
-    /// <returns>this object</returns>
-    IAnimation Loop();
-
-    /// <summary>
-    /// enable auto reverse
-    /// </summary>
-    /// <returns>loop</returns>
-    IAnimation AutoReverse();
+    /// <param name="position">position (ms)</param>
+    /// <param name="reverse">timeline playing in reverse</param>
+    abstract void SetValueAt(
+        double position,
+        bool reverse);
 
     /// <summary>
     /// set the value for any position in the animation time line
     /// </summary>
     /// <param name="position">position (ms)</param>
     abstract void SetValueAt(double position);
+
 }
