@@ -31,4 +31,10 @@ public interface IWidget
     /// update the display of the widget previously attached to a console (already rendered)
     /// </summary>
     void Update(bool shouldHideCursor = true);
+
+    /// <summary>
+    /// set parent widget
+    /// </summary>
+    /// <param name="parent">parent</param>
+    void SetParent(IWidget parent);
 }

@@ -4,12 +4,12 @@ using AnsiVtConsole.NetCore.Component.Widgets.Models;
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 
-namespace AnsiVtConsole.NetCore.Component.Widgets.Text.Raimbow;
+namespace AnsiVtConsole.NetCore.Component.Widgets.Texts.Raimbows;
 
 /// <summary>
 /// raimbow text
 /// </summary>
-public class RaimbowText : TextWidget
+public sealed class Raimbow : Widget<Raimbow>
 {
     /// <summary>
     /// origin RGB of the gradient
@@ -26,13 +26,13 @@ public class RaimbowText : TextWidget
     /// </summary>
     public Rgb DRgb { get; private set; } = new(4, 9, 14);
 
-    /// <inheritdoc/>
-    public RaimbowText(string text) : base(text) { }
-
     readonly StringBuilder _sb = new();
 
     /// <inheritdoc/>
-    public RaimbowText(IWidget wrappedWidget)
+    public Raimbow(string text) : base(new Text(text)) { }
+
+    /// <inheritdoc/>
+    public Raimbow(IWidget wrappedWidget)
         : base(wrappedWidget) { }
 
     /// <summary>
@@ -42,7 +42,7 @@ public class RaimbowText : TextWidget
     /// <param name="g">oring G of the gradient</param>
     /// <param name="b">oring B of the gradient</param>
     /// <returns>this object</returns>
-    public RaimbowText Origin(int r, int g, int b)
+    public Raimbow Origin(int r, int g, int b)
     {
         OriginRGB = new(r, g, b);
         return this;
@@ -53,7 +53,7 @@ public class RaimbowText : TextWidget
     /// </summary>
     /// <param name="rgb">rgb</param>
     /// <returns>this object</returns>
-    public RaimbowText Origin(Rgb rgb)
+    public Raimbow Origin(Rgb rgb)
     {
         OriginRGB = rgb;
         return this;
@@ -66,7 +66,7 @@ public class RaimbowText : TextWidget
     /// <param name="dg">delta G</param>
     /// <param name="db">detla B</param>
     /// <returns>this object</returns>
-    public RaimbowText CyclicGradient(int dr, int dg, int db)
+    public Raimbow CyclicGradient(int dr, int dg, int db)
     {
         DRgb = new(dr, dg, db);
         return this;
@@ -77,20 +77,18 @@ public class RaimbowText : TextWidget
     /// </summary>
     /// <param name="rgb">rgb</param>
     /// <returns>this object</returns>
-    public RaimbowText CyclicGradient(Rgb rgb)
+    public Raimbow CyclicGradient(Rgb rgb)
     {
         DRgb = rgb;
         return this;
     }
 
     /// <inheritdoc/>
-    protected override string RenderWidget()
+    protected override string RenderWidget(string render)
     {
         _sb.Clear();
-        if (Text is null)
-            return string.Empty;
 
-        var t = Text!.ToCharArray();
+        var t = render!.ToCharArray();
         foreach (var c in t)
         {
             if (c == '\n')

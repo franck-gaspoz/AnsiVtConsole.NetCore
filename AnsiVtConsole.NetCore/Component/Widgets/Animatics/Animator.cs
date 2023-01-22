@@ -126,6 +126,9 @@ sealed class Animator
 
                 var wait = Math.Max(0, _timeLapse - frameDuration);
 
+#if DEBUG
+                Debug.WriteLine($"frame: duration={frameDuration} ms | time lapse = {_timeLapse} ms | wait = {wait} ms");
+#endif
                 Thread.Sleep((int)wait);
             }
 

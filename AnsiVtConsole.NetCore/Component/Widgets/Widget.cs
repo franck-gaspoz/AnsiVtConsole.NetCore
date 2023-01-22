@@ -40,10 +40,25 @@ public abstract class Widget<T> : IWidget
     public IWidget? WrappedWidget { get; private set; }
 
     /// <summary>
+    /// parent widget
+    /// </summary>
+    public IWidget? Parent { get; private set; }
+
+    /// <summary>
     /// widget
     /// </summary>
     public Widget(IWidget? wrappedWidget = null)
-        => WrappedWidget = wrappedWidget;
+    {
+        if (wrappedWidget is not null)
+        {
+            WrappedWidget = wrappedWidget;
+            WrappedWidget.SetParent(this);
+        }
+    }
+
+    /// <inheritdoc/>
+    public void SetParent(IWidget parent)
+        => Parent = parent;
 
     /// <summary>
     /// widget at a fixed location
@@ -52,17 +67,6 @@ public abstract class Widget<T> : IWidget
     /// <param name="y">cursor y</param>
     public Widget(int x, int y)
         => (X, Y) = (x, y);
-
-    /// <summary>
-    /// render the widget
-    /// </summary>
-    /// <param name="console">the console to render to</param>
-    /// <param name="render">any render when no wrapped widget</param>
-    /// <returns>the render of the widget</returns>
-    protected string RenderFor(IAnsiVtConsole console, string? render = null)
-        => ManagedRender(WrappedWidget is not null
-            ? WrappedWidget.Render(console)
-            : render ?? string.Empty);
 
     /// <inheritdoc/>
     public string Render(IAnsiVtConsole console)
@@ -73,7 +77,8 @@ public abstract class Widget<T> : IWidget
                 Console = console;
             var render = WrappedWidget is null ?
                 RenderWidget()
-                : WrappedWidget.Render(console);
+                : RenderWidget(
+                    WrappedWidget.Render(console));
             return ManagedRender(render);
         }
     }
@@ -99,10 +104,18 @@ public abstract class Widget<T> : IWidget
     }
 
     /// <summary>
-    /// render the widget itself without context or wrapping considerations
+    /// render a widget that has not wrapper widget content
     /// </summary>
-    /// <returns>the render of the widget itself</returns>
-    protected abstract string RenderWidget();
+    /// <returns>the render of the widget</returns>
+    protected virtual string RenderWidget()
+        => throw new NotImplementedException();
+
+    /// <summary>
+    /// render a widget that wraps a widget content
+    /// </summary>
+    /// <returns>the render of the widget</returns>
+    protected virtual string RenderWidget(string render)
+        => throw new NotImplementedException();
 
     /// <summary>
     /// render for any widget
@@ -111,10 +124,13 @@ public abstract class Widget<T> : IWidget
     /// <returns>rendered widget</returns>
     protected string ManagedRender(string render)
     {
-        render = Widget<T>.BackupColors + render;
-        if (X != -1 && Y != -1)
-            render = CUP(X + 1, Y + 1) + render;
-        render += Widget<T>.RestoreColors;
+        if (Parent == null)
+        {
+            render = Widget<T>.BackupColors + render;
+            if (X != -1 && Y != -1)
+                render = CUP(X + 1, Y + 1) + render;
+            render += Widget<T>.RestoreColors;
+        }
         return render;
     }
 
