@@ -26,6 +26,11 @@ public sealed class Raimbow : Widget<Raimbow>
     /// </summary>
     public Rgb DRgb { get; private set; } = new(4, 9, 14);
 
+    /// <summary>
+    /// text
+    /// </summary>
+    public Text Text => (Text)WrappedWidget!;
+
     readonly StringBuilder _sb = new();
 
     /// <inheritdoc/>

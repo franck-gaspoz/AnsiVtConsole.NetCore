@@ -2,6 +2,7 @@
 
 using AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 using AnsiVtConsole.NetCore.Component.Widgets.Animatics.Animations;
+using AnsiVtConsole.NetCore.Component.Widgets.Bars;
 using AnsiVtConsole.NetCore.Component.Widgets.Texts.Raimbows;
 
 namespace AnsiVtConsole.NetCore.Examples.Widgets.Pages;
@@ -18,12 +19,14 @@ sealed class Title : DemoPage
   | - || ' \ (_-/| | \   / |  _|| (__ / _ \| ' \ (_-// _ \| |/ -_)  _    | .  |/ -_)|  _|| (__ / _ \| '_|/ -_)  
   |_|_||_||_|/__/|_|  \_/   \__| \___|\___/|_||_|/__/\___/|_|\___| (_)   |_|\_|\___| \__| \___|\___/|_|  \___|  
 ";
-
-        Raimbow RaimbowText(string str)
-            => new Raimbow(str)
+        Raimbow Setup(Raimbow raimbow)
+            => raimbow
                 .Origin(0, 0, 128)
                 .CyclicGradient(4, 9, 14)
                 .Add(_);
+
+        Raimbow RaimbowText(string str)
+            => Setup(new Raimbow(str));
 
         var title = RaimbowText(str);
 
@@ -31,7 +34,8 @@ sealed class Title : DemoPage
 
         _.Out.WriteLine();
 
-        var bar = RaimbowText("".PadLeft(113, '─'));
+        var bar = new RaimbowBar(113);
+        Setup(bar.Raimbow);
 
         _.Out.WriteLine();
         _.Out.WriteLine();
@@ -39,12 +43,12 @@ sealed class Title : DemoPage
         var anims =
             new AnimationGroup(
                 new IntAnimation(0, 255, 2000d)
-                    .For(() => bar.OriginRGB.R),
+                    .For(() => bar.Raimbow.OriginRGB.R),
                 new IntAnimation(0, 255, 2000d)
-                    .For(() => bar.OriginRGB.G),
+                    .For(() => bar.Raimbow.OriginRGB.G),
                 new IntAnimation(128, 255, 2000d)
-                    .For(() => bar.OriginRGB.B))
-             .Target(bar.OriginRGB);
+                    .For(() => bar.Raimbow.OriginRGB.B))
+             .Target(bar.Raimbow.OriginRGB);
 
         Animation = new Animation()
             .Add(

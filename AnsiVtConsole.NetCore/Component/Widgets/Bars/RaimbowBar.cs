@@ -12,6 +12,11 @@ public sealed class RaimbowBar : Widget<RaimbowBar>
     /// </summary>
     public char BarChar { get; private set; } = DefaultBarChar;
 
+    /// <summary>
+    /// raimbow
+    /// </summary>
+    public Raimbow Raimbow => (Raimbow)WrappedWidget!;
+
     const char DefaultBarChar = '─';
 
     /// <summary>
