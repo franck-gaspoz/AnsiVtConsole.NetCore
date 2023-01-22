@@ -22,13 +22,12 @@ sealed class Title : DemoPage
         Raimbow Setup(Raimbow raimbow)
             => raimbow
                 .Origin(0, 0, 128)
-                .CyclicGradient(4, 9, 14)
-                .Add(_);
+                .CyclicGradient(4, 9, 14);
 
         Raimbow RaimbowText(string str)
             => Setup(new Raimbow(str));
 
-        var title = RaimbowText(str);
+        var title = RaimbowText(str).Add(_);
 
         RaimbowText($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}");
 
@@ -36,6 +35,7 @@ sealed class Title : DemoPage
 
         var bar = new RaimbowBar(113);
         Setup(bar.Raimbow);
+        bar.Add(_);
 
         _.Out.WriteLine();
         _.Out.WriteLine();

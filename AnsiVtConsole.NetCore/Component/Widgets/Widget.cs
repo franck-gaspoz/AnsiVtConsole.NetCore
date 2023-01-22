@@ -87,7 +87,7 @@ public abstract class Widget<T> : IWidget
     public void Update(bool shouldHideCursor = true)
     {
         if (Console is null)
-            throw new InvalidOperationException("console is null");
+            throw new InvalidOperationException("widget is not attached to a console");
 
         lock (Console.Out.Lock)
         {
@@ -141,6 +141,9 @@ public abstract class Widget<T> : IWidget
     /// <returns>this object</returns>
     public T Add(IAnsiVtConsole console)
     {
+        if (Parent is not null)
+            throw new InvalidOperationException("a widget that has a parent must not be added to a console. Only the root parent must be added");
+
         lock (console.Out.Lock)
         {
             if (_notRendered)
