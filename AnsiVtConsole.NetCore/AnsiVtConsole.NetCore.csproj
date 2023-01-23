@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<AssemblyVersion>1.0.20.0</AssemblyVersion>
-	<FileVersion>1.0.20.0</FileVersion>
+	<AssemblyVersion>1.0.21.0</AssemblyVersion>
+	<FileVersion>1.0.21.0</FileVersion>
 	  
     <RootNamespace>AnsiVtConsole.NetCore</RootNamespace>
     <AssemblyName>AnsiVtConsole.NetCore</AssemblyName>    
@@ -20,21 +20,15 @@
     <Product>AnsiVtConsole.NetCore</Product>
     <Description>ANSI VT console library for .Net Core system console</Description>
     <Copyright>(c) Franck Gaspoz 2023 Licence MIT</Copyright>
-    <Version>1.0.20</Version>
-    <InformationalVersion>1.0.20</InformationalVersion>
+    <Version>1.0.21</Version>
+    <InformationalVersion>1.0.21</InformationalVersion>
     <DebugType>embedded</DebugType>
 	<EmbedAllSources>True</EmbedAllSources>
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	  
 	<PackageReleaseNotes>
-1.0.20 - 21-1-2023
-- animated widgets
-- properties animator
-- widgets: text, type writer,gradient,dra
-- widget image in a separated project AnsiVtConsole.NetCore.Imaging using SkiaSharp
-- examples projects
-- fluent methods for ContextTextWriterWrapper
-- doc update
+1.0.21 - 24-1-2023
+- ...
 	</PackageReleaseNotes>
 	<PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</RepositoryUrl>

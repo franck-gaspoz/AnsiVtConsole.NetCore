@@ -35,8 +35,8 @@ The library provides functionalities needed to build console applications runnin
 download the nuget from command line or add it from Visual Studio
 
 ``` dos
-@rem version 1.0.20 or any new one
-dotnet add package AnsiVtConsole.NetCore --version 1.0.20
+@rem version 1.0.21 or any new one
+dotnet add package AnsiVtConsole.NetCore --version 1.0.21
 ```
 
 > **Note**
@@ -296,10 +296,13 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 # Version history
 
+`1.0.21` - 24-1-2023
+- ..
+
 `1.0.20` - 23-1-2023
 - animated widgets
 - properties animator
-- widgets: text, type writer,gradient,dra
+- widgets: text,type writer,gradient,gradient bar,text timer
 - widget image in a separated project AnsiVtConsole.NetCore.Imaging using SkiaSharp
 - examples projects
 - fluent methods for ContextTextWriterWrapper

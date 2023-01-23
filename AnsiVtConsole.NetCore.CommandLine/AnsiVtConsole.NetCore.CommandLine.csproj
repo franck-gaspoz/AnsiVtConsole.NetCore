@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<OutputType>Exe</OutputType>
-	<AssemblyVersion>1.0.20.0</AssemblyVersion>
-	<FileVersion>1.0.20.0</FileVersion>
+	<AssemblyVersion>1.0.21.0</AssemblyVersion>
+	<FileVersion>1.0.21.0</FileVersion>
 	  
     <RootNamespace>AnsiVtConsole.NetCore.CommandLine</RootNamespace>
     <AssemblyName>AnsiVtConsole.NetCore.CommandLine</AssemblyName>    
