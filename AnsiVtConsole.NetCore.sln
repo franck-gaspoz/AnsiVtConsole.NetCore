@@ -34,11 +34,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnsiVtConsole.NetCore.Comma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnsiVtConsole.NetCore.Imaging", "AnsiVtConsole.NetCore.Imaging\AnsiVtConsole.NetCore.Imaging.csproj", "{C4E2C3AA-A537-4A05-A1D7-797D4A3ACA0E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{0D05B5BF-FF01-4EEE-8D51-CD4314E887AE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnsiVtConsole.NetCore.Examples.ANSI", "Examples\AnsiVtConsole.NetCore.Examples.ANSI\AnsiVtConsole.NetCore.Examples.ANSI.csproj", "{5B5E526B-0478-402F-AC79-41F3C83ED873}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnsiVtConsole.NetCore.Examples.Widgets", "Examples\AnsiVtConsole.NetCore.Examples.Widgets\AnsiVtConsole.NetCore.Examples.Widgets.csproj", "{6FC00B92-6BAE-4B32-A898-7E8D56701517}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{C4E95C5A-8158-48EB-89FA-5376B7FC1797}"
+	ProjectSection(SolutionItems) = preProject
+		Examples\AnsiVtConsole.NetCore.Examples.ANSI\AnsiVtConsole.NetCore.Examples.ANSI.csproj = Examples\AnsiVtConsole.NetCore.Examples.ANSI\AnsiVtConsole.NetCore.Examples.ANSI.csproj
+		Examples\AnsiVtConsole.NetCore.Examples.Widgets\AnsiVtConsole.NetCore.Examples.Widgets.csproj = Examples\AnsiVtConsole.NetCore.Examples.Widgets\AnsiVtConsole.NetCore.Examples.Widgets.csproj
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,31 +72,12 @@ Global
 		{C4E2C3AA-A537-4A05-A1D7-797D4A3ACA0E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C4E2C3AA-A537-4A05-A1D7-797D4A3ACA0E}.Release|x86.ActiveCfg = Release|Any CPU
 		{C4E2C3AA-A537-4A05-A1D7-797D4A3ACA0E}.Release|x86.Build.0 = Release|Any CPU
-		{5B5E526B-0478-402F-AC79-41F3C83ED873}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B5E526B-0478-402F-AC79-41F3C83ED873}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B5E526B-0478-402F-AC79-41F3C83ED873}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5B5E526B-0478-402F-AC79-41F3C83ED873}.Debug|x86.Build.0 = Debug|Any CPU
-		{5B5E526B-0478-402F-AC79-41F3C83ED873}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B5E526B-0478-402F-AC79-41F3C83ED873}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B5E526B-0478-402F-AC79-41F3C83ED873}.Release|x86.ActiveCfg = Release|Any CPU
-		{5B5E526B-0478-402F-AC79-41F3C83ED873}.Release|x86.Build.0 = Release|Any CPU
-		{6FC00B92-6BAE-4B32-A898-7E8D56701517}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FC00B92-6BAE-4B32-A898-7E8D56701517}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FC00B92-6BAE-4B32-A898-7E8D56701517}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6FC00B92-6BAE-4B32-A898-7E8D56701517}.Debug|x86.Build.0 = Debug|Any CPU
-		{6FC00B92-6BAE-4B32-A898-7E8D56701517}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FC00B92-6BAE-4B32-A898-7E8D56701517}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6FC00B92-6BAE-4B32-A898-7E8D56701517}.Release|x86.ActiveCfg = Release|Any CPU
-		{6FC00B92-6BAE-4B32-A898-7E8D56701517}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5F978492-9C45-40F3-9D70-B3283498F57D} = {196A14D8-B446-482A-8B5E-9CD986A0C5A3}
-		{0D05B5BF-FF01-4EEE-8D51-CD4314E887AE} = {196A14D8-B446-482A-8B5E-9CD986A0C5A3}
-		{5B5E526B-0478-402F-AC79-41F3C83ED873} = {0D05B5BF-FF01-4EEE-8D51-CD4314E887AE}
-		{6FC00B92-6BAE-4B32-A898-7E8D56701517} = {0D05B5BF-FF01-4EEE-8D51-CD4314E887AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8B5B602-B2FB-4A96-9DA0-5085D1844222}
