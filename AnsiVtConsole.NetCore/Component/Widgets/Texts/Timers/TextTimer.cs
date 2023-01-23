@@ -46,11 +46,11 @@ public sealed class TextTimer : AnimatedWidget<TextTimer, AnimatedOptionsBuilder
     static string DefaultDurationToString(TimeSpan duration)
     {
         var r = string.Empty;
-        if (duration.TotalDays > 0) r += duration.TotalDays + " day ";
-        if (duration.TotalHours > 0) r += duration.TotalHours + " h ";
-        if (duration.TotalMinutes > 0) r += duration.TotalMinutes + " min ";
-        if (duration.TotalSeconds > 0) r += duration.TotalSeconds + " s ";
-        if (duration.TotalMilliseconds > 0) r += duration.TotalMilliseconds + "ms";
+        if (duration.Days > 0) r += duration.Days + " day ";
+        if (duration.Hours > 0) r += duration.Hours + " h ";
+        if (duration.Minutes > 0) r += duration.Minutes + " min ";
+        if (duration.Seconds > 0) r += duration.Seconds + " s ";
+        if (duration.Milliseconds > 0) r += duration.Milliseconds + "ms";
         return r;
     }
 
@@ -60,11 +60,15 @@ public sealed class TextTimer : AnimatedWidget<TextTimer, AnimatedOptionsBuilder
     /// <inheritdoc/>
     protected override void RunOperation()
     {
-        var remaining = _endTime < DateTime.Now ? TimeSpan.FromSeconds(0)
+        var remaining = DateTime.Now >= _endTime ? TimeSpan.FromSeconds(0)
             : _endTime!.Value - DateTime.Now;
         Text.Value = string.Format(_pattern, DurationToString(remaining));
     }
 
     /// <inheritdoc/>
     protected override void StartInit() => _endTime = DateTime.Now + Duration;
+
+    /// <inheritdoc/>
+    protected override string RenderWidget(string render)
+        => render;
 }

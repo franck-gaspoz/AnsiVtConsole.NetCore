@@ -121,7 +121,7 @@ public abstract class Widget<WidgetType, OptionsBuilderType> : IWidget
     }
 
     /// <summary>
-    /// render a widget that has not wrapper widget content
+    /// render a widget that has not wrapped widget content
     /// </summary>
     /// <returns>the render of the widget</returns>
     protected virtual string RenderWidget()
