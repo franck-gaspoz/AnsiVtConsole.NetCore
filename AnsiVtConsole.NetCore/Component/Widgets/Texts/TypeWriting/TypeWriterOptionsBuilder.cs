@@ -3,7 +3,7 @@
 /// <summary>
 /// type options writer builder
 /// </summary>
-public sealed class TypeWriterOptionsBuilder : OptionsBuilder<TypeWriter>
+public sealed class TypeWriterOptionsBuilder : AnimatedOptionsBuilder<TypeWriter>
 {
     /// <summary>
     /// type writer options builder
@@ -20,17 +20,6 @@ public sealed class TypeWriterOptionsBuilder : OptionsBuilder<TypeWriter>
     public TypeWriterOptionsBuilder Cursor(string cursor)
     {
         Widget.SetCursor(cursor);
-        return this;
-    }
-
-    /// <summary>
-    /// cursor
-    /// </summary>
-    /// <param name="cps">cps</param>
-    /// <returns>this object</returns>
-    public TypeWriterOptionsBuilder Cps(double cps)
-    {
-        Widget.SetCps(cps);
         return this;
     }
 

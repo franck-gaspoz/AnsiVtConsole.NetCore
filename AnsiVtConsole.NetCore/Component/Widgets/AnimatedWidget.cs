@@ -6,7 +6,7 @@
 public abstract class AnimatedWidget<WidgetType, OptionsBuilderType>
         : Widget<WidgetType, OptionsBuilderType>, IAnimatedWidget
     where WidgetType : class, IAnimatedWidget
-    where OptionsBuilderType : OptionsBuilder<WidgetType>
+    where OptionsBuilderType : AnimatedOptionsBuilder<WidgetType>
 {
     /// <summary>
     /// frames per seconds
@@ -18,13 +18,28 @@ public abstract class AnimatedWidget<WidgetType, OptionsBuilderType>
     /// </summary>
     public bool IsRunning { get; private set; }
 
-    /// <inheritdoc/>
-    public AnimatedWidget(IWidget? wrappedWidget = null)
-        : base(wrappedWidget) { }
+    /// <summary>
+    /// animated widget
+    /// </summary>
+    /// <param name="fps">frames per seconds</param>
+    /// <param name="wrappedWidget">wrapped widget</param>
+    public AnimatedWidget(
+        double fps,
+        IWidget? wrappedWidget = null)
+        : base(wrappedWidget) => SetFPS(fps);
 
-    /// <inheritdoc/>
-    public AnimatedWidget(int x, int y)
-        : base(x, y) { }
+    /// <summary>
+    /// widget at a fixed location
+    /// </summary>
+    /// <param name="fps">frames per seconds</param>
+    /// <param name="x">cursor x</param>
+    /// <param name="y">cursor y</param>
+    public AnimatedWidget(
+        double fps,
+        int x,
+        int y)
+        : base(x, y)
+        => SetFPS(fps);
 
     int _timeLapse => (int)(1d / FPS * 1000d);
 

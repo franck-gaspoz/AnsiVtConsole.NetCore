@@ -1,7 +1,7 @@
 ﻿namespace AnsiVtConsole.NetCore.Component.Widgets.Texts.TypeWriting;
 
 /// <summary>
-/// type wrtier
+/// type writer
 /// </summary>
 public sealed class TypeWriter : AnimatedWidget<TypeWriter, TypeWriterOptionsBuilder>
 {
@@ -29,15 +29,14 @@ public sealed class TypeWriter : AnimatedWidget<TypeWriter, TypeWriterOptionsBui
     /// type writer
     /// </summary>
     /// <param name="text">text</param>
-    /// <param name="cps">charcacters per seconds</param>
+    /// <param name="fps">frames per second</param>
     /// <param name="cursor">cursor</param>
     public TypeWriter(
         string text,
-        double cps,
+        double fps,
         string? cursor = null)
-        : base(new Text(string.Empty))
+        : base(fps, new Text(string.Empty))
     {
-        SetFPS(cps);
         Cursor = cursor;
         Value = text;
     }
@@ -67,18 +66,6 @@ public sealed class TypeWriter : AnimatedWidget<TypeWriter, TypeWriterOptionsBui
             + (_charIndex < _rawStr.Length ?
                 GetCursor()
                 : string.Empty);
-    }
-
-    /// <summary>
-    /// set the cps
-    /// </summary>
-    /// <param name="cps">cps</param>
-    /// <returns>this object</returns>
-    public TypeWriter SetCps(double cps)
-    {
-        AssertNotRunning();
-        SetFPS(cps);
-        return this;
     }
 
     /// <summary>

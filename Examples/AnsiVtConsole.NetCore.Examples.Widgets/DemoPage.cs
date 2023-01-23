@@ -1,4 +1,5 @@
-﻿using AnsiVtConsole.NetCore.Component.Widgets.Texts.TypeWriting;
+﻿using AnsiVtConsole.NetCore.Component.Widgets.Texts.Timers;
+using AnsiVtConsole.NetCore.Component.Widgets.Texts.TypeWriting;
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 
@@ -38,5 +39,13 @@ abstract class DemoPage
     protected void SubTitle(string text)
         => _!.Out.WriteLine($"(bkf,f=white){text}(rsf,br)");
 
-    protected void PleaseWait(int waitForNextPage) => _!.Out.WriteLine($"(br,br,bkf,f=yellow)►►► This page will automatically update in {waitForNextPage} seconds...(rsf)");
+    protected void PleaseWait(int waitForNextPage)
+        => new TextTimer(
+            "(br,br,bkf,f=yellow)►►► This page will automatically update in {0} seconds...(rsf)",
+            2,
+            TimeSpan.FromSeconds(waitForNextPage))
+            .Add(_!);
+
+    protected void PleaseWait0(int waitForNextPage)
+        => _!.Out.WriteLine($"(br,br,bkf,f=yellow)►►► This page will automatically update in {waitForNextPage} seconds...(rsf)");
 }
