@@ -28,8 +28,12 @@
 	  
 	<PackageReleaseNotes>
 1.0.20 - 21-1-2023
-- widget animation
-- widget image (project AnsiVtConsole.NetCore.Imaging)
+- animated widgets
+- properties animator
+- widgets: text, type writer,gradient,dra
+- widget image in a separated project AnsiVtConsole.NetCore.Imaging using SkiaSharp
+- fluent methods for ContextTextWriterWrapper
+- doc update
 	</PackageReleaseNotes>
 	<PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</RepositoryUrl>

@@ -275,6 +275,10 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 ![title](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/title.png "title")  
 
+example of an **Image** widget. This widget is delivered in the package: [AnsiVtConsole.NetCore.Imaging](https://www.nuget.org/packages/AnsiVtConsole.NetCore/))
+
+![example7](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example7.png "example7")
+
 
 
 ## project `AnsiConsole.NetCore.Examples.ANSI`
@@ -297,6 +301,8 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 - properties animator
 - widgets: text, type writer,gradient,dra
 - widget image in a separated project AnsiVtConsole.NetCore.Imaging using SkiaSharp
+- fluent methods for ContextTextWriterWrapper
+- doc update
 
 `1.0.19` - 17-1-2023
 - add **widgets** feature + RaimbowText widget
