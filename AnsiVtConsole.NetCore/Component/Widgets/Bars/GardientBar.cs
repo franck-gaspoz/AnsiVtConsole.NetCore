@@ -1,11 +1,11 @@
-﻿using AnsiVtConsole.NetCore.Component.Widgets.Texts.Raimbows;
+﻿using AnsiVtConsole.NetCore.Component.Widgets.Texts.Coloring;
 
 namespace AnsiVtConsole.NetCore.Component.Widgets.Bars;
 
 /// <summary>
 /// animatable raimbow bar
 /// </summary>
-public sealed class RaimbowBar : Widget<RaimbowBar>
+public sealed class GardientBar : Widget<GardientBar>
 {
     /// <summary>
     /// bar char
@@ -15,7 +15,7 @@ public sealed class RaimbowBar : Widget<RaimbowBar>
     /// <summary>
     /// raimbow
     /// </summary>
-    public Raimbow Raimbow => (Raimbow)WrappedWidget!;
+    public Gradient Gradient => (Gradient)WrappedWidget!;
 
     const char DefaultBarChar = '─';
 
@@ -25,8 +25,8 @@ public sealed class RaimbowBar : Widget<RaimbowBar>
     public int Length { get; private set; }
 
     /// <inheritdoc/>
-    public RaimbowBar(int length, char? barChar = null)
-        : base(new Raimbow(GetBarText(length, barChar ?? DefaultBarChar)))
+    public GardientBar(int length, char? barChar = null)
+        : base(new Gradient(GetBarText(length, barChar ?? DefaultBarChar)))
     {
         Length = length;
         BarChar = barChar ?? DefaultBarChar;

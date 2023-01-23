@@ -14,7 +14,7 @@ namespace AnsiVtConsole.NetCore.Component.EchoDirective
         public delegate object? Command2pIntDelegate(int x = 1, int y = 1);
         public delegate object? Command2pDelegate(object parameter, object argument);
         public delegate object? CommandDelegate(object x);
-        public delegate void SimpleCommandDelegate();
+        public delegate ConsoleTextWriterWrapper SimpleCommandDelegate();
         public readonly ConsoleTextWriterWrapper Writer;
         public readonly CommandMap CommandMap;
         readonly IAnsiVtConsole _console;

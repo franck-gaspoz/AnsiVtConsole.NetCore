@@ -24,6 +24,12 @@ public abstract class Widget<T> : IWidget
     /// <inheritdoc/>
     public int Y { get; protected set; } = -1;
 
+    /// <inheritdoc/>
+    public int RightX { get; protected set; } = -1;
+
+    /// <inheritdoc/>
+    public int BottomY { get; protected set; } = -1;
+
     /// <summary>
     /// true if not already rendered
     /// </summary>
@@ -91,15 +97,20 @@ public abstract class Widget<T> : IWidget
 
         lock (Console.Out.Lock)
         {
-            if (shouldHideCursor)
-                Console.Out.HideCur();
+            if (Parent is not null)
+                Parent.Update(shouldHideCursor);
+            else
+            {
+                if (shouldHideCursor)
+                    Console.Out.HideCur();
 
-            var cur = Console.Out.CursorPos;
-            Console.Out.SetCursorPos(X, Y);
+                var cur = Console.Out.CursorPos;
+                Console.Out.SetCursorPos(X, Y);
 
-            Console.Out.WriteLine(Render(Console));
+                Output(Console, Render(Console));
 
-            Console.Out.CursorPos = cur;
+                Console.Out.CursorPos = cur;
+            }
         }
     }
 
@@ -139,13 +150,15 @@ public abstract class Widget<T> : IWidget
     /// </summary>
     /// <param name="console">console</param>
     /// <returns>this object</returns>
-    public T Add(IAnsiVtConsole console)
+    public virtual T Add(IAnsiVtConsole console)
     {
-        if (Parent is not null)
-            throw new InvalidOperationException("a widget that has a parent must not be added to a console. Only the root parent must be added");
-
         lock (console.Out.Lock)
         {
+            Console = console;
+
+            if (Parent is not null)
+                throw new InvalidOperationException("a widget that has a parent must not be added to a console. Only the root parent must be added");
+
             if (_notRendered)
             {
                 if (X == -1)
@@ -154,14 +167,27 @@ public abstract class Widget<T> : IWidget
                     Y = console.Cursor.GetCursorY();
                 _notRendered = false;
             }
-            console.Out.WriteLine(Render(console));
+
+            Output(console, Render(console));
 
             return (this as T)!;
         }
     }
 
     /// <summary>
-    /// set location
+    /// final render of the widget
+    /// </summary>
+    /// <param name="console">console</param>
+    /// <param name="render">render content</param>
+    void Output(IAnsiVtConsole console, string render)
+    {
+        console.Out.WriteLine(render);
+        RightX = console.Cursor.GetCursorX() - 1;
+        BottomY = console.Cursor.GetCursorY() - 1;
+    }
+
+    /// <summary>
+    /// set location (no render)
     /// </summary>
     /// <param name="x">cursor x</param>
     /// <param name="y">cursor y</param>

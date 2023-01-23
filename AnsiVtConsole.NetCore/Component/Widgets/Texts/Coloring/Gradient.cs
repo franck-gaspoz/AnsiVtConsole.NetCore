@@ -4,12 +4,12 @@ using AnsiVtConsole.NetCore.Component.Widgets.Models;
 
 using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 
-namespace AnsiVtConsole.NetCore.Component.Widgets.Texts.Raimbows;
+namespace AnsiVtConsole.NetCore.Component.Widgets.Texts.Coloring;
 
 /// <summary>
 /// raimbow text
 /// </summary>
-public sealed class Raimbow : Widget<Raimbow>
+public sealed class Gradient : Widget<Gradient>
 {
     /// <summary>
     /// origin RGB of the gradient
@@ -34,10 +34,10 @@ public sealed class Raimbow : Widget<Raimbow>
     readonly StringBuilder _sb = new();
 
     /// <inheritdoc/>
-    public Raimbow(string text) : base(new Text(text)) { }
+    public Gradient(string text) : base(new Text(text)) { }
 
     /// <inheritdoc/>
-    public Raimbow(IWidget wrappedWidget)
+    public Gradient(IWidget wrappedWidget)
         : base(wrappedWidget) { }
 
     /// <summary>
@@ -47,7 +47,7 @@ public sealed class Raimbow : Widget<Raimbow>
     /// <param name="g">oring G of the gradient</param>
     /// <param name="b">oring B of the gradient</param>
     /// <returns>this object</returns>
-    public Raimbow Origin(int r, int g, int b)
+    public Gradient Origin(int r, int g, int b)
     {
         OriginRGB = new(r, g, b);
         return this;
@@ -58,7 +58,7 @@ public sealed class Raimbow : Widget<Raimbow>
     /// </summary>
     /// <param name="rgb">rgb</param>
     /// <returns>this object</returns>
-    public Raimbow Origin(Rgb rgb)
+    public Gradient Origin(Rgb rgb)
     {
         OriginRGB = rgb;
         return this;
@@ -71,7 +71,7 @@ public sealed class Raimbow : Widget<Raimbow>
     /// <param name="dg">delta G</param>
     /// <param name="db">detla B</param>
     /// <returns>this object</returns>
-    public Raimbow CyclicGradient(int dr, int dg, int db)
+    public Gradient CyclicGradient(int dr, int dg, int db)
     {
         DRgb = new(dr, dg, db);
         return this;
@@ -82,7 +82,7 @@ public sealed class Raimbow : Widget<Raimbow>
     /// </summary>
     /// <param name="rgb">rgb</param>
     /// <returns>this object</returns>
-    public Raimbow CyclicGradient(Rgb rgb)
+    public Gradient CyclicGradient(Rgb rgb)
     {
         DRgb = rgb;
         return this;

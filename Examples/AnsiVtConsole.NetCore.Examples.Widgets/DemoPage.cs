@@ -1,11 +1,14 @@
-﻿namespace AnsiVtConsole.NetCore.Examples.Widgets;
+﻿using AnsiVtConsole.NetCore.Component.Widgets.Texts.TypeWriting;
+
+using static AnsiVtConsole.NetCore.Component.Console.ANSI;
+
+namespace AnsiVtConsole.NetCore.Examples.Widgets;
 
 abstract class DemoPage
 {
 #pragma warning disable CS8618
     protected IAnsiVtConsole _;
-#pragma warning restore CS8618 
-    readonly int _pageDelay = 3000;
+#pragma warning restore CS8618
 
     public void Run(IAnsiVtConsole console)
     {
@@ -13,19 +16,30 @@ abstract class DemoPage
         Run();
     }
 
+    protected static TypeWriter TypeWriter(string text)
+        => new(
+            $"{SGR_SetForegroundColor4bits(SGR_4BitsColors.White, true)}{text}",
+            40,
+            $"{SGR_SetForegroundColor4bits(SGR_4BitsColors.Green, true)}█(rsf)");
+
+    protected TypeWriter TypeWrite(string text)
+        => TypeWriter(text).Add(_).Wait();
+
     public abstract void Run();
 
     protected static void Wait(int delay) => Thread.Sleep(delay);
 
-    protected void WaitPage()
+    protected void WaitPage(int waitForNextPage)
     {
-        PleaseWait();
-        Thread.Sleep(_pageDelay);
+        PleaseWait(waitForNextPage);
+        Thread.Sleep(waitForNextPage * 1000);
     }
 
     protected void SubTitle(string text)
         => _!.Out.WriteLine($"(bkf,f=white){text}(rsf,br)");
 
-    protected void PleaseWait()
-        => _!.Out.WriteLine($"(bkf,f=white)next page in {_pageDelay / 1000} seconds...(rsf,br)");
+    protected void PleaseWait(int waitForNextPage)
+    {
+        _!.Out.WriteLine($"(br,br,bkf,f=yellow)this page will automatically update in {waitForNextPage} seconds...(rsf,br)");
+    }
 }

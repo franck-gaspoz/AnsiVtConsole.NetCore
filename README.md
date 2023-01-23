@@ -20,13 +20,14 @@ The library provides functionalities needed to build console applications runnin
 
 - A ANSI Parser that can identify/remove escape sequences in a text
 
-- **widgets** : UI elements with live update and animations  
-    - raimbow text
+- **widgets** : visual elements with live update, animations, thread safe, combinables together 
+    - raimbow text,bar
+    - animated text
     - image (provided in a separate package: [AnsiVtConsole.NetCore.Imaging](https://www.nuget.org/packages/AnsiVtConsole.NetCore/))
 
 - The console output can be controlled by:
     - tokens in a string (print directives)
-    - as string shortcuts (dynamic ansi vt strings)
+    - as string shortcuts (dynamic ansi vt strings) powered by **SkiaSharp**
     - throught API methods
 
 # Usage
@@ -257,7 +258,7 @@ out.exe <text> [--raw [--esc-only] [--hexa] ]
 - if `--raw`, parse ANSI and non printable characters to show them by their names or representations
 - if `--raw` these options are avalaibles :
     - `--esc-only` : disable only knowns non printable characters (from ASCII)
-    - `--hexa` : use the hexa unix form for non printable characters
+    - `--hexa` : use the hexa unix format for non printable characters
 
 > **Note**
 >
@@ -267,11 +268,20 @@ out.exe <text> [--raw [--esc-only] [--hexa] ]
 
 # Examples
 
-### Colorization
+## project `AnsiConsole.NetCore.Examples.Widgets`
 
-To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examples**:
+this project once compiled provides a **live demo in the console** of **widgets** implemented in the current version of the library.
+To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examples.Widgets**:
 
 ![title](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/title.png "title")  
+
+
+
+## project `AnsiConsole.NetCore.Examples.ANSI`
+
+### Colorization
+
+To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examples.ANSI**:
 
 ![example1](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example1.png "example1")
 ![example2](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example2.png "example2")
@@ -282,9 +292,11 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 # Version history
 
-`1.0.20` - 18-1-2023
-- widget animation
-- widget image (project AnsiVtConsole.NetCore.Imaging)
+`1.0.20` - 23-1-2023
+- animated widgets
+- properties animator
+- widgets: text, type writer,gradient,dra
+- widget image in a separated project AnsiVtConsole.NetCore.Imaging using SkiaSharp
 
 `1.0.19` - 17-1-2023
 - add **widgets** feature + RaimbowText widget

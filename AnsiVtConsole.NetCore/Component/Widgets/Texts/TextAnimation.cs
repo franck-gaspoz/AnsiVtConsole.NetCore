@@ -1,5 +1,5 @@
 ﻿namespace AnsiVtConsole.NetCore.Component.Widgets.Texts;
-class WaitText : Widget<WaitText>
+class TextAnimation : Widget<TextAnimation>
 {
     /// <summary>
     /// text
@@ -7,5 +7,5 @@ class WaitText : Widget<WaitText>
     public Text Text => (Text)WrappedWidget!;
 
     /// <inheritdoc/>
-    public WaitText(string text) : base(new Text(text)) { }
+    public TextAnimation(string text) : base(new Text(text)) { }
 }

@@ -8,24 +8,27 @@ sealed class Demo : DemoPage
 {
     readonly Title _title;
 
-    readonly List<(DemoPage demo, bool waitForNextPage)> _demos = new();
+    readonly List<(DemoPage demo, int waitForNextPage)> _demos = new();
 
     readonly bool _isAutomatic = true;
     int _cursorTop;
+    const int DefWait = 5;
 
     public Demo()
     {
         _title = new Title();
-        _demos.AddRange(new List<(DemoPage, bool)>()
+        _demos.AddRange(new List<(DemoPage, int)>()
         {
-            (_title,true),
-            (new Images(),true)
+            (_title,0),
+            (new Intro(),8),
+            (new Images(),DefWait)
         });
     }
 
     public override void Run()
     {
         _.Out.ClearScreen();
+        _.Out.HideCur();
 
         var lastDemo = _demos.Last().demo;
         do
@@ -48,11 +51,11 @@ sealed class Demo : DemoPage
         while (true);
     }
 
-    void WaitBeforeNextPage(bool waitForNextPage = true)
+    void WaitBeforeNextPage(int waitForNextPage)
     {
         _.Out.Write(DECTCEMShow);
-        if (waitForNextPage)
-            WaitPage();
+        if (waitForNextPage > 0)
+            WaitPage(waitForNextPage);
         NextPage();
     }
 

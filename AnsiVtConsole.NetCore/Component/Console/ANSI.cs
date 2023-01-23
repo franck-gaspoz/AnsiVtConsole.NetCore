@@ -637,9 +637,9 @@ namespace AnsiVtConsole.NetCore.Component.Console
         /// <summary>
         /// set colors from 4 bit index ( To3BitColorIndex(ConsoleColor) ). (@TODO: check {CSI}0m removed from bg begin)
         /// </summary>
-        /// <param name="foregroundNum"></param>
-        /// <param name="backgroundNum"></param>
-        /// <returns></returns>
+        /// <param name="foregroundNum">foreground number</param>
+        /// <param name="backgroundNum">background number</param>
+        /// <returns>ansi seq</returns>
         public static string Set4BitsColors(int foregroundNum, int backgroundNum)
         {
             var r = "";

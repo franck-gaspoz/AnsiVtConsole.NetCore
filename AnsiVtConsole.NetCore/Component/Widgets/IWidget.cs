@@ -11,14 +11,24 @@ public interface IWidget
     IWidget? WrappedWidget { get; }
 
     /// <summary>
-    /// fixed location X if any else -1 (origin 0)
+    /// fixed location X if any else location when rendered (origin 0)
     /// </summary>
     int X { get; }
 
     /// <summary>
-    /// fixed location Y if any else -1 (origin 0)
+    /// fixed location Y if any else else location when rendered (origin 0)
     /// </summary>
     int Y { get; }
+
+    /// <summary>
+    /// right location X after rendering (origin 0) else -1
+    /// </summary>
+    int RightX { get; }
+
+    /// <summary>
+    /// bottom location Y after rendering (origin 0) else -1
+    /// </summary>
+    int BottomY { get; }
 
     /// <summary>
     /// render the widget

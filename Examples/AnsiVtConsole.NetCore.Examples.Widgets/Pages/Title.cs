@@ -3,7 +3,7 @@
 using AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 using AnsiVtConsole.NetCore.Component.Widgets.Animatics.Animations;
 using AnsiVtConsole.NetCore.Component.Widgets.Bars;
-using AnsiVtConsole.NetCore.Component.Widgets.Texts.Raimbows;
+using AnsiVtConsole.NetCore.Component.Widgets.Texts.Coloring;
 
 namespace AnsiVtConsole.NetCore.Examples.Widgets.Pages;
 
@@ -19,22 +19,22 @@ sealed class Title : DemoPage
   | - || ' \ (_-/| | \   / |  _|| (__ / _ \| ' \ (_-// _ \| |/ -_)  _    | .  |/ -_)|  _|| (__ / _ \| '_|/ -_)  
   |_|_||_||_|/__/|_|  \_/   \__| \___|\___/|_||_|/__/\___/|_|\___| (_)   |_|\_|\___| \__| \___|\___/|_|  \___|  
 ";
-        Raimbow Setup(Raimbow raimbow)
+        Gradient Setup(Gradient raimbow)
             => raimbow
                 .Origin(0, 0, 128)
                 .CyclicGradient(4, 9, 14);
 
-        Raimbow RaimbowText(string str)
-            => Setup(new Raimbow(str));
+        Gradient RaimbowText(string str)
+            => Setup(new Gradient(str));
 
         var title = RaimbowText(str).Add(_);
 
-        RaimbowText($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}");
+        RaimbowText($"  AnsiVtConsole.NetCore v{Assembly.GetExecutingAssembly().GetName().Version}").Add(_);
 
         _.Out.WriteLine();
 
-        var bar = new RaimbowBar(113);
-        Setup(bar.Raimbow);
+        var bar = new GardientBar(113);
+        Setup(bar.Gradient);
         bar.Add(_);
 
         _.Out.WriteLine();
@@ -43,12 +43,12 @@ sealed class Title : DemoPage
         var anims =
             new AnimationGroup(
                 new IntAnimation(0, 255, 2000d)
-                    .For(() => bar.Raimbow.OriginRGB.R),
+                    .For(() => bar.Gradient.OriginRGB.R),
                 new IntAnimation(0, 255, 2000d)
-                    .For(() => bar.Raimbow.OriginRGB.G),
+                    .For(() => bar.Gradient.OriginRGB.G),
                 new IntAnimation(128, 255, 2000d)
-                    .For(() => bar.Raimbow.OriginRGB.B))
-             .Target(bar.Raimbow.OriginRGB);
+                    .For(() => bar.Gradient.OriginRGB.B))
+             .Target(bar.Gradient.OriginRGB);
 
         Animation = new Animation()
             .Add(

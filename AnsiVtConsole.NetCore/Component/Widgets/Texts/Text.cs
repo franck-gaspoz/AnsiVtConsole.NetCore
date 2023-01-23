@@ -5,13 +5,13 @@
 /// </summary>
 public sealed class Text : Widget<Text>
 {
-    string _value;
+    string? _value;
     /// <summary>
     /// text
     /// </summary>
     public string Value
     {
-        get => _value;
+        get => _value!;
         set
         {
             _value = value;
@@ -28,9 +28,7 @@ public sealed class Text : Widget<Text>
     /// widget text
     /// </summary>
     /// <param name="text">text</param>
-#pragma warning disable CS8618
     public Text(string text)
-#pragma warning restore CS8618
     {
         Value = text;
         TextChanged += OnTextChanged;
@@ -38,9 +36,12 @@ public sealed class Text : Widget<Text>
 
     void OnTextChanged(object? sender, EventArgs e)
     {
-
+        lock (Console!.Out.Lock)
+        {
+            Update();
+        }
     }
 
     /// <inheritdoc/>
-    protected override string RenderWidget() => _value;
+    protected override string RenderWidget() => Value;
 }
