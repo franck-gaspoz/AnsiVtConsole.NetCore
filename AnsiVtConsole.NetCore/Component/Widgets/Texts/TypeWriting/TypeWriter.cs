@@ -3,7 +3,7 @@
 /// <summary>
 /// type wrtier
 /// </summary>
-public sealed class TypeWriter : AnimatedWidget<TypeWriter>
+public sealed class TypeWriter : AnimatedWidget<TypeWriter, TypeWriterOptionsBuilder>
 {
     /// <summary>
     /// text
@@ -19,8 +19,6 @@ public sealed class TypeWriter : AnimatedWidget<TypeWriter>
     /// cursor
     /// </summary>
     public string? Cursor { get; private set; }
-
-    readonly Lazy<TypeWriterOptionsBuilder> _optionsBuilder = new();
 
     int _charIndex = 0;
     char[]? _chars;
@@ -43,13 +41,6 @@ public sealed class TypeWriter : AnimatedWidget<TypeWriter>
         Cursor = cursor;
         Value = text;
     }
-
-    /// <summary>
-    /// get options builder
-    /// </summary>
-    /// <returns></returns>
-    public TypeWriterOptionsBuilder Options()
-        => _optionsBuilder.Value;
 
     /// <inheritdoc/>
     protected override string RenderWidget(string render)
@@ -114,7 +105,6 @@ public sealed class TypeWriter : AnimatedWidget<TypeWriter>
         Text.Value = string.Empty;
         return this;
     }
-
 
     string? GetCursor()
         => Cursor?.ToString();

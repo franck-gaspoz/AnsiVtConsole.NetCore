@@ -3,16 +3,14 @@
 /// <summary>
 /// type options writer builder
 /// </summary>
-public sealed class TypeWriterOptionsBuilder
+public sealed class TypeWriterOptionsBuilder : OptionsBuilder<TypeWriter>
 {
-    readonly TypeWriter _typeWriter;
-
     /// <summary>
     /// type writer options builder
     /// </summary>
     /// <param name="typeWriter">type writer</param>
     public TypeWriterOptionsBuilder(TypeWriter typeWriter)
-        => _typeWriter = typeWriter;
+        : base(typeWriter) { }
 
     /// <summary>
     /// cursor
@@ -21,7 +19,7 @@ public sealed class TypeWriterOptionsBuilder
     /// <returns>this object</returns>
     public TypeWriterOptionsBuilder Cursor(string cursor)
     {
-        _typeWriter.SetCursor(cursor);
+        Widget.SetCursor(cursor);
         return this;
     }
 
@@ -32,7 +30,7 @@ public sealed class TypeWriterOptionsBuilder
     /// <returns>this object</returns>
     public TypeWriterOptionsBuilder Cps(double cps)
     {
-        _typeWriter.SetCps(cps);
+        Widget.SetCps(cps);
         return this;
     }
 
@@ -43,13 +41,8 @@ public sealed class TypeWriterOptionsBuilder
     /// <returns>this object</returns>
     public TypeWriterOptionsBuilder Text(string text)
     {
-        _typeWriter.SetText(text);
+        Widget.SetText(text);
         return this;
     }
 
-    /// <summary>
-    /// build the configured object
-    /// </summary>
-    /// <returns>the configured object</returns>
-    public TypeWriter Build() => _typeWriter;
 }

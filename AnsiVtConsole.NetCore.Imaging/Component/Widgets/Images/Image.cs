@@ -11,7 +11,7 @@ namespace AnsiVtConsole.NetCore.Imaging.Component.Widgets.Images;
 /// <summary>
 /// iamge to ansi widget
 /// </summary>
-public sealed class Image : Widget<Image>
+public sealed class Image : Widget<Image, OptionsBuilder<Image>>
 {
     /// <summary>
     /// text

@@ -5,8 +5,9 @@ namespace AnsiVtConsole.NetCore.Component.Widgets;
 /// <summary>
 /// widget base class
 /// </summary>
-public abstract class Widget<T> : IWidget
-    where T : class, IWidget
+public abstract class Widget<WidgetType, OptionsBuilderType> : IWidget
+    where WidgetType : class, IWidget
+    where OptionsBuilderType : OptionsBuilder<WidgetType>
 {
     /// <summary>
     /// backup colors markup
@@ -49,6 +50,11 @@ public abstract class Widget<T> : IWidget
     /// parent widget
     /// </summary>
     public IWidget? Parent { get; private set; }
+
+    /// <summary>
+    /// options builder
+    /// </summary>
+    protected Lazy<OptionsBuilderType> OptionsBuilder = new();
 
     /// <summary>
     /// widget
@@ -137,10 +143,10 @@ public abstract class Widget<T> : IWidget
     {
         if (Parent == null)
         {
-            render = Widget<T>.BackupColors + render;
+            render = Widget<WidgetType, OptionsBuilderType>.BackupColors + render;
             if (X != -1 && Y != -1)
                 render = CUP(X + 1, Y + 1) + render;
-            render += Widget<T>.RestoreColors;
+            render += Widget<WidgetType, OptionsBuilderType>.RestoreColors;
         }
         return render;
     }
@@ -150,7 +156,7 @@ public abstract class Widget<T> : IWidget
     /// </summary>
     /// <param name="console">console</param>
     /// <returns>this object</returns>
-    public virtual T Add(IAnsiVtConsole console)
+    public virtual WidgetType Add(IAnsiVtConsole console)
     {
         lock (console.Out.Lock)
         {
@@ -170,7 +176,7 @@ public abstract class Widget<T> : IWidget
 
             Output(console, Render(console));
 
-            return (this as T)!;
+            return (this as WidgetType)!;
         }
     }
 
@@ -192,10 +198,10 @@ public abstract class Widget<T> : IWidget
     /// <param name="x">cursor x</param>
     /// <param name="y">cursor y</param>
     /// <returns>this object</returns>
-    public T Location(int x, int y)
+    public WidgetType Location(int x, int y)
     {
         X = x;
         Y = y;
-        return (this as T)!;
+        return (this as WidgetType)!;
     }
 }

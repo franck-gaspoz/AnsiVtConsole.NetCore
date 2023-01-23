@@ -9,7 +9,7 @@ namespace AnsiVtConsole.NetCore.Component.Widgets.Texts.Coloring;
 /// <summary>
 /// raimbow text
 /// </summary>
-public sealed class Gradient : Widget<Gradient>
+public sealed class Gradient : Widget<Gradient, OptionsBuilder<Gradient>>
 {
     /// <summary>
     /// origin RGB of the gradient

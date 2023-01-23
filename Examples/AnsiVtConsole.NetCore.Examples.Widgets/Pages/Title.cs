@@ -33,7 +33,7 @@ sealed class Title : DemoPage
 
         _.Out.WriteLine();
 
-        var bar = new GardientBar(113);
+        var bar = new GradientBar(113);
         Setup(bar.Gradient);
         bar.Add(_);
 

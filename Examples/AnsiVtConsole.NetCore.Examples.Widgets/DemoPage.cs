@@ -38,8 +38,5 @@ abstract class DemoPage
     protected void SubTitle(string text)
         => _!.Out.WriteLine($"(bkf,f=white){text}(rsf,br)");
 
-    protected void PleaseWait(int waitForNextPage)
-    {
-        _!.Out.WriteLine($"(br,br,bkf,f=yellow)this page will automatically update in {waitForNextPage} seconds...(rsf,br)");
-    }
+    protected void PleaseWait(int waitForNextPage) => _!.Out.WriteLine($"(br,br,bkf,f=yellow)►►► This page will automatically update in {waitForNextPage} seconds...(rsf)");
 }

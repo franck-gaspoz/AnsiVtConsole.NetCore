@@ -3,8 +3,10 @@
 /// <summary>
 /// widget that has a regulart threaded update
 /// </summary>
-public abstract class AnimatedWidget<T> : Widget<T>, IAnimatedWidget
-    where T : class, IAnimatedWidget
+public abstract class AnimatedWidget<WidgetType, OptionsBuilderType>
+        : Widget<WidgetType, OptionsBuilderType>, IAnimatedWidget
+    where WidgetType : class, IAnimatedWidget
+    where OptionsBuilderType : OptionsBuilder<WidgetType>
 {
     /// <summary>
     /// frames per seconds
@@ -34,66 +36,66 @@ public abstract class AnimatedWidget<T> : Widget<T>, IAnimatedWidget
     /// </summary>
     /// <param name="fps">fps</param>
     /// <returns>this object</returns>
-    public T SetFPS(double fps)
+    public WidgetType SetFPS(double fps)
     {
         AssertNotRunning();
         if (fps < 0)
             throw new ArgumentException("fps must be > 0");
         FPS = fps;
-        return (this as T)!;
+        return (this as WidgetType)!;
     }
 
     /// <inheritdoc/>
-    public override T Add(IAnsiVtConsole console)
+    public override WidgetType Add(IAnsiVtConsole console)
     {
         lock (console.Out.Lock)
         {
             base.Add(console);
             if (_thread is null)
                 Start();
-            return (this as T)!;
+            return (this as WidgetType)!;
         }
     }
 
     /// <summary>
     /// starts the thread
     /// </summary>
-    public T Start()
+    public WidgetType Start()
     {
         StartInit();
         IsRunning = true;
         (_thread = new(() => Run()))
             .Start();
-        return (this as T)!;
+        return (this as WidgetType)!;
     }
 
     /// <summary>
     /// stops the thread
     /// </summary>
-    public T Stop()
+    public WidgetType Stop()
     {
         _stop = true;
         _thread = null;
-        return (this as T)!;
+        return (this as WidgetType)!;
     }
 
     /// <summary>
     /// wait end of animation. if not running returns immediately
     /// </summary>
-    public T Wait()
+    public WidgetType Wait()
     {
         while (IsRunning)
             Thread.Yield();
-        return (this as T)!;
+        return (this as WidgetType)!;
     }
 
     /// <summary>
     /// Wait for delay milliseconds
     /// </summary>
-    public T Wait(int delay)
+    public WidgetType Wait(int delay)
     {
         Thread.Sleep(delay);
-        return (this as T)!;
+        return (this as WidgetType)!;
     }
 
     void Run()

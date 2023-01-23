@@ -29,11 +29,11 @@ sealed class Intro : DemoPage
 
         var remCol = "(tdoff,f=darkcyan)";
         var higCol = "(uon,bon,f=magenta)";
-        TypeWrite($"{remCol}Widgets are composable together and the {higCol}Animator{remCol} class can animate any of their properties");
-        TypeWrite($"{remCol}Widgets mecanism is {higCol}Thread safe{remCol} thus several widgets can play simultaneously");
+        TypeWrite($"{remCol}░ Widgets are composable together and the {higCol}Animator{remCol} class can animate any of their properties");
+        TypeWrite($"{remCol}░ Widgets mecanism is {higCol}thread safe{remCol} thus several widgets can play simultaneously");
 
-        _.Out.WriteLine();
+        _.Out.WriteLine().WriteLine();
 
-        TypeWrite("this demo will auto play, juste have a seat and watch. Let's go now");
+        TypeWrite("░ this demo will auto play, juste have a seat and watch. Let's go now");
     }
 }

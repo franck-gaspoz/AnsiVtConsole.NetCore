@@ -3,7 +3,7 @@
 /// <summary>
 /// text widget
 /// </summary>
-public sealed class Text : Widget<Text>
+public sealed class Text : Widget<Text, OptionsBuilder<Text>>
 {
     string? _value;
     /// <summary>
