@@ -11,7 +11,7 @@ echo githubkey=%githubkey%
 echo version=%1
 echo --------------------------------------------------------------------------------------
 
-git tag -a v%1 -m v%1
-git push origin v%1
-nuget push AnsiVtConsole.NetCore/bin/Release/AnsiVtConsole.NetCore.Imaging.%1.nupkg %nugetkey% -SkipDuplicate -Source https://api.nuget.org/v3/index.json -Verbosity detailed
-dotnet nuget push "AnsiVtConsole.NetCore/bin/Release/AnsiVtConsole.NetCore.Imaging.%1.nupkg" --skip-duplicate --api-key %githubkey% --source "github"
+rem git tag -a v%1 -m v%1
+rem git push origin v%1
+nuget push AnsiVtConsole.NetCore.Imaging/bin/Release/AnsiVtConsole.NetCore.Imaging.%1.nupkg %nugetkey% -SkipDuplicate -Source https://api.nuget.org/v3/index.json -Verbosity detailed
+dotnet nuget push "AnsiVtConsole.NetCore.Imaging/bin/Release/AnsiVtConsole.NetCore.Imaging.%1.nupkg" --skip-duplicate --api-key %githubkey% --source "github"
