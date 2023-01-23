@@ -37,6 +37,12 @@ abstract class DemoPage
     }
 
     protected void SubTitle(string text)
+    {
+        TypeWrite($"(f=white){text}");
+        _.Out.WriteLine();
+    }
+
+    protected void SubTitle0(string text)
         => _!.Out.WriteLine($"(bkf,f=white){text}(rsf,br)");
 
     protected void PleaseWait(int waitForNextPage)
