@@ -43,7 +43,8 @@ abstract class DemoPage
         => new TextTimer(
             "(br,br,bkf,f=yellow)►►► This page will automatically update in {0} seconds...(rsf)",
             2,
-            TimeSpan.FromSeconds(waitForNextPage))
+            TimeSpan.FromSeconds(waitForNextPage),
+            (duration) => duration.Seconds.ToString())
             .Add(_!);
 
     protected void PleaseWait0(int waitForNextPage)
