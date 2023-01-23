@@ -35,10 +35,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnsiVtConsole.NetCore.Imaging", "AnsiVtConsole.NetCore.Imaging\AnsiVtConsole.NetCore.Imaging.csproj", "{C4E2C3AA-A537-4A05-A1D7-797D4A3ACA0E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{C4E95C5A-8158-48EB-89FA-5376B7FC1797}"
-	ProjectSection(SolutionItems) = preProject
-		Examples\AnsiVtConsole.NetCore.Examples.ANSI\AnsiVtConsole.NetCore.Examples.ANSI.csproj = Examples\AnsiVtConsole.NetCore.Examples.ANSI\AnsiVtConsole.NetCore.Examples.ANSI.csproj
-		Examples\AnsiVtConsole.NetCore.Examples.Widgets\AnsiVtConsole.NetCore.Examples.Widgets.csproj = Examples\AnsiVtConsole.NetCore.Examples.Widgets\AnsiVtConsole.NetCore.Examples.Widgets.csproj
-	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnsiVtConsole.NetCore.Examples.ANSI", "Examples\AnsiVtConsole.NetCore.Examples.ANSI\AnsiVtConsole.NetCore.Examples.ANSI.csproj", "{9515D9C8-353B-4967-A416-81387B8D861F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnsiVtConsole.NetCore.Examples.Widgets", "Examples\AnsiVtConsole.NetCore.Examples.Widgets\AnsiVtConsole.NetCore.Examples.Widgets.csproj", "{4CC80B81-0FE0-4532-92CE-446AD974E7D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,12 +72,30 @@ Global
 		{C4E2C3AA-A537-4A05-A1D7-797D4A3ACA0E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C4E2C3AA-A537-4A05-A1D7-797D4A3ACA0E}.Release|x86.ActiveCfg = Release|Any CPU
 		{C4E2C3AA-A537-4A05-A1D7-797D4A3ACA0E}.Release|x86.Build.0 = Release|Any CPU
+		{9515D9C8-353B-4967-A416-81387B8D861F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9515D9C8-353B-4967-A416-81387B8D861F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9515D9C8-353B-4967-A416-81387B8D861F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9515D9C8-353B-4967-A416-81387B8D861F}.Debug|x86.Build.0 = Debug|Any CPU
+		{9515D9C8-353B-4967-A416-81387B8D861F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9515D9C8-353B-4967-A416-81387B8D861F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9515D9C8-353B-4967-A416-81387B8D861F}.Release|x86.ActiveCfg = Release|Any CPU
+		{9515D9C8-353B-4967-A416-81387B8D861F}.Release|x86.Build.0 = Release|Any CPU
+		{4CC80B81-0FE0-4532-92CE-446AD974E7D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CC80B81-0FE0-4532-92CE-446AD974E7D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CC80B81-0FE0-4532-92CE-446AD974E7D2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4CC80B81-0FE0-4532-92CE-446AD974E7D2}.Debug|x86.Build.0 = Debug|Any CPU
+		{4CC80B81-0FE0-4532-92CE-446AD974E7D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CC80B81-0FE0-4532-92CE-446AD974E7D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CC80B81-0FE0-4532-92CE-446AD974E7D2}.Release|x86.ActiveCfg = Release|Any CPU
+		{4CC80B81-0FE0-4532-92CE-446AD974E7D2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5F978492-9C45-40F3-9D70-B3283498F57D} = {196A14D8-B446-482A-8B5E-9CD986A0C5A3}
+		{9515D9C8-353B-4967-A416-81387B8D861F} = {C4E95C5A-8158-48EB-89FA-5376B7FC1797}
+		{4CC80B81-0FE0-4532-92CE-446AD974E7D2} = {C4E95C5A-8158-48EB-89FA-5376B7FC1797}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8B5B602-B2FB-4A96-9DA0-5085D1844222}

@@ -22,13 +22,36 @@ The library provides functionalities needed to build console applications runnin
 
 - **widgets** : visual elements with live update, animations, thread safe, combinables together 
     - raimbow text,bar
-    - animated text
+    - animated text, text timer, type writer
     - image (provided in a separate package: [AnsiVtConsole.NetCore.Imaging](https://www.nuget.org/packages/AnsiVtConsole.NetCore/))
 
 - The console output can be controlled by:
     - tokens in a string (print directives)
     - as string shortcuts (dynamic ansi vt strings) powered by **SkiaSharp**
     - throught API methods
+
+# Index
+
+- [Usage](#usage)
+    - [using the markup](#using-the-markup)
+    - [using the string shortcuts](#using-the-string-shortcuts)
+    - [using the ANSI sequences](#using-the-ansi-sequences)
+    - [using the widgets](#using-the-widgets)
+- [Print directives (markup)](#print-directives-markup)
+    - [1. Colorization with SGR (Select Graphic Rendition)](#colorization-with-sgr-select-graphic-rendition)
+    - [2. Text decoration (vt100) with SGR (Select Graphic Rendition)](#text-decoration-vt100-with-sgr-select-graphic-rendition)
+    - [3. CSI (Control Sequence Introducer)](#csi-control-sequence-introducer)
+    - [4. Script engine](#script-engine)
+    - [5. Application control](#application-control)
+    - [6. ANSI Sequences](#ansi-sequences)
+    - [7. Unicode characters](#unicode-characters)
+- [Command line interface tool for your shells](#command-line-interface-tool-for-your-shells)
+- [Examples](#examples)
+    - [project AnsiConsole.NetCore.Examples.Widgets](#project-ansiconsole.netcore.examples.widgets) 
+    - [project AnsiConsole.NetCore.Examples.ANSI](#project-ansiconsole.netcore.examples.ansi)
+        - [Colorisation](#colorisation)
+        - [AnsiVtConsole markup and Ansi/Vt parsing](#ansivtconsole-markup-and-ansivt-parsing)
+- [Version history](#versions-history)
 
 # Usage
 
@@ -60,9 +83,8 @@ dotnet add package AnsiVtConsole.NetCore --version 1.0.21
 
 
 ``` csharp
-using cons=AnsiVtConsole.NetCore;
 // get the ansi vt console
-var console = new cons.AnsiVTConsole();
+var console = new AnsiVtConsole.NetCore.AnsiVTConsole();
 ```
 
 ## 1. using the markup :
@@ -87,6 +109,24 @@ using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 System.Console.Out.Writeline($"{CRLF}{SGRF("Yellow")}{SGRB("Red")}yellow text on red background{CRLF}{SGRF("Cyan")}current time is: {System.DateTime.Now}{CRLF}");
 ```
 
+## 4. using the widgets
+
+``` csharp
+/* type writer example
+this adds a 'type writer' widget at current cursor location, 
+maintains it in place and produces an animation of the text until
+the end of the animation
+*/
+using AnsiVtConsole.NetCore.Component.Widgets.Texts.TypeWriting;
+
+TypeWriter(text)
+    .Add(console)   // add to a console and render the widget
+    .Wait();        // animated update until end of animation
+```
+
+example output:
+
+![widget output](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/ansivtconsole.netcore.widget.gif "output")
 
 ### all outputs:
 
@@ -294,7 +334,7 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 ![example5](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example5.png "example5")
 
-# Version history
+# Versions history
 
 `1.0.21` - 24-1-2023
 - ..
