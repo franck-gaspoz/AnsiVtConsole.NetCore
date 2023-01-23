@@ -301,6 +301,7 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 - properties animator
 - widgets: text, type writer,gradient,dra
 - widget image in a separated project AnsiVtConsole.NetCore.Imaging using SkiaSharp
+- examples projects
 - fluent methods for ContextTextWriterWrapper
 - doc update
 
