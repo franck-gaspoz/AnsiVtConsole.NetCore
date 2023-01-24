@@ -109,6 +109,10 @@ using static AnsiVtConsole.NetCore.Component.Console.ANSI;
 System.Console.Out.Writeline($"{CRLF}{SGRF("Yellow")}{SGRB("Red")}yellow text on red background{CRLF}{SGRF("Cyan")}current time is: {System.DateTime.Now}{CRLF}");
 ```
 
+### all outputs:
+
+![output](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/output.png "output")
+
 ## 4. using the widgets
 
 ``` csharp
@@ -127,10 +131,6 @@ TypeWriter(text)
 example output:
 
 ![widget output](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/ansivtconsole.netcore.widget.gif "output")
-
-### all outputs:
-
-![output](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/output.png "output")
 
 # Print directives (markup):
 
@@ -315,7 +315,7 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 ![title](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/title.png "title")  
 
-example of an **Image** widget. This widget is delivered in the package: [AnsiVtConsole.NetCore.Imaging](https://www.nuget.org/packages/AnsiVtConsole.NetCore/))
+example of an **Image** widget. This widget is delivered in the package: [AnsiVtConsole.NetCore.Imaging](https://www.nuget.org/packages/AnsiVtConsole.NetCore/)
 
 ![example7](https://raw.githubusercontent.com/franck-gaspoz/AnsiVtConsole.NetCore/main/AnsiVtConsole.NetCore/assets/example7.png "example7")
 
