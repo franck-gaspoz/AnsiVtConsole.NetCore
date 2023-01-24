@@ -81,6 +81,24 @@ public abstract class Widget<WidgetType, OptionsBuilderType> : IWidget
         => (X, Y) = (x, y);
 
     /// <inheritdoc/>
+    public virtual void SetText(string text)
+    {
+        if (WrappedWidget is not null)
+            WrappedWidget.SetText(text);
+        else
+            throw new InvalidOperationException("SetText is not applyable on this widget");
+    }
+
+    /// <inheritdoc/>
+    public virtual string GetText()
+    {
+        if (WrappedWidget is not null)
+            return WrappedWidget.GetText();
+        else
+            throw new InvalidOperationException("GetText is not applyable on this widget");
+    }
+
+    /// <inheritdoc/>
     public string Render(IAnsiVtConsole console)
     {
         lock (console.Out.Lock)

@@ -11,6 +11,18 @@ public interface IWidget
     IWidget? WrappedWidget { get; }
 
     /// <summary>
+    /// set the text of the deepest wrapped widget in the hierarchy
+    /// </summary>
+    /// <param name="text">text</param>
+    void SetText(string text);
+
+    /// <summary>
+    /// get the text of the deepest wrapped widget in the hierarchy
+    /// </summary>
+    /// <returns></returns>
+    string GetText();
+
+    /// <summary>
     /// fixed location X if any else location when rendered (origin 0)
     /// </summary>
     int X { get; }

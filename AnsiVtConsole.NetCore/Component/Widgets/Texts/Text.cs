@@ -19,6 +19,14 @@ public sealed class Text : Widget<Text, OptionsBuilder<Text>>
         }
     }
 
+    /// <inheritdoc/>
+    public override void SetText(string text)
+        => Value = text;
+
+    /// <inheritdoc/>
+    public override string GetText()
+        => Value;
+
     /// <summary>
     /// text changed event
     /// </summary>

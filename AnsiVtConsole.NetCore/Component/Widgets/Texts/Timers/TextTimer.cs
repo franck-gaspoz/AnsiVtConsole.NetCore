@@ -6,11 +6,6 @@
 public sealed class TextTimer : AnimatedWidget<TextTimer, AnimatedOptionsBuilder<TextTimer>>
 {
     /// <summary>
-    /// text
-    /// </summary>
-    public Text Text => (Text)WrappedWidget!;
-
-    /// <summary>
     /// timer duration
     /// </summary>
     public TimeSpan Duration { get; private set; }
@@ -21,7 +16,6 @@ public sealed class TextTimer : AnimatedWidget<TextTimer, AnimatedOptionsBuilder
     public Func<TimeSpan, string> DurationToString { get; private set; }
 
     readonly string _pattern;
-    readonly DateTime? _startTime;
     DateTime? _endTime;
 
     /// <summary>
@@ -62,7 +56,7 @@ public sealed class TextTimer : AnimatedWidget<TextTimer, AnimatedOptionsBuilder
     {
         var remaining = DateTime.Now >= _endTime ? TimeSpan.FromSeconds(0)
             : _endTime!.Value - DateTime.Now;
-        Text.Value = string.Format(_pattern, DurationToString(remaining));
+        SetText(string.Format(_pattern, DurationToString(remaining)));
     }
 
     /// <inheritdoc/>

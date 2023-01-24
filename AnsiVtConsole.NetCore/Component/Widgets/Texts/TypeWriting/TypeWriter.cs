@@ -8,11 +8,6 @@ public sealed class TypeWriter : AnimatedWidget<TypeWriter, TypeWriterOptionsBui
     /// <summary>
     /// text
     /// </summary>
-    public Text Text => (Text)WrappedWidget!;
-
-    /// <summary>
-    /// text
-    /// </summary>
     public string Value { get; private set; }
 
     /// <summary>
@@ -62,10 +57,10 @@ public sealed class TypeWriter : AnimatedWidget<TypeWriter, TypeWriterOptionsBui
     {
         _str += _chars![_charIndex++];
 
-        Text.Value = _str
+        base.SetText(_str
             + (_charIndex < _rawStr.Length ?
                 GetCursor()
-                : string.Empty);
+                : string.Empty));
     }
 
     /// <summary>
@@ -85,11 +80,11 @@ public sealed class TypeWriter : AnimatedWidget<TypeWriter, TypeWriterOptionsBui
     /// </summary>
     /// <param name="text">text</param>
     /// <returns>this object</returns>
-    public TypeWriter SetText(string text)
+    public new TypeWriter SetText(string text)
     {
         AssertNotRunning();
         Value = text;
-        Text.Value = string.Empty;
+        base.SetText(string.Empty);
         return this;
     }
 
