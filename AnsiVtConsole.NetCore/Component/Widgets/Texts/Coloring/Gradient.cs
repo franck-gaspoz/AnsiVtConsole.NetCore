@@ -33,8 +33,19 @@ public sealed class Gradient : Widget<Gradient, OptionsBuilder<Gradient>>
 
     readonly StringBuilder _sb = new();
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// gradient
+    /// </summary>
+    /// <param name="text"></param>
     public Gradient(string text) : base(new Text(text)) { }
+
+    /// <summary>
+    /// gradient
+    /// </summary>
+    /// <param name="x">cursor x</param>
+    /// <param name="y">cursor y</param>
+    /// <param name="text"></param>    
+    public Gradient(int x, int y, string text) : base(x, y, new Text(text)) { }
 
     /// <inheritdoc/>
     public Gradient(IWidget wrappedWidget)

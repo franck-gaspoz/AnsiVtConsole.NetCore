@@ -12,7 +12,7 @@ sealed class Demo : DemoPage
 
     readonly bool _isAutomatic = true;
     int _cursorTop;
-    const int DefWait = 5;
+    const int DefWait = 6;
 
     public Demo()
     {

@@ -19,14 +19,45 @@ public abstract class AnimatedWidget<WidgetType, OptionsBuilderType>
     public bool IsRunning { get; private set; }
 
     /// <summary>
+    /// on start event
+    /// </summary>
+    public event EventHandler OnStart;
+
+    /// <summary>
+    /// on stop event
+    /// </summary>
+    public event EventHandler OnStop;
+
+    /// <summary>
+    /// tick coutn
+    /// </summary>
+    public long Tick { get; private set; }
+
+    /// <summary>
     /// animated widget
     /// </summary>
     /// <param name="fps">frames per seconds</param>
     /// <param name="wrappedWidget">wrapped widget</param>
+#pragma warning disable CS8618
     public AnimatedWidget(
         double fps,
         IWidget? wrappedWidget = null)
         : base(wrappedWidget) => SetFPS(fps);
+
+    /// <summary>
+    /// animated widget
+    /// </summary>
+    /// <param name="x">cursor x</param>
+    /// <param name="y">cursor y</param>
+    /// <param name="fps">frames per seconds</param>
+    /// <param name="wrappedWidget">wrapped widget</param>
+#pragma warning disable CS8618
+    public AnimatedWidget(
+        int x,
+        int y,
+        double fps,
+        IWidget? wrappedWidget = null)
+        : base(x, y, wrappedWidget) => SetFPS(fps);
 
     /// <summary>
     /// widget at a fixed location
@@ -40,6 +71,7 @@ public abstract class AnimatedWidget<WidgetType, OptionsBuilderType>
         int y)
         : base(x, y)
         => SetFPS(fps);
+#pragma warning restore CS8618
 
     int _timeLapse => (int)(1d / FPS * 1000d);
 
@@ -68,8 +100,9 @@ public abstract class AnimatedWidget<WidgetType, OptionsBuilderType>
             base.Add(console);
             if (_thread is null)
                 Start();
-            return (this as WidgetType)!;
         }
+        WaitNextTick();
+        return (this as WidgetType)!;
     }
 
     /// <summary>
@@ -77,11 +110,24 @@ public abstract class AnimatedWidget<WidgetType, OptionsBuilderType>
     /// </summary>
     public WidgetType Start()
     {
+        Tick = 0;
         StartInit();
         IsRunning = true;
         (_thread = new(() => Run()))
             .Start();
+        OnStart?.Invoke(this, EventArgs.Empty);
         return (this as WidgetType)!;
+    }
+
+    /// <summary>
+    /// wait the next animation tick
+    /// </summary>
+    public void WaitNextTick()
+    {
+        if (!IsRunning) return;
+        var tick = Tick;
+        while (Tick == tick)
+            Thread.Yield();
     }
 
     /// <summary>
@@ -91,6 +137,7 @@ public abstract class AnimatedWidget<WidgetType, OptionsBuilderType>
     {
         _stop = true;
         _thread = null;
+        OnStop?.Invoke(this, EventArgs.Empty);
         return (this as WidgetType)!;
     }
 
@@ -117,21 +164,26 @@ public abstract class AnimatedWidget<WidgetType, OptionsBuilderType>
     {
         var _end = _stop = false;
         var str = string.Empty;
-        int newX;
         while (!_end && !_stop)
         {
+            var oldRightX = RightX;
+
             lock (Console!.Out.Lock)
             {
-                RunOperation();
-
-                newX = Console.Cursor.GetCursorX();
+                PrepareFrame();
+                RenderFrame();
             }
-            if (newX > RightX)
+
+            if (RightX > oldRightX)
+            {
                 Thread.Sleep(_timeLapse);
+                Tick++;
+            }
 
             _end = IsEnd();
         }
         IsRunning = false;
+        OnStop?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -141,9 +193,14 @@ public abstract class AnimatedWidget<WidgetType, OptionsBuilderType>
     protected abstract bool IsEnd();
 
     /// <summary>
-    /// operation of the thread. Run in a console lock
+    /// operation of the thread (step 1). Run in a console lock
     /// </summary>
-    protected abstract void RunOperation();
+    protected virtual void PrepareFrame() { }
+
+    /// <summary>
+    /// operation of the thread (step 2). Run in a console lock
+    /// </summary>
+    protected abstract void RenderFrame();
 
     /// <summary>
     /// init at start

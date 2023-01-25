@@ -35,8 +35,20 @@ public sealed class Text : Widget<Text, OptionsBuilder<Text>>
     /// <summary>
     /// widget text
     /// </summary>
+    /// <param name="x">cursor x</param>
+    /// <param name="y">cursor y</param>
     /// <param name="text">text</param>
-    public Text(string text)
+    public Text(int x, int y, string text) : base(x, y)
+    {
+        Value = text;
+        TextChanged += OnTextChanged;
+    }
+
+    /// <summary>
+    /// widget text
+    /// </summary>
+    /// <param name="text">text</param>
+    public Text(string text) : base(null)
     {
         Value = text;
         TextChanged += OnTextChanged;

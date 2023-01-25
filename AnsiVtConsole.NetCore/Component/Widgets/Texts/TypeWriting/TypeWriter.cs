@@ -36,6 +36,26 @@ public sealed class TypeWriter : AnimatedWidget<TypeWriter, TypeWriterOptionsBui
         Value = text;
     }
 
+    /// <summary>
+    /// type writer
+    /// </summary>
+    /// <param name="x">cursor x</param>
+    /// <param name="y">cursor y</param>
+    /// <param name="text">text</param>
+    /// <param name="fps">frames per second</param>
+    /// <param name="cursor">cursor</param>
+    public TypeWriter(
+        int x,
+        int y,
+        string text,
+        double fps,
+        string? cursor = null)
+        : base(x, y, fps, new Text(string.Empty))
+    {
+        Cursor = cursor;
+        Value = text;
+    }
+
     /// <inheritdoc/>
     protected override string RenderWidget(string render)
         => render;
@@ -53,7 +73,7 @@ public sealed class TypeWriter : AnimatedWidget<TypeWriter, TypeWriterOptionsBui
     protected override bool IsEnd() => _charIndex >= _rawStr.Length;
 
     /// <inheritdoc/>
-    protected override void RunOperation()
+    protected override void RenderFrame()
     {
         _str += _chars![_charIndex++];
 

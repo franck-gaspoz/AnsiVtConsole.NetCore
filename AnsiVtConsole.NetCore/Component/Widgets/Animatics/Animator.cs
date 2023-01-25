@@ -7,11 +7,13 @@ namespace AnsiVtConsole.NetCore.Component.Widgets.Animatics;
 /// <summary>
 /// sequential play of timelines
 /// </summary>
-sealed class Animator
+public sealed class Animator
 {
+    /// <summary>
+    /// indicates if animation is playing or not
+    /// </summary>
     public bool IsRunning { get; private set; }
 
-    Thread? _thread;
     bool _end = false;
     readonly Animation _animation;
     TimeLine? _timeLine;
@@ -22,10 +24,21 @@ sealed class Animator
     double _sumAnimationDuration;
     int _tick;
 
+    /// <summary>
+    /// on start event
+    /// </summary>
     public event EventHandler OnStart;
+
+    /// <summary>
+    /// on stop event
+    /// </summary>
     public event EventHandler OnStop;
 
 #pragma warning disable CS8618
+    /// <summary>
+    /// animator
+    /// </summary>
+    /// <param name="animation">played animation</param>
     public Animator(Animation animation) => _animation = animation;
 #pragma warning restore CS8618
 
@@ -42,8 +55,8 @@ sealed class Animator
 
         OnStart?.Invoke(this, EventArgs.Empty);
 
-        (_thread = new(() => RunAnimation(_animation)))
-             .Start();
+        new Thread(() => RunAnimation(_animation))
+            .Start();
     }
 
     /// <summary>
@@ -54,7 +67,6 @@ sealed class Animator
         _end = true;
         IsRunning = false;
         OnStop?.Invoke(this, EventArgs.Empty);
-        _thread = null;
     }
 
     void Start(bool reverse, TimeLine timeLine)
@@ -132,7 +144,7 @@ sealed class Animator
                 Thread.Sleep((int)wait);
             }
 
-            if (_timeLine.IsAutoReverse)
+            if (_timeLine!.IsAutoReverse)
                 reverse = !reverse;
 #if DEBUG
             if (_tick > 0)

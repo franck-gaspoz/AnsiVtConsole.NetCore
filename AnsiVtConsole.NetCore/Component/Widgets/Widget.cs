@@ -59,6 +59,7 @@ public abstract class Widget<WidgetType, OptionsBuilderType> : IWidget
     /// <summary>
     /// widget
     /// </summary>
+    /// <param name="wrappedWidget">wrapped widget</param>
     public Widget(IWidget? wrappedWidget = null)
     {
         if (wrappedWidget is not null)
@@ -75,10 +76,18 @@ public abstract class Widget<WidgetType, OptionsBuilderType> : IWidget
     /// <summary>
     /// widget at a fixed location
     /// </summary>
-    /// <param name="x">cursor x</param>
-    /// <param name="y">cursor y</param>
-    public Widget(int x, int y)
-        => (X, Y) = (x, y);
+    /// <param name="x">left</param>
+    /// <param name="y">top</param>
+    /// <param name="wrappedWidget">wrapped widget</param>
+    public Widget(int x, int y, IWidget? wrappedWidget = null)
+    {
+        if (wrappedWidget is not null)
+        {
+            WrappedWidget = wrappedWidget;
+            WrappedWidget.SetParent(this);
+        }
+        (X, Y) = (x, y);
+    }
 
     /// <inheritdoc/>
     public virtual void SetText(string text)
@@ -176,6 +185,9 @@ public abstract class Widget<WidgetType, OptionsBuilderType> : IWidget
     /// <returns>this object</returns>
     public virtual WidgetType Add(IAnsiVtConsole console)
     {
+        if (Console is not null)
+            throw new InvalidOperationException("widget already added to console: " + console);
+
         lock (console.Out.Lock)
         {
             Console = console;
@@ -205,9 +217,10 @@ public abstract class Widget<WidgetType, OptionsBuilderType> : IWidget
     /// <param name="render">render content</param>
     void Output(IAnsiVtConsole console, string render)
     {
-        console.Out.WriteLine(render);
-        RightX = console.Cursor.GetCursorX() - 1;
-        BottomY = console.Cursor.GetCursorY() - 1;
+        console.Out.Write(render);
+        RightX = console.Cursor.GetCursorX();
+        BottomY = console.Cursor.GetCursorY();
+        console.Out.WriteLine();
     }
 
     /// <summary>

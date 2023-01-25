@@ -13,4 +13,15 @@ public class TimerOptionsBuilder : OptionsBuilder<TextTimer>
     /// <param name="widget">widget</param>
     public TimerOptionsBuilder(TextTimer widget)
         : base(widget) { }
+
+    /// <summary>
+    /// set the pattern (allowed while running)
+    /// </summary>
+    /// <param name="pattern">pattern</param>
+    /// <returns>this object</returns>
+    public TextTimer Pattern(string pattern)
+    {
+        Widget.SetPattern(pattern);
+        return Widget;
+    }
 }
