@@ -363,7 +363,7 @@ namespace AnsiVtConsole.NetCore.Component.Parser.NonRecursiveFunctionalGrammar
                         var maxLength = _paths.Max(x => x.Text.Length);
                         var longests = _paths.Where(x => x.Text.Length == maxLength);
                         t = new List<SyntacticBlock>(longests);
-                        t.Sort((x, y) => x.SyntacticRule.Rule.ID.CompareTo(y.SyntacticRule.Rule.ID));
+                        t.Sort((x, y) => x.SyntacticRule!.Rule!.ID.CompareTo(y.SyntacticRule!.Rule!.ID));
                     }
                     else
                     {

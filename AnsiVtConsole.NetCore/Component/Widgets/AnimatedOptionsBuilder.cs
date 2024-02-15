@@ -22,7 +22,7 @@ public class AnimatedOptionsBuilder<T> : OptionsBuilder<T>
     public AnimatedOptionsBuilder<T> Fps(double fps)
     {
         var o = Widget as AnimatedWidget<T, AnimatedOptionsBuilder<T>>;
-        o.SetFPS(fps);
+        o!.SetFPS(fps);
         return this;
     }
 }

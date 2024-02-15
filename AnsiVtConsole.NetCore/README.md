@@ -336,10 +336,10 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 # Versions history
 
-`1.0.21` - 24-1-2023
-- ..
+`1.0.21,1.0.22,1.0.23,1.0.24` - 2-16-2024
+- fix nuget content files
 
-`1.0.20` - 23-1-2023
+`1.0.20` - 1-23-2023
 - animated widgets
 - properties animator
 - widgets: text,type writer,gradient,gradient bar,text timer
@@ -348,25 +348,25 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 - fluent methods for ContextTextWriterWrapper
 - doc update
 
-`1.0.19` - 17-1-2023
+`1.0.19` - 1-17-2023
 - add **widgets** feature + RaimbowText widget
 - add example
 - doc update
 
-`1.0.18` - 01-1-2023
+`1.0.18` - 1-1-2023
 - add symbols and sources in package
 - new editorconfig and code clean up
 - command `out` for a shell available in `AnsiVtConsole.NetCore.CommandLine.Out` that compiles to `out.exe`
 - doc update
 
-`1.0.17` - 01-10-2023
+`1.0.17` - 10-1-2023
 - add setting that make it possible to disable ansi/vt in console ouputs: `AnsiVtConsole.NetCore.Component.Settings` : `IsMarkupDisabled`,`IsRawOutputEnabled`,`ReplaceNonPrintableCharactersByTheirName`,`RemoveANSISequences`
 - add methods to get output text in various formats (without ansi,with unparsed markup,in shell escaped characters) : `GetText`,`GetRawText`,`ANSIParser.GetText` 
 - add grammar file for ANSI parser
 - enable buffering mode for any print directive
 - update doc
 
-`1.0.16` - 01-05-2022
+`1.0.16` - 5-1-2022
 - fix nupkg. add deployment of documentation files
 - update doc
 
@@ -379,7 +379,7 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 `1.0.12` - 12-17-2022
 - rename Writeln methods by WriteLine
-- suppress Log,Logln & logger refactoring
+- suppress Log,Logln &amp; logger refactoring
 - add code documentation
 
 **AnsiVtConsole.NetCore.Imaging**

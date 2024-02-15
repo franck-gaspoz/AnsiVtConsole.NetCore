@@ -6,8 +6,10 @@
     <Nullable>enable</Nullable>
     
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<AssemblyVersion>1.0.21.0</AssemblyVersion>
-	<FileVersion>1.0.21.0</FileVersion>
+	<AssemblyVersion>1.0.24.0</AssemblyVersion>
+	<FileVersion>1.0.24.0</FileVersion>
+	<Version>1.0.24</Version>
+	<InformationalVersion>1.0.24</InformationalVersion>
 	  
     <RootNamespace>AnsiVtConsole.NetCore</RootNamespace>
     <AssemblyName>AnsiVtConsole.NetCore</AssemblyName>    
@@ -20,21 +22,62 @@
     <Product>AnsiVtConsole.NetCore</Product>
     <Description>ANSI VT console library for .Net Core system console</Description>
     <Copyright>(c) Franck Gaspoz 2023 Licence MIT</Copyright>
-    <Version>1.0.21</Version>
-    <InformationalVersion>1.0.21</InformationalVersion>
     <DebugType>embedded</DebugType>
 	<EmbedAllSources>True</EmbedAllSources>
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	  
 	<PackageReleaseNotes>
-1.0.21 - 24-1-2023
-- ...
+`1.0.21,1.0.22,1.0.23,1.0.24` - 2-16-2024
+- fix nuget content files
+
+`1.0.20` - 1-23-2023
+- animated widgets
+- properties animator
+- widgets: text,type writer,gradient,gradient bar,text timer
+- widget image in a separated project AnsiVtConsole.NetCore.Imaging using SkiaSharp
+- examples projects
+- fluent methods for ContextTextWriterWrapper
+- doc update
+
+`1.0.19` - 1-17-2023
+- add **widgets** feature + RaimbowText widget
+- add example
+- doc update
+
+`1.0.18` - 1-1-2023
+- add symbols and sources in package
+- new editorconfig and code clean up
+- command `out` for a shell available in `AnsiVtConsole.NetCore.CommandLine.Out` that compiles to `out.exe`
+- doc update
+
+`1.0.17` - 10-1-2023
+- add setting that make it possible to disable ansi/vt in console ouputs: `AnsiVtConsole.NetCore.Component.Settings` : `IsMarkupDisabled`,`IsRawOutputEnabled`,`ReplaceNonPrintableCharactersByTheirName`,`RemoveANSISequences`
+- add methods to get output text in various formats (without ansi,with unparsed markup,in shell escaped characters) : `GetText`,`GetRawText`,`ANSIParser.GetText` 
+- add grammar file for ANSI parser
+- enable buffering mode for any print directive
+- update doc
+
+`1.0.16` - 5-1-2022
+- fix nupkg. add deployment of documentation files
+- update doc
+
+`1.0.14,1.0.15` - 12-17-2022
+- fix LogError,LogWarning
+
+`1.0.13` - 12-17-2022
+- fix refactoring Write,WriteLine
+- add default empty string to log methods
+
+`1.0.12` - 12-17-2022
+- rename Writeln methods by WriteLine
+- suppress Log,Logln &amp; logger refactoring
+- add code documentation
 	</PackageReleaseNotes>
 	<PackageProjectUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/franck-gaspoz/AnsiVtConsole.NetCore</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
 	<PackageTags>ansi vt vt100 console color shell prompt bash powershell linux csharp netcore6 cli cmd command line tool</PackageTags>
-	<PackageIcon>content\assets\ascii-icon.png</PackageIcon>
+	<PackageIcon>content\ascii-icon.png</PackageIcon>
 	  
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
@@ -71,85 +114,87 @@
 
   <ItemGroup>
     <Content Include="assets\ascii-icon.png">
-		<CopyToOuput>true</CopyToOuput>
-		<copyToOuput>true</copyToOuput>
-		<IncludeInPackage>true</IncludeInPackage>
-		<BuildAction>Content</BuildAction>
-		<copyToOutput>true</copyToOutput>
-		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
+		<PackagePath>contentFiles/any/any/;content/</PackagePath>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\example1.png">
-      <Pack>True</Pack>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-      <IncludeInPackage>true</IncludeInPackage>
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\example2.png">
-      <Pack>True</Pack>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-	  <IncludeInPackage>true</IncludeInPackage>
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<IncludeInPackage>true</IncludeInPackage>
 	</Content>
     <Content Include="assets\example3.png">
-      <Pack>True</Pack>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-	  <IncludeInPackage>true</IncludeInPackage>
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\example4.png">
-      <Pack>True</Pack>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-	  <IncludeInPackage>true</IncludeInPackage>
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\example5.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\example6.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\example7.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\output.png">
-      <Pack>True</Pack>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <PackagePath>contentFiles/any/any/assets;content/assets;contentFiles;content</PackagePath>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-      <IncludeInPackage>true</IncludeInPackage>
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<IncludeInPackage>true</IncludeInPackage>
 	</Content>
     <Content Include="assets\title.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		<Pack>True</Pack>
+		<PackagePath>contentFiles/any/any/;content/</PackagePath>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="Component\Parser\ANSI\ansi-seq-patterns.txt">
-		<CopyToOuput>true</CopyToOuput>
-		<copyToOuput>true</copyToOuput>
-		<IncludeInPackage>true</IncludeInPackage>
-		<BuildAction>Content</BuildAction>
-		<copyToOutput>true</copyToOutput>
-		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		<CopyToPublishDirectory>Always</CopyToPublishDirectory>
-		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/any/Component/Parser/ANSI;content/Component/Parser/ANSI;lib/$(TargetFramework)/Component/Parser/ANSI/;content;contentFiles</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</Content>
     <Content Include="LICENSE.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Pack>True</Pack>
       <PackagePath>contentFiles/any/any/;content/</PackagePath>
       <PackageCopyToOutput>true</PackageCopyToOutput>
       <IncludeInPackage>true</IncludeInPackage>
 	</Content>
     <Content Include="README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Pack>True</Pack>
       <PackagePath>contentFiles/any/any/;content/</PackagePath>
       <PackageCopyToOutput>true</PackageCopyToOutput>
