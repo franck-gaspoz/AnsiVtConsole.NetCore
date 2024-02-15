@@ -6,10 +6,10 @@
     <Nullable>enable</Nullable>
     
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<AssemblyVersion>1.0.24.0</AssemblyVersion>
-	<FileVersion>1.0.24.0</FileVersion>
-	<Version>1.0.24</Version>
-	<InformationalVersion>1.0.24</InformationalVersion>
+	<AssemblyVersion>1.0.26.0</AssemblyVersion>
+	<FileVersion>1.0.26.0</FileVersion>
+	<Version>1.0.26</Version>
+	<InformationalVersion>1.0.26</InformationalVersion>
 	  
     <RootNamespace>AnsiVtConsole.NetCore</RootNamespace>
     <AssemblyName>AnsiVtConsole.NetCore</AssemblyName>    
@@ -27,7 +27,7 @@
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	  
 	<PackageReleaseNotes>
-`1.0.21,1.0.22,1.0.23,1.0.24` - 2-16-2024
+`1.0.21,1.0.22,1.0.23,1.0.24,1.0.25,1.0.26` - 2-16-2024
 - fix nuget content files
 
 `1.0.20` - 1-23-2023
@@ -116,88 +116,96 @@
     <Content Include="assets\ascii-icon.png">
 		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<PackagePath>content/</PackagePath>
+		<PackageCopyToOutput>false</PackageCopyToOutput>
 		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\example1.png">
 		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<PackagePath>content/</PackagePath>
+		<PackageCopyToOutput>false</PackageCopyToOutput>
 		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\example2.png">
 		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<PackagePath>content/</PackagePath>
+		<PackageCopyToOutput>false</PackageCopyToOutput>
 		<IncludeInPackage>true</IncludeInPackage>
 	</Content>
     <Content Include="assets\example3.png">
 		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<PackagePath>content/</PackagePath>
+		<PackageCopyToOutput>false</PackageCopyToOutput>
 		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\example4.png">
 		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<PackagePath>content/</PackagePath>
+		<PackageCopyToOutput>false</PackageCopyToOutput>
 		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\example5.png">
 		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<PackagePath>content/</PackagePath>
+		<PackageCopyToOutput>false</PackageCopyToOutput>
 		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\example6.png">
 		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<PackagePath>content/</PackagePath>
+		<PackageCopyToOutput>false</PackageCopyToOutput>
 		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\example7.png">
 		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<PackagePath>content/</PackagePath>
+		<PackageCopyToOutput>false</PackageCopyToOutput>
 		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="assets\output.png">
 		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<PackagePath>content/</PackagePath>
+		<PackageCopyToOutput>false</PackageCopyToOutput>
 		<IncludeInPackage>true</IncludeInPackage>
 	</Content>
     <Content Include="assets\title.png">
 		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		<Pack>True</Pack>
-		<PackagePath>contentFiles/any/any/;content/</PackagePath>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<PackagePath>content/</PackagePath>
+		<PackageCopyToOutput>false</PackageCopyToOutput>
 		<IncludeInPackage>true</IncludeInPackage>
     </Content>
     <Content Include="Component\Parser\ANSI\ansi-seq-patterns.txt">
+		<PackagePath>contentFiles/Component/Parser/ANSI;content/Component/Parser/ANSI;lib/$(TargetFramework)/Component/Parser/ANSI/;content;contentFiles;contentFiles/any/any/Component/Parser/ANSI</PackagePath>
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<copyToOuput>true</copyToOuput>
+		<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		<IncludeInPackage>true</IncludeInPackage>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<BuildAction>Content</BuildAction>
+		<copyToOutput>true</copyToOutput>
+		<Pack>True</Pack>
 	</Content>
     <Content Include="LICENSE.md">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Pack>True</Pack>
-      <PackagePath>contentFiles/any/any/;content/</PackagePath>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <PackagePath>content</PackagePath>
+      <PackageCopyToOutput>false</PackageCopyToOutput>
       <IncludeInPackage>true</IncludeInPackage>
 	</Content>
     <Content Include="README.md">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Pack>True</Pack>
-      <PackagePath>contentFiles/any/any/;content/</PackagePath>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <PackagePath>content</PackagePath>
+      <PackageCopyToOutput>false</PackageCopyToOutput>
       <IncludeInPackage>true</IncludeInPackage>
 	</Content>
   </ItemGroup>

@@ -336,7 +336,7 @@ To try these examples, compile and run the project **AnsiVtConsole.NetCore.Examp
 
 # Versions history
 
-`1.0.21,1.0.22,1.0.23,1.0.24` - 2-16-2024
+`1.0.21,1.0.22,1.0.23,1.0.24,1.0.25,1.0.26` - 2-16-2024
 - fix nuget content files
 
 `1.0.20` - 1-23-2023
